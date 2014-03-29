@@ -18,16 +18,16 @@ public class Absorb_FirePlayer : MonoBehaviour {
     public bool shouldFire { get; set; }
 
     public delegate void Cannondelegate();
-    private event Cannondelegate OncannonEnter;
-    public event Cannondelegate oncannonEnter {
-        add { OncannonEnter += value; }
-        remove { OncannonEnter -= value; }
+    private event Cannondelegate OnPlayerEnter;
+    public event Cannondelegate onPlayerEnter {
+        add { OnPlayerEnter += value; }
+        remove { OnPlayerEnter -= value; }
     }
 
-    private event Cannondelegate OnCannonExit;
-    public event Cannondelegate onCannonExit {
-        add { OnCannonExit += value; }
-        remove { OnCannonExit -= value; }
+    private event Cannondelegate OnFirePlayer;
+    public event Cannondelegate onFirePlayer {
+        add { OnFirePlayer += value; }
+        remove { OnFirePlayer -= value; }
     }
 
     private void Awake() { cannon = transform.parent; }
@@ -37,7 +37,7 @@ public class Absorb_FirePlayer : MonoBehaviour {
             hasPlayer = true;
             player = col.GetComponent<Player>();
             player.body2D.gravityScale = 0;
-            if(OncannonEnter != null) OncannonEnter();
+            if(OnPlayerEnter != null) OnPlayerEnter();
 
             if(followingCamera != null) {
                 followingCamera.allowZooming = false;
@@ -59,7 +59,7 @@ public class Absorb_FirePlayer : MonoBehaviour {
         canFire = false;
         player = null;
         shouldFire = false;
-        if(OnCannonExit != null) OnCannonExit();
+        if(OnFirePlayer != null) OnFirePlayer();
     }
 
     private void Update() {

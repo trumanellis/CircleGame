@@ -17,7 +17,7 @@ public class IntroManager : MonoBehaviour {
         mainMenuMusic = SoundManager.Play("Main Menu", true);
         showMenuTrigger.onButtonPress += ShowMainMenu;
         triggerArea.onAreaEnter += DetachTitle;
-        cannon.oncannonEnter += () => {
+        cannon.onPlayerEnter += () => {
             player.moveController.trailEnabled = true;
             SOS.ExecuteMethod(menuStarter.cannonFireDelay, () => { cannon.shouldFire = true; });
         };
@@ -37,7 +37,6 @@ public class IntroManager : MonoBehaviour {
     }
 
     private void ShowMainMenu(EventTriggerButton button) {
-        Destroy(button.gameObject);
         playerCamera.SetTarget(menuStarter.endFollowObject);
         player.trans.position = menuStarter.playerStartPosition.position;
         menuStarter.title.GetComponent<FollowTarget>().SetTarget(player.trans).shouldFollow = true;

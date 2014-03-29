@@ -4,13 +4,15 @@ using System.Collections.Generic;
 
 [RequireComponent(typeof(Collider2D))]
 public class EventTriggerButton : MonoBehaviour {
-    private static Dictionary<int, List<EventTriggerButton>> groups = new Dictionary<int,List<EventTriggerButton>>();
+    private static Dictionary<int, List<EventTriggerButton>> groups = new Dictionary<int, List<EventTriggerButton>>();
     [Range(0, 50)]
     public int group = 0;
     public bool playerOnly;
     public bool requiresHold;
+    public bool destroyAfterPress;
     public EventButtonPressAnimation anim;
     public bool isPressed { get; set; }
+    private bool canPress = true;
 
     public delegate void EventButtonEvent(EventTriggerButton button);
     public delegate void EventButtonGroupEvent(List<EventTriggerButton> buttons);
@@ -69,17 +71,20 @@ public class EventTriggerButton : MonoBehaviour {
     }
 
     private void OnPress() {
-        isPressed = true;
-        anim.PressAnimation(true);
-        if(group == 0) {
-            if(OnButtonPress != null) OnButtonPress(this);
-        } else {
-            List<EventTriggerButton> buttons = groups[group];
-            for(int i = 0; i < buttons.Count; i++) {
-                if(!buttons[i].isPressed) return;
-            }
+        if(canPress) {
+            isPressed = true;
+            canPress = false;
+            anim.PressAnimation(true);
+            if(group == 0) {
+                if(OnButtonPress != null) OnButtonPress(this);
+            } else {
+                List<EventTriggerButton> buttons = groups[group];
+                for(int i = 0; i < buttons.Count; i++) {
+                    if(!buttons[i].isPressed) return;
+                }
 
-            if(OnButtonGroupPress != null) OnButtonGroupPress(groups[group]);
+                if(OnButtonGroupPress != null) OnButtonGroupPress(groups[group]);
+            }
         }
     }
 
@@ -87,6 +92,10 @@ public class EventTriggerButton : MonoBehaviour {
         isPressed = false;
         anim.PressAnimation(false);
         if(OnButtonRelease != null) OnButtonRelease(this);
+    }
+
+    private void AnimComplete(bool down) {
+        if(down && destroyAfterPress) Destroy(gameObject);
     }
 }
 
@@ -104,14 +113,18 @@ public class EventButtonPressAnimation {
                 "y", pressedScale,
                 "delay", delay,
                 "time", animDuration,
-                "easetype", easeType
+                "easetype", easeType,
+                "oncomplete", "AnimComplete",
+                "oncompleteparams", true
                 ));
         } else {
             iTween.ScaleTo(go.gameObject, iTween.Hash(
                 "y", 1f,
                 "delay", delay,
                 "time", animDuration,
-                "easetype", easeType
+                "easetype", easeType,
+                "oncomplete", "AnimComplete",
+                "oncompleteparams", false
                 ));
         }
     }
