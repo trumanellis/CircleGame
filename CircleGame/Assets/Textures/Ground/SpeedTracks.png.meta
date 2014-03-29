@@ -1,0 +1,265 @@
+fileFormatVersion: 2
+guid: e8e6d86b509a62d42ae3ccea33de3f3c
+TextureImporter:
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: .25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  seamlessCubemap: 0
+  textureFormat: -3
+  maxTextureSize: 1024
+  textureSettings:
+    filterMode: 0
+    aniso: 1
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: .5, y: .5}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings:
+  - buildTarget: iPhone
+    maxTextureSize: 1024
+    textureFormat: -2
+    compressionQuality: 50
+  spriteSheet:
+    sprites:
+    - name: ST_Wide_Up
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 434
+        width: 141
+        height: 165
+      alignment: 0
+      pivot: {x: .5, y: .5}
+    - name: ST_Wide_Down
+      rect:
+        serializedVersion: 2
+        x: 143
+        y: 434
+        width: 141
+        height: 165
+      alignment: 0
+      pivot: {x: .5, y: .5}
+    - name: ST_Wide_Right
+      rect:
+        serializedVersion: 2
+        x: 285
+        y: 458
+        width: 165
+        height: 141
+      alignment: 0
+      pivot: {x: .5, y: .5}
+    - name: ST_Wide_Left
+      rect:
+        serializedVersion: 2
+        x: 285
+        y: 316
+        width: 165
+        height: 141
+      alignment: 0
+      pivot: {x: .5, y: .5}
+    - name: Bar_Small_H
+      rect:
+        serializedVersion: 2
+        x: 172
+        y: 397
+        width: 67
+        height: 4
+      alignment: 0
+      pivot: {x: .5, y: .5}
+    - name: Bar_Small_V
+      rect:
+        serializedVersion: 2
+        x: 167
+        y: 334
+        width: 4
+        height: 67
+      alignment: 0
+      pivot: {x: .5, y: .5}
+    - name: Bar_Large_H
+      rect:
+        serializedVersion: 2
+        x: 333
+        y: 263
+        width: 165
+        height: 4
+      alignment: 0
+      pivot: {x: .5, y: .5}
+    - name: Bar_Large_V
+      rect:
+        serializedVersion: 2
+        x: 333
+        y: 97
+        width: 4
+        height: 165
+      alignment: 0
+      pivot: {x: .5, y: .5}
+    - name: ST_Wide_Open_Right
+      rect:
+        serializedVersion: 2
+        x: 167
+        y: 174
+        width: 165
+        height: 141
+      alignment: 0
+      pivot: {x: .5, y: .5}
+    - name: ST_Wide_Open_Left
+      rect:
+        serializedVersion: 2
+        x: 167
+        y: 32
+        width: 165
+        height: 141
+      alignment: 0
+      pivot: {x: .5, y: .5}
+    - name: ST_Wide_Open_Up
+      rect:
+        serializedVersion: 2
+        x: 451
+        y: 268
+        width: 141
+        height: 165
+      alignment: 0
+      pivot: {x: .5, y: .5}
+    - name: ST_Wide_Open_Down
+      rect:
+        serializedVersion: 2
+        x: 593
+        y: 268
+        width: 141
+        height: 165
+      alignment: 0
+      pivot: {x: .5, y: .5}
+    - name: ST_Small_Open_Up
+      rect:
+        serializedVersion: 2
+        x: 451
+        y: 434
+        width: 75
+        height: 165
+      alignment: 0
+      pivot: {x: .5, y: .5}
+    - name: ST_Small_Open_Down
+      rect:
+        serializedVersion: 2
+        x: 527
+        y: 434
+        width: 75
+        height: 165
+      alignment: 0
+      pivot: {x: .5, y: .5}
+    - name: ST_Small_Open_Right
+      rect:
+        serializedVersion: 2
+        x: 603
+        y: 524
+        width: 165
+        height: 75
+      alignment: 0
+      pivot: {x: .5, y: .5}
+    - name: ST_Small_Open_Left
+      rect:
+        serializedVersion: 2
+        x: 603
+        y: 448
+        width: 165
+        height: 75
+      alignment: 0
+      pivot: {x: .5, y: .5}
+    - name: ST_Small_Right
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 357
+        width: 165
+        height: 75
+      alignment: 0
+      pivot: {x: .5, y: .5}
+    - name: St_Small_Left
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 281
+        width: 165
+        height: 75
+      alignment: 0
+      pivot: {x: .5, y: .5}
+    - name: ST_Small_Up
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 115
+        width: 75
+        height: 165
+      alignment: 0
+      pivot: {x: .5, y: .5}
+    - name: ST_Small_Down
+      rect:
+        serializedVersion: 2
+        x: 77
+        y: 115
+        width: 75
+        height: 165
+      alignment: 0
+      pivot: {x: .5, y: .5}
+    - name: Double_Left
+      rect:
+        serializedVersion: 2
+        x: 167
+        y: 402
+        width: 38
+        height: 30
+      alignment: 0
+      pivot: {x: .5, y: .5}
+    - name: Double_Right
+      rect:
+        serializedVersion: 2
+        x: 206
+        y: 402
+        width: 38
+        height: 30
+      alignment: 0
+      pivot: {x: .5, y: .5}
+    - name: Double_Down
+      rect:
+        serializedVersion: 2
+        x: 245
+        y: 394
+        width: 30
+        height: 38
+      alignment: 0
+      pivot: {x: .5, y: .5}
+    - name: Double_Up
+      rect:
+        serializedVersion: 2
+        x: 245
+        y: 355
+        width: 30
+        height: 38
+      alignment: 0
+      pivot: {x: .5, y: .5}
+  spritePackingTag: 
+  userData: 
