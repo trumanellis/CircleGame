@@ -6,7 +6,6 @@ using UnityEngine;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using IgnisUtils.Input;
 
 #endregion
 
@@ -186,11 +185,6 @@ public class cInput : MonoBehaviour {
         }
     }
 
-
-    void LateUpdate() {
-        VirtualKeyManager.UpdateVirtualKeys();
-    }
-
     #endregion
 
     public static void Init() {
@@ -317,62 +311,50 @@ public class cInput : MonoBehaviour {
     }
 
     public static void SetVirtualKey(string keyName, float sensitivity = 3f, float gravity = 3f, float deadZone = .01f) {
-        _cInputInit();
         VirtualKeyManager.SetVirtualKey(keyName, sensitivity, gravity, deadzone);
     }
 
     public static void RemoveVirtualKey(string keyName) {
-        _cInputInit();
         VirtualKeyManager.RemoveVirtualKey(keyName);
     }
 
     public static void SetVirtualAxis(string axisName, string positiveKey, string negativeKey = null) {
-        _cInputInit();
         VirtualKeyManager.SetVirtualAxis(axisName, positiveKey, negativeKey);
     }
 
     public static void PressVirtualKey(string keyName) {
-        _cInputInit();
         VirtualKeyManager.PressVirtualKey(keyName);
     }
 
     public static void ReleaseVirtualKey(string keyName) {
-        _cInputInit();
         VirtualKeyManager.ReleaseVirtualKey(keyName);
     }
 
     public static void ChangeVirtualKey(string origKey, string newKey) {
-        _cInputInit();
         VirtualKeyManager.ChangeVirtualKey(origKey, newKey);
     }
 
     public static float GetVirtualKey(string keyName) {
-        _cInputInit();
         return VirtualKeyManager.GetVirtualKey(keyName);
     }
 
     public static float GetVirtualKeyRaw(string keyName) {
-        _cInputInit();
         return VirtualKeyManager.GetVirtualKeyRaw(keyName);
     }
 
     public static bool GetVirtualKeyDown(string keyName) {
-        _cInputInit();
         return VirtualKeyManager.GetVirtualKeyDown(keyName);
     }
 
     public static bool GetVirtualKeyUp(string keyName) {
-        _cInputInit();
         return VirtualKeyManager.GetVirtualKeyUp(keyName);
     }
 
     public static float GetVirtualAxis(string axisName) {
-        _cInputInit();
         return VirtualKeyManager.GetVirtualAxis(axisName);
     }
 
     public static float GetVirtualAxisRaw(string axisName) {
-        _cInputInit();
         return VirtualKeyManager.GetVirtualAxisRaw(axisName);
     }
 
@@ -1875,7 +1857,6 @@ public class cInput : MonoBehaviour {
     #endregion
 
     private static void _cInputInit() {
-        if(!VirtualKeyManager.initialized) VirtualKeyManager.Init(20);
         if(_cObject == null) {
             GameObject cObject;
             if(GameObject.Find("cObject")) {

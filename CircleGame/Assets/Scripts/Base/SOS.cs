@@ -79,6 +79,7 @@ public class SOS : MonoBehaviour {
             debugConsole.Show(!debugConsole.isShowing);
         if(Input.GetKeyUp(quitKey))
             Application.Quit();
+        if(!isMobile) CheckForkeyBoardInput();
     }
 
     public void OnLevelWasLoaded() {
@@ -228,22 +229,41 @@ public class SOS : MonoBehaviour {
     #endregion
 
     private static void CheckIfMobile() {
-        if(Application.platform == RuntimePlatform.Android || Application.platform == RuntimePlatform.IPhonePlayer || Application.platform == RuntimePlatform.WP8Player ||
-            Application.platform == RuntimePlatform.MetroPlayerARM) {
+        //if(Application.platform == RuntimePlatform.Android || Application.platform == RuntimePlatform.IPhonePlayer || Application.platform == RuntimePlatform.WP8Player ||
+        //    Application.platform == RuntimePlatform.MetroPlayerARM) {
 
-                isMobile = true;
-        }
+        //        isMobile = true;
+        //}
+
+        if(SystemInfo.supportsAccelerometer) isMobile = true;
+    }
+
+    private void CheckForkeyBoardInput() {
+        if(cInput.GetKeyDown("Right")) cInput.PressVirtualKey("Right");
+        else if(cInput.GetKeyUp("Right")) cInput.ReleaseVirtualKey("Right");
+
+        if(cInput.GetKeyDown("Left")) cInput.PressVirtualKey("Left");
+        else if(cInput.GetKeyUp("Left")) cInput.ReleaseVirtualKey("Left");
+
+        if(cInput.GetKeyDown("Jump")) cInput.PressVirtualKey("Jump");
+        else if(cInput.GetKeyUp("Jump")) cInput.ReleaseVirtualKey("Jump");
+
+        if(cInput.GetKeyDown("Escape")) cInput.PressVirtualKey("Escape");
+        else if(cInput.GetKeyUp("Escape")) cInput.ReleaseVirtualKey("Escape");
     }
 
     private void CreateKeys() {
+        VirtualKeyManager.Init(20);
         cInput.SetKey("Left", Keys.A, "LeftArrow");
         cInput.SetKey("Right", Keys.D, "RightArrow");
         cInput.SetKey("Jump", Keys.Space, "UpArrow");
+        cInput.SetKey("Escape", Keys.Escape);
         cInput.SetAxis("Horizontal", "Left", "Right", 5f, 10f, .1f);
         cInput.SetVirtualKey("Left", 5f, 10f, .1f);
         cInput.SetVirtualKey("Right", 5f, 10f, .1f);
         cInput.SetVirtualAxis("Horizontal", "Right", "Left");
         cInput.SetVirtualKey("Jump");
+        cInput.SetVirtualKey("Escape");
     }
 }
 

@@ -8,7 +8,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class Updater : MonoBehaviour {
-    public static Launchie.Launchie updater { get; set; }
+    public static Launchie.Launchie updater { get; private set; }
     public static Action onFinishedDownloadingReleaseNotes;
     public static Action onFinishedDownloadingPatch;
     public static Action onFinishedExtractingPatch;
@@ -22,10 +22,10 @@ public class Updater : MonoBehaviour {
 
 
     public static UpdateData CheckForUpdate(string version) {
-        updater = new Launchie.Launchie("http://www.sosmediadesigns.net/Patches", version);
+        updater = new Launchie.Launchie("https://s3.amazonaws.com/IgnisBucket/Patches/CircleGame/patches.txt", version);
         updater.setOnError(OnError);
         initialized = true;
-
+        Debug.Log(updater.Check());
         bool updateFound = updater.Check() == 1 ? true : false;
         return new UpdateData(updater, updateFound);
     }
@@ -94,7 +94,9 @@ public class Updater : MonoBehaviour {
 
 public class UpdateData {
     public Launchie.Launchie updater;
-    public bool updateFound;
+    public bool updateFound { get; set; }
+    public string releaseNotes { get; set; }
+    public string version { get; set; }
 
     public UpdateData(Launchie.Launchie updater, bool updateFound) {
         this.updater = updater;

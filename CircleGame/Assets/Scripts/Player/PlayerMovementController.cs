@@ -26,10 +26,6 @@ public class PlayerMovementController : MonoBehaviour {
     }
 
     private void Update() {
-        if(!SOS.isMobile) {
-            CheckForkeyBoardInput();
-        }
-
         isGrounded = false;
 
         for(int i = 0; i < groundCheckers.Length; i++) {
@@ -94,16 +90,5 @@ public class PlayerMovementController : MonoBehaviour {
 
     private void CreateCollisionMask() {
         collisionMask = (1 << LayerMask.NameToLayer("Ground") | (1 << LayerMask.NameToLayer("Cannon")) | (1 << LayerMask.NameToLayer("Trampoline")));
-    }
-
-    private void CheckForkeyBoardInput() {
-        if(cInput.GetKeyDown("Right")) cInput.PressVirtualKey("Right");
-        else if(cInput.GetKeyUp("Right")) cInput.ReleaseVirtualKey("Right");
-
-        if(cInput.GetKeyDown("Left")) cInput.PressVirtualKey("Left");
-        else if(cInput.GetKeyUp("Left")) cInput.ReleaseVirtualKey("Left");
-
-        if(cInput.GetKeyDown("Jump")) cInput.PressVirtualKey("Jump");
-        else if(cInput.GetKeyUp("Jump")) cInput.ReleaseVirtualKey("Jump");
     }
 }

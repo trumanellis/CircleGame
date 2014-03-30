@@ -2,24 +2,22 @@
 using System.Collections;
 
 public class UpdateChecker : MonoBehaviour {
-    private UpdateData data;
+    public static UpdateData updateData;
+    public bool checkOnAwake;
     private bool showUpdateWindow;
 
     private void Awake() {
-        UpdateData data = Updater.CheckForUpdate(SOS.version);
-
-        if(data.updateFound) {
-            Updater.DownloadReleaseNotes(() => {
-                showUpdateWindow = true;
-            });
-        }
+        if(checkOnAwake) CheckForUpdate();
     }
 
-    private void Update() {
-        if(showUpdateWindow) {
-            showUpdateWindow = false;
-            //transform.Find<UpdateWindow>().ShowWindow(true);
-            enabled = false;
+    public static void CheckForUpdate() {
+        updateData = Updater.CheckForUpdate(SOS.version);
+
+        if(updateData.updateFound) {
+            Updater.DownloadReleaseNotes(() => {
+                updateData.version = updateData.updater.getAvailableVersion();
+                updateData.releaseNotes = updateData.updater.getReleaseNotes();
+            });
         }
     }
 }

@@ -9,12 +9,15 @@ public class SoundManager : MonoBehaviour {
     public Sound[] _sounds;
     public static List<Sound> playingSounds = new List<Sound>();
     private Dictionary<string, Sound> sounds = new Dictionary<string, Sound>();
+    private Transform soundParent;
 
-    private void Awake() {
+    private void Start() {
         instance = this;
         isMuted = _muted;
 
         FillSounds();
+        soundParent = new GameObject("Sounds").transform;
+        soundParent.parent = transform;
     }
 
     public static Sound Play(string name, bool loop = false) {
@@ -28,6 +31,7 @@ public class SoundManager : MonoBehaviour {
         }
 
         GameObject go = new GameObject("Sound Source (" + sound.name + ")");
+        go.transform.parent = instance.soundParent;
         AudioSource source = go.AddComponent<AudioSource>();
         source.volume = sound.volume;
         source.pitch = source.pitch;
