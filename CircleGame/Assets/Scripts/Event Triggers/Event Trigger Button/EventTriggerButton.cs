@@ -9,6 +9,7 @@ public class EventTriggerButton : MonoBehaviour {
     public int group = 0;
     public bool playerOnly;
     public bool requiresHold;
+    public bool showAnimation;
     public bool destroyAfterPress;
     public EventButtonPressAnimation anim;
     public bool isPressed { get; set; }
@@ -74,7 +75,8 @@ public class EventTriggerButton : MonoBehaviour {
         if(canPress) {
             isPressed = true;
             canPress = false;
-            anim.PressAnimation(true);
+            if(showAnimation) anim.PressAnimation(true);
+            else AnimComplete(true);
             if(group == 0) {
                 if(OnButtonPress != null) OnButtonPress(this);
             } else {
@@ -90,7 +92,8 @@ public class EventTriggerButton : MonoBehaviour {
 
     private void OnRelease() {
         isPressed = false;
-        anim.PressAnimation(false);
+        if(showAnimation) anim.PressAnimation(false);
+        else AnimComplete(false);
         if(OnButtonRelease != null) OnButtonRelease(this);
     }
 

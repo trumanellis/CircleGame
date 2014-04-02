@@ -13,6 +13,8 @@
 *.Trashes
  
 # All platforms:
+_Patch
+_patch
 Library
 Temp
 Builds

@@ -65,9 +65,9 @@ public class Absorb_FirePlayer : MonoBehaviour {
     private void Update() {
         if(hasPlayer && !playerFired) {
             player.position = cannonTip.position;
-            if(!canFire && (cInput.GetKeyDown("Jump") || shouldFire)) {
+            if(!canFire && (cInput.GetVirtualKeyDown("Jump") || shouldFire)) {
                 canFire = true;
-            } else if(canFire && (cInput.GetKeyUp("Jump") || shouldFire)) {
+            } else if(canFire && (cInput.GetVirtualKeyUp("Jump") || shouldFire)) {
                 StartCoroutine(LaunchPlayer());
             }
         }

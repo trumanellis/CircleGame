@@ -63,11 +63,6 @@ public class PlayerMovementController : MonoBehaviour {
             }
         }
 
-        if(SOS.debugEnabled) {
-            Debug.Log("X: " + player.body2D.velocity.x);
-            Debug.Log("Y: " + player.body2D.velocity.y); 
-        }
-
         if(trailEnabled) {
             if(Mathf.Abs(player.body2D.velocity.x) > trailThreshHoldX) speedTrail.enabled = true;
             else if(Mathf.Abs(player.body2D.velocity.y) > trailThreshHoldY) speedTrail.enabled = true;

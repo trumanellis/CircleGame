@@ -7,7 +7,6 @@ public class SoundManager : MonoBehaviour {
     public bool _muted;
     public static bool isMuted;
     public Sound[] _sounds;
-    public static List<Sound> playingSounds = new List<Sound>();
     private Dictionary<string, Sound> sounds = new Dictionary<string, Sound>();
     private Transform soundParent;
 
@@ -20,28 +19,30 @@ public class SoundManager : MonoBehaviour {
         soundParent.parent = transform;
     }
 
-    public static Sound Play(string name, bool loop = false) {
-        return Play(SoundManager.GetSound(name), loop);
+    public static Sound Create(string name) {
+        return Create(GetSound(name));
     }
 
-    public static Sound Play(Sound sound, bool loop = false) {
+    public static Sound Create(Sound sound) {
+        GameObject go = new GameObject("Sound Source (" + sound.name + ")");
+        go.transform.parent = instance.soundParent;
+        AudioSource source = go.AddComponent<AudioSource>();
+        source.clip = sound.clip;
+        sound.source = source;
+        go.AddComponent<SoundTracker>().Init(sound);
+        return sound;
+    }
+
+    public static Sound Play(string name) {
+        return Play(SoundManager.GetSound(name));
+    }
+
+    public static Sound Play(Sound sound) {
         if(sound == null) {
             Debug.LogError("Sound can not be null!");
             return null;
         }
-
-        GameObject go = new GameObject("Sound Source (" + sound.name + ")");
-        go.transform.parent = instance.soundParent;
-        AudioSource source = go.AddComponent<AudioSource>();
-        source.volume = sound.volume;
-        source.pitch = source.pitch;
-        source.loop = loop;
-        source.clip = sound.clip;
-        sound.source = source;
-        playingSounds.Add(sound);
-        go.AddComponent<SoundTracker>().Init(sound);
-        source.Play();
-
+        Create(sound).Play();
         return sound;
     }
 
@@ -66,55 +67,96 @@ public class SoundManager : MonoBehaviour {
 public class Sound {
     public AudioClip clip;
     public string name;
+    public bool destroyOnFinish;
     public delegate void SoundDelegate(Sound sound);
     public SoundDelegate onSoundEnded;
 
-    public AudioSource source {get;set;}
+    public AudioSource source { get; set; }
     public bool isPlaying { get; set; }
+    public bool isPaused { get; set; }
     public float length { get { return clip.length; } }
-    private float _volume = 1f;
-    public float volume { get { return _volume; } set { _volume = value; } }
-    private float _pitch = 1f;
-    public float pitch { get { return _pitch; } set { _pitch = value; } }
+    //public bool loop { get { return source.loop; } }
+    //public float volume { get { return source.volume; } }
+    //public float pitch { get { return source.pitch; } }
 
     public Sound(string name, AudioClip clip) {
         this.name = name;
         this.clip = clip;
     }
 
-    public Sound Play(bool loop = false) {
-        SoundManager.Play(this, loop);
+    public Sound Play() {
+        if(isPaused) {
+            source.Play();
+            isPaused = false;
+            isPlaying = true;
+            return this;
+        }
+        if(source != null) {
+            source.Play();
+            isPlaying = true;
+            return this;
+        }
+        SoundManager.Play(this);
         isPlaying = true;
         return this;
     }
 
     public Sound Pause() {
-        if(SoundManager.playingSounds.Contains(this))
-            SoundManager.playingSounds[SoundManager.playingSounds.IndexOf(this)].Pause();
-        else Debug.LogWarning("This sound is not playing and therefore cannot be paused");
+        if(source != null) {
+            source.Pause();
+            isPaused = true;
+            isPlaying = false;
+        } else NotInit();
         return this;
+    }
+
+    public void Stop() {
+        if(source != null) {
+            source.Stop();
+            SOS.Destroy(source.gameObject);
+        } else NotInit();
+    }
+
+    public Sound Pitch(float pitch) {
+        if(source != null) {
+            if(pitch > 0) source.pitch = pitch;
+        } else NotInit();
+        return this;
+    }
+
+    public Sound Volume(float volume) {
+        if(source != null) {
+            if(volume > 0) source.volume = volume;
+        } else NotInit();
+        return this;
+    }
+
+    public Sound Loop(bool loop) {
+        if(source != null) {
+            source.loop = loop;
+        } else NotInit();
+        return this;
+    }
+
+    private void NotInit() {
+        Debug.LogWarning("This sound has not been properly initialized");
     }
 }
 
 public class SoundTracker : MonoBehaviour {
-    private static int instanceId = 0;
     private Sound sound;
-    private float soundTime;
-    private float length;
 
     public void Init(Sound sound) {
-        instanceId++;
         this.sound = sound;
-        length = sound.source.clip.length;
     }
 
     private void Update() {
-        soundTime = sound.source.time;
-        if(soundTime >= length) SoundEnded();
+        if(sound.source.time >= sound.length) SoundEnded();
     }
 
     private void SoundEnded() {
         if(sound.onSoundEnded != null) sound.onSoundEnded(sound);
-        Destroy(gameObject);
+        if(sound.destroyOnFinish) Destroy(gameObject);
+        enabled = false;
     }
 }

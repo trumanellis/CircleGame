@@ -22,10 +22,9 @@ public class Updater : MonoBehaviour {
 
 
     public static UpdateData CheckForUpdate(string version) {
-        updater = new Launchie.Launchie("https://s3.amazonaws.com/IgnisBucket/Patches/CircleGame/patches.txt", version);
+        updater = new Launchie.Launchie(SOS.updateURL, version);
         updater.setOnError(OnError);
         initialized = true;
-        Debug.Log(updater.Check());
         bool updateFound = updater.Check() == 1 ? true : false;
         return new UpdateData(updater, updateFound);
     }

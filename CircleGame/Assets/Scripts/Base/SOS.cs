@@ -21,6 +21,8 @@ public class SOS : MonoBehaviour {
 
     public string _version = "1.0.0.0";
     public static string version;
+    public string _updateURL = "http://www.sosmediadesigns.net/patches/";
+    public static string updateURL;
     public KeyCode _quitKey = KeyCode.F12;
     public static KeyCode quitKey;
     public bool preventScreenSleep = false;
@@ -49,14 +51,20 @@ public class SOS : MonoBehaviour {
 
         CheckIfMobile();
         CreateKeys();
+        CopyVarsToStatic();
+
+        if(preventScreenSleep && isMobile) Screen.sleepTimeout = SleepTimeout.NeverSleep;
+
+        CreatePrototypesObject();
+        HidePrototypes();
+    }
+
+    private void CopyVarsToStatic() {
         version = _version;
         quitKey = _quitKey;
         isPaidVersion = _isPaidVersion;
         debugEnabled = _enableDebug;
-        if(preventScreenSleep) Screen.sleepTimeout = SleepTimeout.NeverSleep;
-
-        CreatePrototypesObject();
-        HidePrototypes();
+        updateURL = _updateURL;
     }
 
     private void Start() {

@@ -1,0 +1,20 @@
+System.UriFormatException: Invalid URI: The format of the URI could not be determined: /versions.txt
+  at System.Uri..ctor (System.String uriString, Boolean dontEscape) [0x00000] in <filename unknown>:0 
+  at System.Uri..ctor (System.String uriString) [0x00000] in <filename unknown>:0 
+  at Launchie.Launchie.ForceCheck () [0x00000] in <filename unknown>:0 
+
+System.UriFormatException: Invalid URI: The format of the URI could not be determined: /versions.txt
+  at System.Uri..ctor (System.String uriString, Boolean dontEscape) [0x00000] in <filename unknown>:0 
+  at System.Uri..ctor (System.String uriString) [0x00000] in <filename unknown>:0 
+  at Launchie.Launchie.ForceCheck () [0x00000] in <filename unknown>:0 
+
+System.UriFormatException: Invalid URI: The format of the URI could not be determined: /versions.txt
+  at System.Uri..ctor (System.String uriString, Boolean dontEscape) [0x00000] in <filename unknown>:0 
+  at System.Uri..ctor (System.String uriString) [0x00000] in <filename unknown>:0 
+  at Launchie.Launchie.ForceCheck () [0x00000] in <filename unknown>:0 
+
+System.UriFormatException: Invalid URI: The format of the URI could not be determined: /versions.txt
+  at System.Uri..ctor (System.String uriString, Boolean dontEscape) [0x00000] in <filename unknown>:0 
+  at System.Uri..ctor (System.String uriString) [0x00000] in <filename unknown>:0 
+  at Launchie.Launchie.ForceCheck () [0x00000] in <filename unknown>:0 
+

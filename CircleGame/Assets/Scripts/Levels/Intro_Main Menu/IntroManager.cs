@@ -14,7 +14,7 @@ public class IntroManager : MonoBehaviour {
     private Sound mainMenuMusic;
 
     private void Start() {
-        mainMenuMusic = SoundManager.Play("Main Menu", true);
+        mainMenuMusic = SoundManager.Play("Main Menu").Loop(true);
         showMenuTrigger.onButtonPress += ShowMainMenu;
         triggerArea.onAreaEnter += DetachTitle;
         cannon.onPlayerEnter += () => {
@@ -40,10 +40,11 @@ public class IntroManager : MonoBehaviour {
 
     private void ShowMainMenu(EventTriggerButton button) {
         StopCoroutine("CheckForSkipRequest");
+        Destroy(showMenuTrigger.gameObject);
         playerCamera.SetTarget(menuStarter.endFollowObject);
         player.trans.position = menuStarter.playerStartPosition.position;
         menuStarter.title.GetComponent<FollowTarget>().SetTarget(player.trans).shouldFollow = true;
-        player.body2D.AddForce(Vector2.right * menuStarter.playerForce);
+        player.body2D.velocity = Vector2.right * menuStarter.playerSpeed;
         triggerArea.enabled = true;
     }
 
@@ -58,10 +59,8 @@ public class IntroManager : MonoBehaviour {
     }
 
     private void SkipIntro() {
-        Destroy(showMenuTrigger.gameObject);
         iTween.Stop();
         EnablePlayer();
-        menuStarter.playerForce += 50;
         ShowMainMenu(null);
     }
 
@@ -120,7 +119,7 @@ public class MainMenuStarter {
     public Transform endFollowObject;
     public Transform title;
     public Transform playerStartPosition;
-    public float playerForce = 10f;
+    public float playerSpeed = 50f;
     public float cannonFireDelay = .8f;
     public UITweener updateButton;
     public UITweener[] buttons;
@@ -133,11 +132,13 @@ public class MainMenuStarter {
             buttons[i].PlayForward();
         }
 
-        if(!UpdateChecker.updateData.updateFound) {
-            updateButton.gameObject.SetActive(true);
-            UIButton ubutton = updateButton.GetComponent<UIButton>();
-            ubutton.isEnabled = false;
-            updateButton.onFinished.Add(new EventDelegate(() => { ubutton.isEnabled = true; })); 
+        if(UpdateChecker.updateData != null) {
+            if(UpdateChecker.updateData.updateFound) {
+                updateButton.gameObject.SetActive(true);
+                UIButton ubutton = updateButton.GetComponent<UIButton>();
+                ubutton.isEnabled = false;
+                updateButton.onFinished.Add(new EventDelegate(() => { ubutton.isEnabled = true; }));
+            }
         }
     }
 }
