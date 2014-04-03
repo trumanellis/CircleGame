@@ -266,6 +266,8 @@ public class SOS : MonoBehaviour {
         cInput.SetKey("Right", Keys.D, "RightArrow");
         cInput.SetKey("Jump", Keys.Space, "UpArrow");
         cInput.SetKey("Escape", Keys.Escape);
+        cInput.SetKey("Left Mouse", Keys.Mouse0);
+        cInput.SetKey("Right Mouse", Keys.Mouse1);
         cInput.SetAxis("Horizontal", "Left", "Right", 5f, 10f, .1f);
         cInput.SetVirtualKey("Left", 5f, 10f, .1f);
         cInput.SetVirtualKey("Right", 5f, 10f, .1f);

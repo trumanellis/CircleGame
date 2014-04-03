@@ -50,7 +50,7 @@ namespace DustinHorne.Json.Examples
 
 
             //Now we can serialize our list and use the TypeNameHandling option of JSON .NET to make 
-            //sure the proper type name is stored alone with the serialized data.  Formatting.None will result 
+            //sure the proper type name is stored along with the serialized data. Formatting.None will result 
             //in the most compact serialized data.  Change it to Indented for a more readable representation
             var settings = new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All };
 
@@ -76,7 +76,6 @@ namespace DustinHorne.Json.Examples
                     Debug.Log(obj.StringValue);
                 }
             }
-
         }
 
         private JNSimpleObjectModel GetBaseModel()
