@@ -16,7 +16,7 @@ public class FollowTarget : MonoBehaviour {
     }
 
 	private void Update () {
-        if(shouldFollow) us.position = target.position - delta;
+        if(shouldFollow && target != null) us.position = target.position - delta;
 	}
 
     public FollowTarget SetTarget(Transform target) {
@@ -26,7 +26,13 @@ public class FollowTarget : MonoBehaviour {
     }
 
     public FollowTarget RecalculateDelta() {
-        delta = target.position - us.position;
+        if(target != null) {
+            delta = target.position - us.position;
+            enabled = true;
+        } else {
+            Debug.LogWarning("The target is null");
+            enabled = false;
+        }
         return this;
     }
 }

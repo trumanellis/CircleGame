@@ -21,22 +21,26 @@ public class CameraFollow: MonoBehaviour {
     }
 
     private void FixedUpdate() {
-        Vector3 start = us.position;
-        Vector3 end = Vector3.MoveTowards(start, target.position, followSpeed * Time.deltaTime);
-        end.z = start.z;
-        us.position = end;
+        if(target != null) {
+            Vector3 start = us.position;
+            Vector3 end = Vector3.MoveTowards(start, target.position, followSpeed * Time.deltaTime);
+            end.z = start.z;
+            us.position = end;
 
-        if(allowZooming && (body != null || body2D != null) && cam != null) {
-            float spd = body2D != null ? body2D.velocity.magnitude : body.velocity.magnitude;
-            float scl = Mathf.Clamp01((spd - minZoomSpeed) / (maxZoomSpeed - minZoomSpeed));
-            float targetZoomFactor = Mathf.Lerp(1, maxZoomFactor, scl);
-            cam.ZoomFactor = Mathf.MoveTowards(cam.ZoomFactor, targetZoomFactor, 0.2f * Time.deltaTime);
+            if(allowZooming && (body != null || body2D != null) && cam != null) {
+                float spd = body2D != null ? body2D.velocity.magnitude : body.velocity.magnitude;
+                float scl = Mathf.Clamp01((spd - minZoomSpeed) / (maxZoomSpeed - minZoomSpeed));
+                float targetZoomFactor = Mathf.Lerp(1, maxZoomFactor, scl);
+                cam.ZoomFactor = Mathf.MoveTowards(cam.ZoomFactor, targetZoomFactor, 0.2f * Time.deltaTime);
+            }
         }
     }
 
     private void Init() {
-        body = target.GetComponent<Rigidbody>();
-        body2D = target.GetComponent<Rigidbody2D>();
+        if(target != null) {
+            body = target.GetComponent<Rigidbody>();
+            body2D = target.GetComponent<Rigidbody2D>();
+        }
     }
 
     public void SetTarget(Transform target) {
