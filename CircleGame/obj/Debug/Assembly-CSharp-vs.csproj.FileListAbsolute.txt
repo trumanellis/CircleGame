@@ -11,3 +11,4 @@ D:\programming\GitHub\CircleGame\CircleGame\Temp\bin\Debug\ICSharpCode.NRefactor
 D:\programming\GitHub\CircleGame\CircleGame\obj\Debug\Assembly-CSharp-vs.csprojResolveAssemblyReference.cache
 D:\programming\GitHub\CircleGame\CircleGame\obj\Debug\Assembly-CSharp.dll
 D:\programming\GitHub\CircleGame\CircleGame\obj\Debug\Assembly-CSharp.pdb
+D:\programming\GitHub\CircleGame\CircleGame\Temp\bin\Debug\SampleClassLibrary.dll

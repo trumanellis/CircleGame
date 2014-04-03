@@ -237,13 +237,7 @@ public class SOS : MonoBehaviour {
     #endregion
 
     private static void CheckIfMobile() {
-        //if(Application.platform == RuntimePlatform.Android || Application.platform == RuntimePlatform.IPhonePlayer || Application.platform == RuntimePlatform.WP8Player ||
-        //    Application.platform == RuntimePlatform.MetroPlayerARM) {
-
-        //        isMobile = true;
-        //}
-
-        if(SystemInfo.supportsAccelerometer) isMobile = true;
+        if(SystemInfo.supportsAccelerometer) isMobile = true; //works in MOST casses
     }
 
     private void CheckForkeyBoardInput() {
@@ -268,7 +262,10 @@ public class SOS : MonoBehaviour {
         cInput.SetKey("Escape", Keys.Escape);
         cInput.SetKey("Left Mouse", Keys.Mouse0);
         cInput.SetKey("Right Mouse", Keys.Mouse1);
-        cInput.SetAxis("Horizontal", "Left", "Right", 5f, 10f, .1f);
+        cInput.SetKey("Scroll Up", Keys.MouseWheelUp);
+        cInput.SetKey("Scroll Down", Keys.MouseWheelDown);
+        cInput.SetAxis("Horizontal", "Left", "Right", 10f, 10f, .1f);
+        cInput.SetAxis("Vertical", "Scroll Up", "Scroll Down", 3f, 10f, 0.1f);
         cInput.SetVirtualKey("Left", 5f, 10f, .1f);
         cInput.SetVirtualKey("Right", 5f, 10f, .1f);
         cInput.SetVirtualAxis("Horizontal", "Right", "Left");
