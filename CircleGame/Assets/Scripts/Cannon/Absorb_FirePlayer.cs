@@ -6,7 +6,7 @@ public class Absorb_FirePlayer : MonoBehaviour {
     public Transform cannonTip;
     private Transform cannon;
     public CameraFollow followingCamera;
-    public float force = 200;
+    public float velocity = 20;
     public float cameraTweenDureation = 1.5f;
     public float maxZoom = .6f;
     public float cameraZoomDelay = .5f;
@@ -75,7 +75,7 @@ public class Absorb_FirePlayer : MonoBehaviour {
 
     private IEnumerator LaunchPlayer() {
         player.trans.rotation = cannon.rotation;
-        player.body2D.velocity = player.trans.up * force;
+        player.body2D.velocity = player.trans.up * velocity;
         hasPlayer = false;
         playerFired = true;
 
