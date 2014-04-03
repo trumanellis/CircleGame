@@ -34,13 +34,6 @@ public class ScreenShot : MonoBehaviour {
     }
 
     void Update() {
-        //if(Input.GetAxis("Screen Shot") != 0 && canTakeScreenShot) {
-        //    canTakeScreenShot = false;
-        //    StartCoroutine(ScreenshotEncode());
-        //} else if(Input.GetAxis("Screen Shot") == 0) {
-        //    canTakeScreenShot = true;
-        //}
-
         if(Input.GetKeyUp(key) && canTakeScreenShot) {
             canTakeScreenShot = false;
             StartCoroutine(ScreenshotEncode());
