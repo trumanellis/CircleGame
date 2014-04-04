@@ -2,6 +2,10 @@
 using System.Collections;
 
 public class OnScreenControlsManager : MonoBehaviour {
+    private void Awake() {
+        if(!SOS.isMobile) gameObject.SetActive(false);
+    }
+
     private void Update() {
         if(cInput.GetVirtualKeyDown("Left")) Debug.Log("Left Was pressed");
         else if(cInput.GetVirtualKeyUp("Left")) Debug.Log("Left Was Released");
