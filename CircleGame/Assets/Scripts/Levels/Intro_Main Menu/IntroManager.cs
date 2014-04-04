@@ -19,7 +19,7 @@ public class IntroManager : MonoBehaviour {
         triggerArea.onAreaEnter += DetachTitle;
         cannon.onPlayerEnter += () => {
             player.moveController.trailEnabled = true;
-            SOS.ExecuteMethod(menuStarter.cannonFireDelay, () => { 
+            SOS.ExecuteMethod(menuStarter.cannonFireDelay, () => {
                 cannon.shouldFire = true;
                 menuStarter.ShowButtons();
             });

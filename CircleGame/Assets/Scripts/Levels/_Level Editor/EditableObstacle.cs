@@ -19,10 +19,7 @@ public class EditableObstacle : MonoBehaviour {
             shouldCount = pressed;
             if(pressed) StartScaling();
             else if(!pressed) {
-                heldTime = 0f;
-                shouldReposition = false;
-                gameObject.transform.localScale = Vector3.one;
-                iTween.StopByName("Scale Up");
+                StopScaling();
             }
         }
     }
@@ -45,24 +42,33 @@ public class EditableObstacle : MonoBehaviour {
         if(shouldReposition){
             Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             trans.position = (Vector2)pos;
+            obstacle.position = trans.position;
+            obstacle.scale = trans.localScale;
+            obstacle.rotaion = trans.eulerAngles;
         }
     }
 
     private void ShowMenu() {
-        showingMenu = true;
-        shouldCount = false;
-        heldTime = 0f;
+        showingMenu = !showingMenu;
 
         //show available menus for item
-        Debug.Log("Should show menu for " + type);
+        Debug.Log((showingMenu ? "Should show" : "Closing") + " menu for " + type);
     }
 
-    public void StartScaling() {
+    private void StartScaling() {
         iTween.ScaleTo(gameObject, iTween.Hash(
             "name", "Scale Up",
             "time", showTime,
             "easetype", ease,
             "scale", new Vector3(1.1f, 1.1f, 1f)
             ));
+    }
+
+    private void StopScaling() {
+        heldTime = 0f;
+        shouldReposition = false;
+        shouldCount = false;
+        gameObject.transform.localScale = Vector3.one;
+        iTween.StopByName("Scale Up");
     }
 }

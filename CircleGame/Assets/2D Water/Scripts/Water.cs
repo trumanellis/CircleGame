@@ -220,7 +220,7 @@ public class Water : MonoBehaviour {
     }
 
     private void OnDrawGizmos() {
-        Gizmos.color = Color.red;
+        Gizmos.color = new Color(1f, 0f, 0f, .3f);
         left = transform.position.x - (width / 2f);
         baseheight = transform.position.y;
         bottom = transform.position.y - height;

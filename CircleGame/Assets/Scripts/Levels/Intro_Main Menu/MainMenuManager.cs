@@ -10,11 +10,12 @@ public class MainMenuManager : MonoBehaviour {
 
     public void PlayClicked() {
         Debug.Log("Play clicked");
-        Application.LoadLevel("Level1");
+        Application.LoadLevel("Dev Level");
     }
 
     public void StartNewGameClicked() {
         Debug.Log("Start New Game clicked");
+        Application.LoadLevel("Level Editor");
     }
 
     public void SelectStoryClicked() {
