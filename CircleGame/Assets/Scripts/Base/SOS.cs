@@ -265,7 +265,7 @@ public class SOS : MonoBehaviour {
         cInput.SetKey("Scroll Up", Keys.MouseWheelUp);
         cInput.SetKey("Scroll Down", Keys.MouseWheelDown);
         cInput.SetAxis("Horizontal", "Left", "Right", 10f, 10f, .1f);
-        cInput.SetAxis("Vertical", "Scroll Up", "Scroll Down", 3f, 10f, 0.1f);
+        cInput.SetAxis("Vertical", "Scroll Down", "Scroll Up", 3f, 10f, 0.1f);
         cInput.SetVirtualKey("Left", 5f, 10f, .1f);
         cInput.SetVirtualKey("Right", 5f, 10f, .1f);
         cInput.SetVirtualAxis("Horizontal", "Right", "Left");
