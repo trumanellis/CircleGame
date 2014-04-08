@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Newtonsoft.Json;
 
 public class LevelEditorManager : MonoBehaviour {
+    private static LevelEditorManager instance;
     private Transform root;
     private List<Obstacle> obstacles = new List<Obstacle>();
 
@@ -13,6 +14,7 @@ public class LevelEditorManager : MonoBehaviour {
     public GameObject circleTriple;
 
     private void Awake() {
+        instance = this;
         root = transform;
     }
 
@@ -20,6 +22,14 @@ public class LevelEditorManager : MonoBehaviour {
         if(PlayerPrefs.HasKey("Serialize Test")) {
             LoadLevel();
         }
+    }
+
+    public static void ShowRadialMenu(ObstacleType type) {
+        instance.radialMenu.ShowRadialMenu(type);
+    }
+
+    public static void HideRadialMenu() {
+        instance.radialMenu.HideRadialMenu();
     }
 
     private void OnClick() {

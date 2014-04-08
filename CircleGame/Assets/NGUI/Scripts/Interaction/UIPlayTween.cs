@@ -255,7 +255,6 @@ public class UIPlayTween : MonoBehaviour
 
 	public void Play (bool forward)
 	{
-        Debug.Log("Called");
 		mActive = 0;
 		GameObject go = (tweenTarget == null) ? gameObject : tweenTarget;
 
