@@ -7,6 +7,8 @@ public class RadialMenu : MonoBehaviour {
     public Camera uiCamera;
     public Vector2 size;
     public UITweener[] tweeners;
+    public bool isShowing { get; set; }
+    public float tweenDuration = .1f;
     public float radialRightPadding = 5f;
     public float radialLeftPadding = 5f;
     public float radialUpperPadding = 5f;
@@ -16,6 +18,8 @@ public class RadialMenu : MonoBehaviour {
         trans = transform;
         radialMenu = gameObject;
         tweeners = GetComponentsInChildren<UITweener>();
+        for(int i = 0; i < tweeners.Length; i++)
+            tweeners[i].duration = tweenDuration;
         radialMenu.SetActive(false);
     }
 
@@ -33,17 +37,17 @@ public class RadialMenu : MonoBehaviour {
         trans.position = uiCamera.ScreenToWorldPoint(radialPos);
         for(int i = 0; i < tweeners.Length; i++)
             tweeners[i].PlayForward();
-        SOS.ExecuteMethod(3f, () => { HideRadialMenu(); });
+        isShowing = true;
     }
 
     public void HideRadialMenu() {
         for(int i = 0; i < tweeners.Length; i++)
             tweeners[i].PlayReverse();
-        SOS.ExecuteMethod(.1f, () => { radialMenu.SetActive(false); });
+        SOS.ExecuteMethod(tweenDuration, () => { radialMenu.SetActive(false); isShowing = false; });
     }
 
-    private void OnDrawGizmos() {
-        Gizmos.color = Color.green;
-        Gizmos.DrawWireCube(transform.position, new Vector3(size.x, size.y, .1f));
-    }
+    //private void OnDrawGizmos() {
+    //    Gizmos.color = Color.green;
+    //    Gizmos.DrawWireCube(transform.position, new Vector3(size.x, size.y, .1f));
+    //}
 }

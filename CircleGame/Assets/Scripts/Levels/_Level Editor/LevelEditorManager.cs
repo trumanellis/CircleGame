@@ -24,8 +24,8 @@ public class LevelEditorManager : MonoBehaviour {
     }
 
     private void OnClick() {
-        if(Input.GetMouseButtonUp(1))
-            radialMenu.ShowRadialMenu(ObstacleType.None);
+        if(Input.GetMouseButtonUp(1) && !radialMenu.isShowing) radialMenu.ShowRadialMenu(ObstacleType.None);
+        else if(Input.GetMouseButtonUp(0) && radialMenu.isShowing) radialMenu.HideRadialMenu();
     }
 
     private void LoadLevel() {
