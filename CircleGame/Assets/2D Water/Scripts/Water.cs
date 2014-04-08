@@ -27,7 +27,7 @@ public class Water : MonoBehaviour {
     public GameObject watermesh;
 
     public float width = 20;
-    [Range(0, 10)]
+    [Range(0, 5)]
     public int percision = 5;
     public float height;
 
@@ -129,7 +129,7 @@ public class Water : MonoBehaviour {
             colliders[i] = new GameObject();
             colliders[i].name = "Trigger";
             colliders[i].AddComponent<BoxCollider2D>();
-            colliders[i].transform.parent = transform;
+            colliders[i].transform.parent = trans;
 
             //Set the position and scale to the correct dimensions
             colliders[i].transform.position = new Vector3(left + width * (i + 0.5f) / edgecount, baseheight - 0.5f, 0);
@@ -139,6 +139,9 @@ public class Water : MonoBehaviour {
             colliders[i].GetComponent<BoxCollider2D>().isTrigger = true;
             colliders[i].AddComponent<WaterDetector>();
         }
+
+        //GameObject go = Instantiate(watermesh, Vector3.zero, Quaternion.identity) as GameObject;
+        //go.GetComponent<MeshFilter>().mesh = CreateMesh(width, height);
     }
 
     public void Splash(float xpos, float velocity) {
@@ -158,6 +161,27 @@ public class Water : MonoBehaviour {
             }
         }
     }
+
+    //Mesh CreateMesh(float width, float height) {
+    //    Mesh m = new Mesh();
+    //    m.name = "ScriptedMesh";
+    //    m.vertices = new Vector3[] {
+    //   new Vector3(-width, -height, 0.01f),
+    //   new Vector3(width, -height, 0.01f),
+    //   new Vector3(width, height, 0.01f),
+    //   new Vector3(-width, height, 0.01f)
+    //};
+    //    m.uv = new Vector2[] {
+    //   new Vector2 (0, 0),
+    //   new Vector2 (0, 1),
+    //   new Vector2(1, 1),
+    //   new Vector2 (1, 0)
+    //};
+    //    m.triangles = new int[] { 0, 1, 2, 0, 2, 3 };
+    //    m.RecalculateNormals();
+
+    //    return m;
+    //}
 
     //Same as the code from in the meshes before, set the new mesh positions
     void UpdateMeshes() {

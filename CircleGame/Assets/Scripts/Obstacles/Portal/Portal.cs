@@ -2,20 +2,20 @@
 using System.Collections;
 
 [RequireComponent(typeof(Collider2D))]
+public delegate void PortalDelegate();
 public class Portal : MonoBehaviour {
-    public Portal destinationPortal; 
     public bool receivingTarget { get; set; }
+    public event PortalDelegate onPlayerEnter;
+    public event PortalDelegate onPlayerExit;
 
     private void OnTriggerEnter2D(Collider2D col) {
-        if(!receivingTarget) {
-            if(destinationPortal != null) {
-                destinationPortal.receivingTarget = true;
-                col.gameObject.transform.position = new Vector2(destinationPortal.transform.position.x, destinationPortal.transform.position.y);
-            } else col.gameObject.transform.position = Vector2.zero;
+        if(col.tag.Equals("Player") && !receivingTarget) {
+            if(onPlayerEnter != null) onPlayerEnter();
         }
     }
 
     private void OnTriggerExit2D(Collider2D col) {
+        if(col.tag.Equals("Player") && onPlayerExit != null) onPlayerExit();
         receivingTarget = false;
     }
 }
