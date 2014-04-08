@@ -151,8 +151,8 @@ public class UIButton : UIButtonColor
 	
 	protected override void OnDragOver ()
 	{
-		if (isEnabled && (dragHighlight || UICamera.currentTouch.pressed == gameObject))
-			base.OnDragOver();
+        if(isEnabled && (dragHighlight || UICamera.currentTouch.pressed == gameObject))
+            base.OnDragOver();
 	}
 
 	/// <summary>

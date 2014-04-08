@@ -8,6 +8,7 @@ public class LevelEditorManager : MonoBehaviour {
     private Transform root;
     private List<Obstacle> obstacles = new List<Obstacle>();
 
+    public LevelEditorCamera editorCam;
     public RadialMenu radialMenu;
     public GameObject circleSingle;
     public GameObject circleDouble;
@@ -32,9 +33,15 @@ public class LevelEditorManager : MonoBehaviour {
         instance.radialMenu.HideRadialMenu();
     }
 
-    private void OnClick() {
-        if(Input.GetMouseButtonUp(1) && !radialMenu.isShowing) radialMenu.ShowRadialMenu(ObstacleType.None);
-        else if(Input.GetMouseButtonUp(0) && radialMenu.isShowing) radialMenu.HideRadialMenu();
+    private void OnScroll(float delta) {
+        editorCam.Zoom(delta);
+    }
+
+    private void OnPress(bool pressed) {
+        if(!SOS.isMobile) {
+            if(!pressed && radialMenu.isShowing) radialMenu.HideRadialMenu();
+            else if(pressed && Input.GetMouseButton(1)/* && !radialMenu.isShowing*/) radialMenu.ShowRadialMenu(ObstacleType.None);
+        }
     }
 
     private void LoadLevel() {

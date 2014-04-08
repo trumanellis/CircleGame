@@ -43,7 +43,7 @@ public class RadialMenu : MonoBehaviour {
     public void HideRadialMenu() {
         for(int i = 0; i < tweeners.Length; i++)
             tweeners[i].PlayReverse();
-        SOS.ExecuteMethod(tweenDuration, () => { radialMenu.SetActive(false); isShowing = false; });
+        //SOS.ExecuteMethod(tweenDuration, () => { radialMenu.SetActive(false); isShowing = false; });
     }
 
     //private void OnDrawGizmos() {

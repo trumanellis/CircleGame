@@ -20,7 +20,20 @@ public class LevelEditorCamera : MonoBehaviour {
     }
 
     private void Update() {
-        float scroll = cInput.GetAxis("Vertical");
+        //float scroll = cInput.GetAxis("Vertical");
+
+        if(Input.GetMouseButtonDown(2) || ((Input.GetKey(KeyCode.LeftAlt) || Input.GetKey(KeyCode.LeftAlt)) && Input.GetMouseButtonDown(0))) {
+            startPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            shouldTrack = true;
+        } else if(Input.GetMouseButtonUp(2) || (Input.GetKeyUp(KeyCode.LeftAlt) || Input.GetKeyUp(KeyCode.RightAlt)) || Input.GetMouseButtonUp(0)) shouldTrack = false;
+
+        if(shouldTrack) {
+            cameraPos = root.position -= (Camera.main.ScreenToWorldPoint(Input.mousePosition) - startPos);
+            RepositionCamera();
+        }
+    }
+
+    public void Zoom(float scroll) {
         if(scroll != 0) {
             float startZoom = mainCam.ZoomFactor;
             if(mainCam.ZoomFactor + scroll < maxZoom) {
@@ -36,16 +49,12 @@ public class LevelEditorCamera : MonoBehaviour {
 
             if(mainCam.ZoomFactor < startZoom) currentCameraBounds = cameraBounds * mainCam.ZoomFactor;
             else if(mainCam.ZoomFactor > startZoom) currentCameraBounds = cameraBounds / mainCam.ZoomFactor;
+
+            RepositionCamera();
         }
+    }
 
-        if(Input.GetMouseButtonDown(2) || ((Input.GetKey(KeyCode.LeftAlt) || Input.GetKey(KeyCode.LeftAlt)) && Input.GetMouseButtonDown(0))) {
-            startPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            shouldTrack = true;
-        } else if(Input.GetMouseButtonUp(2) || (Input.GetKeyUp(KeyCode.LeftAlt) || Input.GetKeyUp(KeyCode.RightAlt)) || Input.GetMouseButtonUp(0)) shouldTrack = false;
-
-        if(shouldTrack)
-            cameraPos = root.position -= (Camera.main.ScreenToWorldPoint(Input.mousePosition) - startPos);
-
+    private void RepositionCamera() {
         if(cameraPos.x < currentCameraBounds.x) cameraPos.x = currentCameraBounds.x;
         else if(cameraPos.x > currentCameraBounds.z) cameraPos.x = currentCameraBounds.z;
 
