@@ -18,7 +18,6 @@ public class LevelEditorManager : MonoBehaviour {
 
     private void Start() {
         if(PlayerPrefs.HasKey("Serialize Test")) {
-            Debug.Log("Start");
             LoadLevel();
         }
     }
