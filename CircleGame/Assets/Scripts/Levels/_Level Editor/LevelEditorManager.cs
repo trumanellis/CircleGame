@@ -7,6 +7,7 @@ public class LevelEditorManager : MonoBehaviour {
     private Transform root;
     private List<Obstacle> obstacles = new List<Obstacle>();
 
+    public RadialMenu radialMenu;
     public GameObject circleSingle;
     public GameObject circleDouble;
     public GameObject circleTriple;
@@ -22,13 +23,9 @@ public class LevelEditorManager : MonoBehaviour {
         }
     }
 
-    private void Update() {
-        if(Input.GetKeyUp(KeyCode.S)) {
-            SaveLevel();
-        } else if(Input.GetKeyUp(KeyCode.Q)) {
-            PlayerPrefs.DeleteAll();
-            PlayerPrefs.Save();
-        }
+    private void OnClick() {
+        if(Input.GetMouseButtonUp(1))
+            radialMenu.ShowRadialMenu(ObstacleType.None);
     }
 
     private void LoadLevel() {
