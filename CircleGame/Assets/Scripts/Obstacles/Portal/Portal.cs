@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-[RequireComponent(typeof(Collider2D))]
 public delegate void PortalDelegate();
+[RequireComponent(typeof(Collider2D))]
 public class Portal : MonoBehaviour {
     public bool receivingTarget { get; set; }
     public event PortalDelegate onPlayerEnter;
