@@ -89,7 +89,7 @@ public class LevelEditorManager : MonoBehaviour {
     }
 
     public void ClearPrefs() {
-        PlayerPrefs.DeleteAll();
+        PlayerPrefs.DeleteKey("Serialize Test");
         PlayerPrefs.Save();
         Debug.Log("All Prefs Cleared");
     }

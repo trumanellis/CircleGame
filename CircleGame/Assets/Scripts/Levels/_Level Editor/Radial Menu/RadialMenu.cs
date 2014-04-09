@@ -4,6 +4,7 @@ public class RadialMenu : MonoBehaviour {
     private GameObject radialMenu;
     private Transform trans;
     private UITweener[] tweeners;
+    private UIButton[] buttons;
     private ObstacleType currentType;
 
     public Camera uiCamera;
@@ -21,8 +22,11 @@ public class RadialMenu : MonoBehaviour {
         trans = transform;
         radialMenu = gameObject;
         tweeners = GetComponentsInChildren<UITweener>();
+        buttons = GetComponentsInChildren<UIButton>();
         for(int i = 0; i < tweeners.Length; i++)
             tweeners[i].duration = tweenDuration;
+        for(int i = 0; i < buttons.Length; i++)
+            buttons[i].isEnabled = false;
         radialMenu.SetActive(false);
     }
 
@@ -51,11 +55,16 @@ public class RadialMenu : MonoBehaviour {
         trans.position = uiCamera.ScreenToWorldPoint(radialPos);
         for(int i = 0; i < tweeners.Length; i++)
             tweeners[i].PlayForward();
+        for(int i = 0; i < buttons.Length; i++)
+            buttons[i].isEnabled = true;
         isShowing = true;
     }
 
     public void HideRadialMenu() {
+        menuLabel.text = string.Empty;
         for(int i = 0; i < tweeners.Length; i++)
             tweeners[i].PlayReverse();
+        for(int i = 0; i < buttons.Length; i++)
+            buttons[i].isEnabled = false;
     }
 }
