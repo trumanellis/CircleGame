@@ -3,16 +3,19 @@
 public class RadialMenu : MonoBehaviour {
     private GameObject radialMenu;
     private Transform trans;
+    private UITweener[] tweeners;
+    private ObstacleType currentType;
 
     public Camera uiCamera;
     public Vector2 size;
-    public UITweener[] tweeners;
     public bool isShowing { get; set; }
     public float tweenDuration = .1f;
     public float radialRightPadding = 5f;
     public float radialLeftPadding = 5f;
     public float radialUpperPadding = 5f;
     public float radialLowerPadding = 5f;
+    public GameObject innerCircle;
+    public UILabel menuLabel;
 
     private void Awake() {
         trans = transform;
@@ -23,15 +26,26 @@ public class RadialMenu : MonoBehaviour {
         radialMenu.SetActive(false);
     }
 
+    public void OnMenuHover(string name, bool enter) {
+        menuLabel.text = enter ? name : (currentType == ObstacleType.None ? "General" : currentType.ToString());
+    }
+
+    public void OnMenuSelected(string name) {
+        menuLabel.text = string.Empty;
+        Debug.Log("Selected " + name);
+    }
+
     public void ShowRadialMenu(ObstacleType type) {
         //show code
+        currentType = type;
+        menuLabel.text = type == ObstacleType.None ? "General" : type.ToString();
         radialMenu.SetActive(true);
         Vector3 radialPos = Input.mousePosition;
-        if(radialPos.x >= Screen.width / 2f && radialPos.x > Screen.width - size.x / 2f) radialPos.x = Screen.width - (size.x / 2f) - radialRightPadding;
-        else if(radialPos.x < Screen.width / 2f && radialPos.x < size.x / 2f) radialPos.x = size.x / 2f + radialLeftPadding;
+        if(radialPos.x >= Screen.width / 2f && radialPos.x > Screen.width - size.x / 2f - radialRightPadding) radialPos.x = Screen.width - (size.x / 2f) - radialRightPadding;
+        else if(radialPos.x < Screen.width / 2f && radialPos.x < size.x / 2f + radialLeftPadding) radialPos.x = size.x / 2f + radialLeftPadding;
 
-        if(radialPos.y >= Screen.height / 2f && radialPos.y > Screen.height - size.y / 2f) radialPos.y = Screen.height - (size.y / 2f) - radialUpperPadding;
-        else if(radialPos.y < Screen.height / 2f && radialPos.y < size.y / 2f) radialPos.y = size.y / 2f + radialLowerPadding;
+        if(radialPos.y >= Screen.height / 2f && radialPos.y > Screen.height - size.y / 2f - radialUpperPadding) radialPos.y = Screen.height - (size.y / 2f) - radialUpperPadding;
+        else if(radialPos.y < Screen.height / 2f && radialPos.y < size.y / 2f + radialLowerPadding) radialPos.y = size.y / 2f + radialLowerPadding;
 
         radialPos.z = 0;
         trans.position = uiCamera.ScreenToWorldPoint(radialPos);
@@ -43,11 +57,5 @@ public class RadialMenu : MonoBehaviour {
     public void HideRadialMenu() {
         for(int i = 0; i < tweeners.Length; i++)
             tweeners[i].PlayReverse();
-        //SOS.ExecuteMethod(tweenDuration, () => { radialMenu.SetActive(false); isShowing = false; });
     }
-
-    //private void OnDrawGizmos() {
-    //    Gizmos.color = Color.green;
-    //    Gizmos.DrawWireCube(transform.position, new Vector3(size.x, size.y, .1f));
-    //}
 }
