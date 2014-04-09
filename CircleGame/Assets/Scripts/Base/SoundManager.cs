@@ -42,6 +42,7 @@ public class SoundManager : MonoBehaviour {
             Debug.LogError("Sound can not be null!");
             return null;
         }
+        sound.destroyOnFinish = true;
         Create(sound).Play();
         return sound;
     }
@@ -67,10 +68,10 @@ public class SoundManager : MonoBehaviour {
 public class Sound {
     public AudioClip clip;
     public string name;
-    public bool destroyOnFinish;
     public delegate void SoundDelegate(Sound sound);
     public SoundDelegate onSoundEnded;
 
+    public bool destroyOnFinish { get; set; }
     public AudioSource source { get; set; }
     public bool isPlaying { get; set; }
     public bool isPaused { get; set; }

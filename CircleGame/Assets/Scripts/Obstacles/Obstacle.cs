@@ -15,21 +15,21 @@ public class Obstacle {
 }
 
 public class CircleObstacle : Obstacle {
-    public enum CircleType { Circle_Single, Circle_Double, Circle_Triple }
+    public enum CircleType { None, Circle_Single, Circle_Double, Circle_Triple }
     public CircleType type = CircleType.Circle_Single;
 
     public CircleObstacle() { obstacleType = ObstacleType.Circle; }
 }
 
 public class GroundObstacle : Obstacle {
-    public enum GroundType { Ground, Falling_Ground, Moving_Ground }
+    public enum GroundType { None, Ground, Falling_Ground, Moving_Ground }
     public GroundType type = GroundType.Ground;
 
     public GroundObstacle() { obstacleType = ObstacleType.Ground; }
 }
 
 public class SpeedtrackObstacle : Obstacle {
-    public enum SpeedTrackType { Small_Down, Small_Up, Small_Left, Small_Right, Wide_Down, Wide_Up, Wide_Left, Wide_Right }
+    public enum SpeedTrackType { None, Small_Down, Small_Up, Small_Left, Small_Right, Wide_Down, Wide_Up, Wide_Left, Wide_Right }
     public SpeedTrackType type = SpeedTrackType.Small_Left;
 
     public SpeedtrackObstacle() { obstacleType = ObstacleType.Speed_Track; }

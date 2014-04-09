@@ -7,6 +7,7 @@ public class RadialMenu : MonoBehaviour {
     private UIButton[] buttons;
     private ObstacleType currentType;
 
+    public static RadialMenu instance { get; private set; }
     public Camera uiCamera;
     public Vector2 size;
     public bool isShowing { get; set; }
@@ -19,12 +20,15 @@ public class RadialMenu : MonoBehaviour {
     public UILabel menuLabel;
 
     private void Awake() {
+        instance = this;
         trans = transform;
         radialMenu = gameObject;
         tweeners = GetComponentsInChildren<UITweener>();
         buttons = GetComponentsInChildren<UIButton>();
-        for(int i = 0; i < tweeners.Length; i++)
-            tweeners[i].duration = tweenDuration;
+        for(int i = 0; i < tweeners.Length; i++) {
+            if(tweeners[i].tweenGroup != 1) tweeners[i].duration = tweenDuration;
+        }
+
         for(int i = 0; i < buttons.Length; i++)
             buttons[i].isEnabled = false;
         radialMenu.SetActive(false);
@@ -53,11 +57,22 @@ public class RadialMenu : MonoBehaviour {
 
         radialPos.z = 0;
         trans.position = uiCamera.ScreenToWorldPoint(radialPos);
-        for(int i = 0; i < tweeners.Length; i++)
-            tweeners[i].PlayForward();
+        for(int i = 0; i < tweeners.Length; i++) {
+            if(tweeners[i].tweenGroup != 1) {
+                tweeners[0].onFinished.Add(new EventDelegate() {
+                    oneShot = true,
+                    methodName = "EnableColliders",
+                    target = this
+                });
+                tweeners[i].PlayForward();
+            }
+        }
+        isShowing = true;
+    }
+
+    private void EnableColliders() {
         for(int i = 0; i < buttons.Length; i++)
             buttons[i].isEnabled = true;
-        isShowing = true;
     }
 
     public void HideRadialMenu() {
