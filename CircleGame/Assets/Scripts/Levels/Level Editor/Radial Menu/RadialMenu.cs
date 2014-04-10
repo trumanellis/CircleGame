@@ -21,6 +21,7 @@ public class RadialMenu : MonoBehaviour {
     public float radialLowerPadding = 5f;
     public GameObject innerCircle;
     public UILabel menuLabel;
+    public EditablePlayerStartLocation playerStartLocation;
 
     private void Awake() {
         instance = this;
@@ -40,12 +41,14 @@ public class RadialMenu : MonoBehaviour {
 
     public void OnMenuSelected(EditableProperties.Properties prop) {
         menuLabel.text = string.Empty;
-        Debug.Log("Selected " + prop);
+        switch(prop) {
+            case EditableProperties.Properties.Set_Player_Start: playerStartLocation.SetLocation(location); break;
+        }
     }
 
     public void DeleteRequested() {
         if(EditableObstacle.currentObstacle != null) {
-            LevelEditorManager.instance.RemoveObstacle(EditableObstacle.currentObstacle.obstacle);
+            LevelEditorManager.RemoveObstacle(EditableObstacle.currentObstacle.obstacle);
             Destroy(EditableObstacle.currentObstacle.gameObject);
         }
     }

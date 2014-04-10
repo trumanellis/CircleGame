@@ -121,12 +121,12 @@ public class LevelEditorManager : MonoBehaviour {
         Debug.Log("All Prefs Cleared");
     }
 
-    public void AddObstacle(Obstacle ob) {
-        obstacles.Add(ob);
+    public static void AddObstacle(Obstacle ob) {
+        instance.obstacles.Add(ob);
     }
 
-    public void RemoveObstacle(Obstacle ob) {
-        obstacles.Remove(ob);
+    public static void RemoveObstacle(Obstacle ob) {
+        instance.obstacles.Remove(ob);
     }
 }
 

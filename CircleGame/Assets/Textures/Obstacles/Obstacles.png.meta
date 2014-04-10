@@ -20,14 +20,14 @@ TextureImporter:
   grayScaleToAlpha: 0
   generateCubemap: 0
   seamlessCubemap: 0
-  textureFormat: 5
+  textureFormat: -3
   maxTextureSize: 4096
   textureSettings:
-    filterMode: 2
-    aniso: 4
+    filterMode: 0
+    aniso: 1
     mipBias: -1
     wrapMode: 1
-  nPOTScale: 1
+  nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
   spriteMode: 2
@@ -120,6 +120,15 @@ TextureImporter:
         y: 3
         width: 304
         height: 286
+      alignment: 0
+      pivot: {x: .5, y: .5}
+    - name: Player_Start
+      rect:
+        serializedVersion: 2
+        x: 220
+        y: 402
+        width: 49
+        height: 48
       alignment: 0
       pivot: {x: .5, y: .5}
   spritePackingTag: 

@@ -14,7 +14,9 @@ public enum ObstacleType {
     [EnumDescription("Speed Track")]
     Speed_Track, 
     Cannon, 
-    Trampoline
+    Trampoline,
+    [EnumDescription("Player Start")]
+    Player_Start
 }
 public class Obstacle {
     public ObstacleType obstacleType = ObstacleType.Circle;

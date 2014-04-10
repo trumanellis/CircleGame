@@ -38,6 +38,6 @@ public class SubObstacleButton : MonoBehaviour {
             case ObstacleType.Water: break;
         }
         EditableObstacle.SetCurrentObject(eob);
-        LevelEditorManager.instance.AddObstacle(ob);
+        LevelEditorManager.AddObstacle(ob);
     }
 }

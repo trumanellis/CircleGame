@@ -6,17 +6,12 @@ public class EditableObstacle : MonoBehaviour {
     private Transform trans;
     private SpriteRenderer[] sprites;
     private Color[] spriteColours;
-    private iTween.EaseType ease = iTween.EaseType.easeInExpo;
 
     public static EditableObstacle currentObstacle { get; private set; }
     public readonly EditableProperties properties = new EditableProperties();
     public Obstacle obstacle { get; protected set; }
     public BoxCollider boundingBox { get; private set; }
-    private float heldTime;
-    private float showTime = .5f;
-    private bool shouldCount;
     private bool shouldReposition;
-    private bool showingMenu;
 
     private const float leftPadding = 5f;
     private const float rightPadding = 5f;
@@ -44,14 +39,15 @@ public class EditableObstacle : MonoBehaviour {
         if(!SOS.isMobile) {
             if(!pressed) RadialMenu.instance.HideRadialMenu();
             else if(pressed && Input.GetMouseButtonDown(1)) {
-                RadialMenu.instance.deleteButton.isEnabled = true;
                 RadialMenu.instance.ShowRadialMenu(this);
+                if(currentObstacle.obstacle.obstacleType == ObstacleType.Player_Start) RadialMenu.instance.deleteButton.isEnabled = false;
+                else RadialMenu.instance.deleteButton.isEnabled = true;
             }
         }
     }
 
     private void Update() {
-        if(shouldReposition && !showingMenu) {
+        if(shouldReposition) {
             Vector3 pos = Input.mousePosition;
             if(pos.x > Screen.width - (boundingBox.size.x / 2f) * (100f * cam.ZoomFactor) - leftPadding) pos.x = Screen.width - (boundingBox.size.x / 2f) * (100f * cam.ZoomFactor) - leftPadding;
             else if(pos.x < (boundingBox.size.x / 2f) * (100f * cam.ZoomFactor) + rightPadding) pos.x = (boundingBox.size.x / 2f) * (100f * cam.ZoomFactor) + rightPadding;
@@ -61,12 +57,6 @@ public class EditableObstacle : MonoBehaviour {
             trans.position = (Vector2)Camera.main.ScreenToWorldPoint(pos);
             obstacle.position = trans.position;
         }
-    }
-
-    private void StopScaling() {
-        heldTime = 0f;
-        shouldReposition = false;
-        shouldCount = false;
     }
 
     public static void SetCurrentObject(EditableObstacle eob) {
