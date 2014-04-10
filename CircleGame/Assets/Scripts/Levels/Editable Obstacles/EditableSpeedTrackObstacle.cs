@@ -17,7 +17,6 @@ public class EditableSpeedTrackObstacle : EditableObstacle {
     }
 
     private void SetEditableProperties() {
-        properties.edits |= EditableProperties.Properties.Position;
-        properties.edits |= EditableProperties.Properties.Rotation;
+        properties.edits = (EditableProperties.Properties.Position | EditableProperties.Properties.Rotation);
     }
 }

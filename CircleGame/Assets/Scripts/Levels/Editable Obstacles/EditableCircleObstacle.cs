@@ -17,7 +17,6 @@ public class EditableCircleObstacle : EditableObstacle {
     }
 
     private void SetEditableProperties() {
-        properties.edits |= EditableProperties.Properties.Position;
-        properties.edits |= EditableProperties.Properties.Remove_Center_Ground;
+        properties.edits = (EditableProperties.Properties.Position | EditableProperties.Properties.Remove_Center_Ground);
     }
 }

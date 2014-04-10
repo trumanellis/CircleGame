@@ -3,14 +3,21 @@ using System.Collections;
 
 public class RadialMenuButton : MonoBehaviour {
     private RadialMenu manager;
-    private TweenPosition[] tweens;
-    private TweenPosition tween;
     private bool pressed;
     private bool pressedStaged;
 
-    public EditableProperties.Properties property { get; set; }
+    private EditableProperties.Properties _property;
+    public EditableProperties.Properties property {
+        get { return _property; }
+        set { 
+            _property = value;
+            propertyDescription = _property.GetDescription();
+        }
+    }
 
-    private void Start() { 
+    public string propertyDescription { get; set; }
+
+    private void Awake() { 
         manager = transform.parent.GetComponent<RadialMenu>();
         //tweens = GetComponents<TweenPosition>();
         //for(int i = 0; i < tweens.Length; i++) {
@@ -20,14 +27,14 @@ public class RadialMenuButton : MonoBehaviour {
 
     private void OnDragOver() { 
         pressedStaged = true;
-        manager.OnMenuHover(property.GetDescription(), true);
+        manager.OnMenuHover(propertyDescription, true);
         SoundManager.Play("Button Hover");
         //tween.PlayForward();
     }
 
     private void OnDragOut() {
         pressedStaged = false;
-        manager.OnMenuHover(property.GetDescription(), false);
+        manager.OnMenuHover(propertyDescription, false);
         //tween.PlayReverse();
     }
 

@@ -8,6 +8,8 @@ public class RadialMenu : MonoBehaviour {
     private ObstacleType currentType;
 
     public static RadialMenu instance { get; private set; }
+    public RadialMenuButton[] menuButtons;
+    public UIButton deleteButton;
     public Camera uiCamera;
     public Vector2 size;
     public bool isShowing { get; set; }
@@ -31,11 +33,12 @@ public class RadialMenu : MonoBehaviour {
 
         for(int i = 0; i < buttons.Length; i++)
             buttons[i].isEnabled = false;
-        radialMenu.SetActive(false);
     }
 
+    private void Start() { radialMenu.SetActive(false); }
+
     public void OnMenuHover(string name, bool enter) {
-        menuLabel.text = enter ? name : (currentType == ObstacleType.None ? "General" : currentType.ToString());
+        menuLabel.text = enter ? name : (currentType == ObstacleType.None ? "General" : currentType.GetDescription());
     }
 
     public void OnMenuSelected(EditableProperties.Properties prop) {
@@ -46,21 +49,24 @@ public class RadialMenu : MonoBehaviour {
     public void DeleteRequested() {
         if(EditableObstacle.currentObstacle != null) {
             Destroy(EditableObstacle.currentObstacle.gameObject);
-            EditableObstacle.currentObstacle = null; 
+            EditableObstacle.currentObstacle = null;
         }
     }
 
     public void ShowRadialMenu(EditableObstacle ob) {
-        if(ob != null) {
-            EditableProperties.Properties[] props = ob.properties.GetProperties();
-            for(int i = 0; i < props.Length; i++)
-                Debug.Log(props[i]);
+        var props = ob == null ? EditableProperties.blankEdits.GetProperties() : ob.properties.edits.GetProperties();
+        int index = 0;
+        for(; index < props.Length; index++) {
+            menuButtons[index].gameObject.SetActive(true);
+            menuButtons[index].property = props[index];
         }
+        for(; index < menuButtons.Length; index++)
+            menuButtons[index].gameObject.SetActive(false);
 
 
         EditableObstacle.currentObstacle = ob;
         currentType = ob == null ? ObstacleType.None : ob.obstacle.obstacleType;
-        menuLabel.text = ob == null ? "General" : ob.obstacle.obstacleType.ToString();
+        menuLabel.text = ob == null ? "General" : ob.obstacle.obstacleType.GetDescription();
         radialMenu.SetActive(true);
         Vector3 radialPos = Input.mousePosition;
         if(radialPos.x >= Screen.width / 2f && radialPos.x > Screen.width - size.x / 2f - radialRightPadding) radialPos.x = Screen.width - (size.x / 2f) - radialRightPadding;
@@ -79,7 +85,7 @@ public class RadialMenu : MonoBehaviour {
                     target = this
                 });
                 tweeners[i].PlayForward();
-            } 
+            }
         }
         isShowing = true;
     }

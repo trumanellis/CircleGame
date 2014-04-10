@@ -22,13 +22,10 @@ public class EditableGroundObstacle : EditableObstacle {
     }
 
     private void SetEditableProperties() {
-        properties.edits |= EditableProperties.Properties.Position;
-        properties.edits |= EditableProperties.Properties.Rotation;
-        properties.edits |= EditableProperties.Properties.Scale;
+        properties.edits = (EditableProperties.Properties.Position | EditableProperties.Properties.Rotation | EditableProperties.Properties.Scale);
 
         if(subType == GroundObstacle.GroundType.Moving_Ground) {
-            properties.edits |= EditableProperties.Properties.Speed;
-            properties.edits |= EditableProperties.Properties.Start_End_Pos;
+            properties.edits |= (EditableProperties.Properties.Speed | EditableProperties.Properties.Start_End_Pos);
         }
     }
 }

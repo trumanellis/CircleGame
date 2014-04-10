@@ -6,53 +6,40 @@ using System.Collections.Generic;
 
 public class EditableProperties {
     public Properties edits;
-    public BlankProperties blankEdits = BlankProperties.None;
-
-    public EditableProperties() {
-        blankEdits |= BlankProperties.Set_Player_Start;
-        blankEdits |= BlankProperties.Set_Portal_Pos;
-    }
-
-    public Properties[] GetProperties() {
-        var props = new List<Properties>((Properties[])Enum.GetValues(typeof(Properties)));
-        for(int i = props.Count - 1; i > 0; i--) {
-            if(!edits.Contains(props[i])) props.Remove(props[i]);
-        }
-
-        return props.ToArray();
-    }
+    public static Properties blankEdits = (Properties.Set_Player_Start | Properties.Set_Portal_Pos);
 
     [System.Flags]
-    public enum Properties : byte {
-        [DisplayName("RePosition")]
+    public enum Properties {
+        //commons
+        [EnumDescription("Re Position")]
         Position = 1 << 0,
-        [DisplayName("Rotate")]
+        [EnumDescription("Rotate")]
         Rotation = 1 << 1,
-        [DisplayName("Scale")]
+        [EnumDescription("Scale")]
         Scale = 1 << 2,
 
-        [DisplayName("Change Speed")]
+        //uniques
+        [EnumDescription("Change Speed")]
         Speed = 1 << 3, // cannon rotation/moving platforms
-        [DisplayName("Start/End Position")]
+        [EnumDescription("Start/End Position")]
         Start_End_Pos = 1 << 4, // moving platforms
-        [DisplayName("Left/Right Bounds")]
+        [EnumDescription("Left/Right Bounds")]
         left_Right_Bounds = 1 << 5, //canons
-        [DisplayName("Toggle Ground")]
-        Remove_Center_Ground = 1 << 6
-    }
+        [EnumDescription("Toggle Ground")]
+        Remove_Center_Ground = 1 << 6,
 
-    [System.Flags]
-    public enum BlankProperties : byte {
-        None = 0,
-        Set_Player_Start = 1 << 0,
-        Set_Portal_Pos = 1 << 1
+        //blank properties
+        [EnumDescription("Set Start")]
+        Set_Player_Start = 1 << 7,
+        [EnumDescription("Set Portal")]
+        Set_Portal_Pos = 1 << 8
     }
 }
 
-public class DisplayNameAttribute : System.Attribute {
+public class EnumDescription : System.Attribute {
     public string displayName { get; private set; }
 
-    public DisplayNameAttribute(string name) {
+    public EnumDescription(string name) {
         displayName = name;
     }
 }
@@ -60,14 +47,22 @@ public class DisplayNameAttribute : System.Attribute {
 public static class EditablePropertiesExtensions {
     const BindingFlags flags = BindingFlags.Static | BindingFlags.Public | BindingFlags.Instance;
 
-    public static string GetDescription(this EditableProperties.Properties prop) {
+    public static string GetDescription(this Enum prop) {
         Type type = prop.GetType();
 
         FieldInfo info = type.GetField(prop.ToString());
-        DisplayNameAttribute pa = info.GetCustomAttributes(typeof(DisplayNameAttribute), false)[0] as DisplayNameAttribute;
-        return pa == null ? prop.ToString() : pa.displayName;
+        object[] pas = info.GetCustomAttributes(typeof(EnumDescription), false);
+        if(pas.Length > 0)
+            return (EnumDescription)pas[0] == null ? prop.ToString() : ((EnumDescription)pas[0]).displayName;
+        return prop.ToString();
     }
 
+    public static EditableProperties.Properties[] GetProperties(this EditableProperties.Properties prop) {
+        var props = new List<EditableProperties.Properties>((EditableProperties.Properties[])Enum.GetValues(typeof(EditableProperties.Properties)));
+        for(int i = props.Count - 1; i >= 0; i--) {
+            if(!prop.Contains(props[i])) props.Remove(props[i]);
+        } return props.ToArray();
+    }
     public static bool Contains(this EditableProperties.Properties main, EditableProperties.Properties prop) {
         return (main & prop) == prop;
     }

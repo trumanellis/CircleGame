@@ -6,7 +6,16 @@ using System.Collections;
 /// It is used for the serialization/deserialization of obstacles
 /// </summary>
 
-public enum ObstacleType { None, Circle, Ground, Water, Speed_Track, Cannon, Trampoline }
+public enum ObstacleType { 
+    None,
+    Circle,
+    Ground, 
+    Water, 
+    [EnumDescription("Speed Track")]
+    Speed_Track, 
+    Cannon, 
+    Trampoline
+}
 public class Obstacle {
     public ObstacleType obstacleType = ObstacleType.Circle;
     public Vector3 position { get; set; }
