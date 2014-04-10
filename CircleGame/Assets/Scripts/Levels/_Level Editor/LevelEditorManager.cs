@@ -4,15 +4,15 @@ using System.Collections.Generic;
 using Newtonsoft.Json;
 
 public class LevelEditorManager : MonoBehaviour {
-    private static LevelEditorManager instance;
+    public static LevelEditorManager instance { get; private set; }
     private Transform root;
     private List<Obstacle> obstacles = new List<Obstacle>();
-
     public LevelEditorCamera editorCam;
     public RadialMenu radialMenu;
-    public GameObject circleSingle;
-    public GameObject circleDouble;
-    public GameObject circleTriple;
+
+    public CirlePrefabs circlePrefabs;
+    public GroundPrefabs groundPrefabs;
+    public SpeedTrackPrefabs trackPrefabs;
 
     private void Awake() {
         instance = this;
@@ -47,34 +47,55 @@ public class LevelEditorManager : MonoBehaviour {
     private void LoadLevel() {
         JsonSerializerSettings settings = new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All };
         string map = PlayerPrefs.GetString("Serialize Test");
-        obstacles = JsonConvert.DeserializeObject<List<Obstacle>>(map, settings);
-        for(int i = 0; i < obstacles.Count; i++) {
-            Vector3 pos = obstacles[i].position;
-            Vector3 scale = obstacles[i].scale;
-            Vector3 rot = obstacles[i].rotaion;
+        var obs = JsonConvert.DeserializeObject<List<Obstacle>>(map, settings);
+        for(int i = 0; i < obs.Count; i++) {
+            Vector3 pos = obs[i].position;
+            Vector3 scale = obs[i].scale;
+            Vector3 rot = obs[i].rotaion;
             Transform trans = null;
 
-            switch(obstacles[i].obstacleType) {
+            switch(obs[i].obstacleType) {
                 case ObstacleType.Circle:
-                    CircleObstacle cob = obstacles[i] as CircleObstacle;
-                    switch(cob.subType) {
-                        case CircleObstacle.CircleType.Circle_Single: break;
-                        case CircleObstacle.CircleType.Circle_Double: break;
-                        case CircleObstacle.CircleType.Circle_Triple:
-                            trans = ((GameObject)Instantiate(circleTriple, pos, Quaternion.identity)).transform;
-                            trans.localScale = scale;
-                            trans.eulerAngles = rot;
+                    var cob = obs[i] as CircleObstacle;
+                    if(cob.subType == CircleObstacle.CircleType.Circle_Single) trans = ((GameObject)Instantiate(circlePrefabs.circleSingle, pos, Quaternion.identity)).transform;
+                    else if(cob.subType == CircleObstacle.CircleType.Circle_Double) trans = ((GameObject)Instantiate(circlePrefabs.circleDouble, pos, Quaternion.identity)).transform;
+                    else trans = ((GameObject)Instantiate(circlePrefabs.circleTriple, pos, Quaternion.identity)).transform;
 
-                            trans.gameObject.AddComponent<BoxCollider>().size = new Vector3(4f, 4f, 0f);
-                            //EditableObstacle editob = trans.gameObject.AddComponent<EditableObstacle>();
-                            //editob.type = ObstacleType.Circle;
-                            //editob.obstacle = cob;
-                            break;
-                        default: break;
-                    }
+                    var ecob = trans.gameObject.AddComponent<EditableCircleObstacle>();
+                    ecob.subType = cob.subType;
+                    obstacles.Add(ecob.obstacle);
+                    break;
+                case ObstacleType.Ground:
+                    var gob = obs[i] as GroundObstacle;
+                    if(gob.subType == GroundObstacle.GroundType.Ground) trans = ((GameObject)Instantiate(groundPrefabs.ground, pos, Quaternion.identity)).transform;
+                    else if(gob.subType == GroundObstacle.GroundType.Falling_Ground) trans = ((GameObject)Instantiate(groundPrefabs.fallingGround, pos, Quaternion.identity)).transform;
+
+                    var egob = trans.gameObject.AddComponent<EditableGroundObstacle>();
+                    egob.subType = gob.subType;
+                    obstacles.Add(egob.obstacle);
+                    break;
+
+                case ObstacleType.Speed_Track:
+                    var stob = obs[i] as SpeedtrackObstacle;
+                    if(stob.subType == SpeedtrackObstacle.SpeedTrackType.Small_Down) trans = ((GameObject)Instantiate(trackPrefabs.smallDown, pos, Quaternion.identity)).transform;
+                    else if(stob.subType == SpeedtrackObstacle.SpeedTrackType.Small_Left) trans = ((GameObject)Instantiate(trackPrefabs.smallLeft, pos, Quaternion.identity)).transform;
+                    else if(stob.subType == SpeedtrackObstacle.SpeedTrackType.Small_Right) trans = ((GameObject)Instantiate(trackPrefabs.smallRight, pos, Quaternion.identity)).transform;
+                    else if(stob.subType == SpeedtrackObstacle.SpeedTrackType.Small_Up) trans = ((GameObject)Instantiate(trackPrefabs.smallUp, pos, Quaternion.identity)).transform;
+                    else if(stob.subType == SpeedtrackObstacle.SpeedTrackType.Wide_Down) trans = ((GameObject)Instantiate(trackPrefabs.wideDown, pos, Quaternion.identity)).transform;
+                    else if(stob.subType == SpeedtrackObstacle.SpeedTrackType.Wide_Left) trans = ((GameObject)Instantiate(trackPrefabs.wideLeft, pos, Quaternion.identity)).transform;
+                    else if(stob.subType == SpeedtrackObstacle.SpeedTrackType.Wide_Right) trans = ((GameObject)Instantiate(trackPrefabs.wideRight, pos, Quaternion.identity)).transform;
+                    else if(stob.subType == SpeedtrackObstacle.SpeedTrackType.Wide_Up) trans = ((GameObject)Instantiate(trackPrefabs.wideUp, pos, Quaternion.identity)).transform;
+
+                    var estob = trans.gameObject.AddComponent<EditableSpeedTrackObstacle>();
+                    estob.subType = stob.subType;
+                    obstacles.Add(estob.obstacle);
                     break;
                 default: break;
             }
+
+            trans.position = pos;
+            trans.localEulerAngles = rot;
+            trans.localScale = scale;
 
             trans.parent = root;
         }
@@ -101,4 +122,29 @@ public class LevelEditorManager : MonoBehaviour {
     public void RemoveObstacle(Obstacle ob) {
         obstacles.Remove(ob);
     }
+}
+
+[System.Serializable]
+public class CirlePrefabs {
+    public GameObject circleSingle;
+    public GameObject circleDouble;
+    public GameObject circleTriple;
+}
+
+[System.Serializable]
+public class GroundPrefabs {
+    public GameObject ground;
+    public GameObject fallingGround;
+}
+
+[System.Serializable]
+public class SpeedTrackPrefabs {
+    public GameObject smallDown;
+    public GameObject smallLeft;
+    public GameObject smallRight;
+    public GameObject smallUp;
+    public GameObject wideDown;
+    public GameObject wideLeft;
+    public GameObject wideRight;
+    public GameObject wideUp;
 }

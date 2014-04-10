@@ -3,7 +3,6 @@ using System.Collections;
 
 public class SubObstacleButton : MonoBehaviour {
     public GameObject obstacle;
-    public LevelEditorManager manager;
 
     public ObstacleType type;
     public CircleObstacle.CircleType circleType = CircleObstacle.CircleType.None;
@@ -12,7 +11,7 @@ public class SubObstacleButton : MonoBehaviour {
 
     public void OnClick() {
         GameObject go = Instantiate(obstacle, (Vector2)Camera.main.transform.position, Quaternion.identity) as GameObject;
-
+        go.transform.parent = LevelEditorManager.instance.transform;
         Obstacle ob = null;
         switch(type) {
             case ObstacleType.Circle:
@@ -35,6 +34,6 @@ public class SubObstacleButton : MonoBehaviour {
             case ObstacleType.Water: break;
         }
 
-        manager.AddObstacle(ob);
+        LevelEditorManager.instance.AddObstacle(ob);
     }
 }

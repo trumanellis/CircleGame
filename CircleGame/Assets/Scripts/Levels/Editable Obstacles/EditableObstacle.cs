@@ -10,7 +10,6 @@ public class EditableObstacle : MonoBehaviour {
     public static EditableObstacle currentObstacle { get; set; }
     public readonly EditableProperties properties = new EditableProperties();
     public Obstacle obstacle { get; protected set; }
-    public LevelEditorManager manager { get; set; }
     private float heldTime;
     private float showTime = .5f;
     private bool shouldCount;
@@ -28,7 +27,7 @@ public class EditableObstacle : MonoBehaviour {
         cam = Camera.main.GetComponent<tk2dCamera>();
     }
 
-    private void OnScroll(float delta) { manager.editorCam.Zoom(delta); }
+    private void OnScroll(float delta) { LevelEditorManager.instance.editorCam.Zoom(delta); }
     private void OnPress(bool pressed) {
         if(Input.GetMouseButtonDown(0) || Input.GetMouseButtonUp(0)) {
             shouldCount = pressed;
@@ -43,10 +42,6 @@ public class EditableObstacle : MonoBehaviour {
                 RadialMenu.instance.ShowRadialMenu(this);
             }
         }
-    }
-
-    private void OnClick() {
-
     }
 
     private void Update() {

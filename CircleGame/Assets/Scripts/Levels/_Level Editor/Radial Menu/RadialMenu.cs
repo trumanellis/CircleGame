@@ -6,6 +6,7 @@ public class RadialMenu : MonoBehaviour {
     private UITweener[] tweeners;
     private UIButton[] buttons;
     private ObstacleType currentType;
+    private Vector2 location;
 
     public static RadialMenu instance { get; private set; }
     public RadialMenuButton[] menuButtons;
@@ -48,12 +49,14 @@ public class RadialMenu : MonoBehaviour {
 
     public void DeleteRequested() {
         if(EditableObstacle.currentObstacle != null) {
+            LevelEditorManager.instance.RemoveObstacle(EditableObstacle.currentObstacle.obstacle);
             Destroy(EditableObstacle.currentObstacle.gameObject);
             EditableObstacle.currentObstacle = null;
         }
     }
 
     public void ShowRadialMenu(EditableObstacle ob) {
+        if(!SOS.isMobile) location = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         var props = ob == null ? EditableProperties.blankEdits.GetProperties() : ob.properties.edits.GetProperties();
         int index = 0;
         for(; index < props.Length; index++) {
