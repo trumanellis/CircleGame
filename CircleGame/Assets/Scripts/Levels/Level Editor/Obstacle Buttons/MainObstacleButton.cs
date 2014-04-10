@@ -6,26 +6,31 @@ public class MainObstacleButton : MonoBehaviour {
     private static GameObject currentlyShownMenu;
 
     private void OnClick() {
-        if(currentlyShownMenu != null && currentlyShownMenu != subMenu)
-            HideSubMenu();
-        else currentlyShownMenu = subMenu;
-
-        subMenu.SetActive(true);
-        subMenu.GetComponent<TweenPosition>().PlayForward();
+        if(currentlyShownMenu != null && currentlyShownMenu == subMenu) ReplaceSubMenuWith(null);
+        else if(currentlyShownMenu != null) ReplaceSubMenuWith(subMenu);
+        else ShowSubMenu();
     }
 
-    public void HideSubMenu() {
-        UIScrollView sv = currentlyShownMenu.GetComponent<UIScrollView>();
+    private void ShowSubMenu() {
+        subMenu.SetActive(true);
+        var tweener = subMenu.GetComponent<TweenPosition>();
+        tweener.onFinished.Clear();
+        tweener.PlayForward();
+        currentlyShownMenu = subMenu;
+    }
+
+    private void ReplaceSubMenuWith(GameObject replacement) {
+        var sv = currentlyShownMenu.GetComponent<UIScrollView>();
         if(sv != null) sv.ResetPosition();
-        TweenPosition tweener = currentlyShownMenu.GetComponent<TweenPosition>();
 
+        var tweener = currentlyShownMenu.GetComponent<TweenPosition>();
         tweener.onFinished.Add(new EventDelegate(() => {
-            currentlyShownMenu.SetActive(false);
-            currentlyShownMenu = subMenu;
+            tweener.gameObject.SetActive(false);
         }) {
-            oneShot = true       
+            oneShot = true
         });
-
         tweener.PlayReverse();
+        currentlyShownMenu = replacement;
+        if(replacement != null) ShowSubMenu();
     }
 }
