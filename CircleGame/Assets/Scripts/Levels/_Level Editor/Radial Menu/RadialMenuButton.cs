@@ -8,11 +8,10 @@ public class RadialMenuButton : MonoBehaviour {
     private bool pressed;
     private bool pressedStaged;
 
-    public string menuName { get; set; }
+    public EditableProperties.Properties property { get; set; }
 
-    private void Awake() { 
+    private void Start() { 
         manager = transform.parent.GetComponent<RadialMenu>();
-        menuName = gameObject.name;
         //tweens = GetComponents<TweenPosition>();
         //for(int i = 0; i < tweens.Length; i++) {
         //    if(tweens[i].tweenGroup == 1) tween = tweens[i];
@@ -20,15 +19,15 @@ public class RadialMenuButton : MonoBehaviour {
     }
 
     private void OnDragOver() { 
-        pressedStaged = true; 
-        manager.OnMenuHover(menuName, true);
+        pressedStaged = true;
+        manager.OnMenuHover(property.GetDescription(), true);
         SoundManager.Play("Button Hover");
         //tween.PlayForward();
     }
 
     private void OnDragOut() {
-        pressedStaged = false; 
-        manager.OnMenuHover(menuName, false);
+        pressedStaged = false;
+        manager.OnMenuHover(property.GetDescription(), false);
         //tween.PlayReverse();
     }
 
@@ -37,5 +36,5 @@ public class RadialMenuButton : MonoBehaviour {
         pressed = pressedStaged;
     }
 
-    protected virtual void MenuSelected() { manager.OnMenuSelected(name); }
+    protected virtual void MenuSelected() { manager.OnMenuSelected(property); }
 }

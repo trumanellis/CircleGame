@@ -12,8 +12,6 @@ public class MainObstacleButton : MonoBehaviour {
 
         subMenu.SetActive(true);
         subMenu.GetComponent<TweenPosition>().PlayForward();
-
-
     }
 
     public void HideSubMenu() {

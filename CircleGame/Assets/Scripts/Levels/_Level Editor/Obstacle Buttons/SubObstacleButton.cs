@@ -13,10 +13,28 @@ public class SubObstacleButton : MonoBehaviour {
     public void OnClick() {
         GameObject go = Instantiate(obstacle, (Vector2)Camera.main.transform.position, Quaternion.identity) as GameObject;
 
-        EditableObstacle editob = go.AddComponent<EditableObstacle>();
-        editob.manager = manager;
-        editob.obstacle = new Obstacle() {
+        Obstacle ob = null;
+        switch(type) {
+            case ObstacleType.Circle:
+                var cob = go.AddComponent<EditableCircleObstacle>();
+                cob.subType = circleType;
+                ob = cob.obstacle;
+                break;
+            case ObstacleType.Ground:
+                var gob = go.AddComponent<EditableGroundObstacle>();
+                gob.subType = groundType;
+                ob = gob.obstacle;
+                break;
+            case ObstacleType.Speed_Track:
+                var stob = go.AddComponent<EditableSpeedTrackObstacle>();
+                stob.subType = speedtrackType;
+                ob = stob.obstacle;
+                break;
+            case ObstacleType.Cannon:
+            case ObstacleType.Trampoline:
+            case ObstacleType.Water: break;
+        }
 
-        };
+        manager.AddObstacle(ob);
     }
 }

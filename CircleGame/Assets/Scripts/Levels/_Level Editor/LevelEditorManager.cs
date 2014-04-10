@@ -26,7 +26,7 @@ public class LevelEditorManager : MonoBehaviour {
     }
 
     public static void ShowRadialMenu(ObstacleType type) {
-        instance.radialMenu.ShowRadialMenu(type);
+        instance.radialMenu.ShowRadialMenu(null);
     }
 
     public static void HideRadialMenu() {
@@ -40,7 +40,7 @@ public class LevelEditorManager : MonoBehaviour {
     private void OnPress(bool pressed) {
         if(!SOS.isMobile) {
             if(!pressed) radialMenu.HideRadialMenu();
-            else if(pressed && Input.GetMouseButton(1)) radialMenu.ShowRadialMenu(ObstacleType.None);
+            else if(pressed && Input.GetMouseButton(1)) radialMenu.ShowRadialMenu(null);
         }
     }
 
@@ -57,7 +57,7 @@ public class LevelEditorManager : MonoBehaviour {
             switch(obstacles[i].obstacleType) {
                 case ObstacleType.Circle:
                     CircleObstacle cob = obstacles[i] as CircleObstacle;
-                    switch(cob.type) {
+                    switch(cob.subType) {
                         case CircleObstacle.CircleType.Circle_Single: break;
                         case CircleObstacle.CircleType.Circle_Double: break;
                         case CircleObstacle.CircleType.Circle_Triple:
@@ -66,9 +66,9 @@ public class LevelEditorManager : MonoBehaviour {
                             trans.eulerAngles = rot;
 
                             trans.gameObject.AddComponent<BoxCollider>().size = new Vector3(4f, 4f, 0f);
-                            EditableObstacle editob = trans.gameObject.AddComponent<EditableObstacle>();
-                            editob.type = ObstacleType.Circle;
-                            editob.obstacle = cob;
+                            //EditableObstacle editob = trans.gameObject.AddComponent<EditableObstacle>();
+                            //editob.type = ObstacleType.Circle;
+                            //editob.obstacle = cob;
                             break;
                         default: break;
                     }
