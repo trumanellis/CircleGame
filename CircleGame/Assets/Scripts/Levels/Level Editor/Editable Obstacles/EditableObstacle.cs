@@ -60,16 +60,20 @@ public class EditableObstacle : MonoBehaviour {
     }
 
     public static void SetCurrentObject(EditableObstacle eob) {
-        Vector3 center = new Vector3(eob.boundingBox.center.x, eob.boundingBox.center.y, 0);
+        Vector3 center = Vector3.zero;
         if(currentObstacle != null) {
+            center = new Vector3(currentObstacle.boundingBox.center.x, currentObstacle.boundingBox.center.y, 0);
             currentObstacle.boundingBox.center = center;
             for(int i = 0; i < currentObstacle.sprites.Length; i++)
                 currentObstacle.sprites[i].color = currentObstacle.spriteColours[i];
         }
-        for(int i = 0; i < eob.sprites.Length; i++)
-            eob.sprites[i].color = LevelEditorManager.selectedObstacleColour;
-        center.z = -1;
-        eob.boundingBox.center = center;
+
+        if(eob != null) {
+            center = new Vector3(eob.boundingBox.center.x, eob.boundingBox.center.y, -1);
+            eob.boundingBox.center = center;
+            for(int i = 0; i < eob.sprites.Length; i++)
+                eob.sprites[i].color = LevelEditorManager.selectedObstacleColour;
+        }
         currentObstacle = eob;
     }
 }

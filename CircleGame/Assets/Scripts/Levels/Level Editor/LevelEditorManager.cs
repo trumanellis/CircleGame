@@ -42,12 +42,16 @@ public class LevelEditorManager : MonoBehaviour {
 
     private void OnPress(bool pressed) {
         if(!SOS.isMobile) {
-            if(!pressed) radialMenu.HideRadialMenu();
+            if(!pressed && Input.GetMouseButtonUp(1)) radialMenu.HideRadialMenu();
             else if(pressed && Input.GetMouseButtonDown(1)) {
                 radialMenu.ShowRadialMenu(null);
                 radialMenu.deleteButton.isEnabled = false;
             }
         }
+    }
+
+    private void OnClick() {
+        if(Input.GetMouseButtonUp(0)) EditableObstacle.SetCurrentObject(null);
     }
 
     private void LoadLevel() {
