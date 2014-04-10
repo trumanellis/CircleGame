@@ -11,7 +11,7 @@ public class EditableGroundObstacle : EditableObstacle {
         }
     }
 
-    private void Awake() {
+    protected override void Awake() {
         GameObject go = gameObject;
         gob = new GroundObstacle() {
             position = go.transform.position,
@@ -19,6 +19,7 @@ public class EditableGroundObstacle : EditableObstacle {
             scale = go.transform.localScale
         };
         obstacle = gob;
+        base.Awake();
     }
 
     private void SetEditableProperties() {

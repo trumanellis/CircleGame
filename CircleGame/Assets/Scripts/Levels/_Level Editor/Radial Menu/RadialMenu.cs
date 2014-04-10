@@ -28,12 +28,8 @@ public class RadialMenu : MonoBehaviour {
         radialMenu = gameObject;
         tweeners = GetComponentsInChildren<UITweener>();
         buttons = GetComponentsInChildren<UIButton>();
-        for(int i = 0; i < tweeners.Length; i++) {
-            if(tweeners[i].tweenGroup != 1) tweeners[i].duration = tweenDuration;
-        }
-
-        for(int i = 0; i < buttons.Length; i++)
-            buttons[i].isEnabled = false;
+        for(int i = 0; i < tweeners.Length; i++)
+            tweeners[i].duration = tweenDuration;
     }
 
     private void Start() { radialMenu.SetActive(false); }
@@ -51,7 +47,6 @@ public class RadialMenu : MonoBehaviour {
         if(EditableObstacle.currentObstacle != null) {
             LevelEditorManager.instance.RemoveObstacle(EditableObstacle.currentObstacle.obstacle);
             Destroy(EditableObstacle.currentObstacle.gameObject);
-            EditableObstacle.currentObstacle = null;
         }
     }
 
@@ -66,8 +61,6 @@ public class RadialMenu : MonoBehaviour {
         for(; index < menuButtons.Length; index++)
             menuButtons[index].gameObject.SetActive(false);
 
-
-        EditableObstacle.currentObstacle = ob;
         currentType = ob == null ? ObstacleType.None : ob.obstacle.obstacleType;
         menuLabel.text = ob == null ? "General" : ob.obstacle.obstacleType.GetDescription();
         radialMenu.SetActive(true);
@@ -80,22 +73,11 @@ public class RadialMenu : MonoBehaviour {
 
         radialPos.z = 0;
         trans.position = uiCamera.ScreenToWorldPoint(radialPos);
-        for(int i = 0; i < tweeners.Length; i++) {
-            if(tweeners[i].tweenGroup != 1) {
-                tweeners[0].onFinished.Add(new EventDelegate() {
-                    oneShot = true,
-                    methodName = "EnableColliders",
-                    target = this
-                });
-                tweeners[i].PlayForward();
-            }
-        }
-        isShowing = true;
-    }
-
-    private void EnableColliders() {
+        for(int i = 0; i < tweeners.Length; i++)
+            tweeners[i].PlayForward();
         for(int i = 0; i < buttons.Length; i++)
             buttons[i].isEnabled = true;
+        isShowing = true;
     }
 
     public void HideRadialMenu() {

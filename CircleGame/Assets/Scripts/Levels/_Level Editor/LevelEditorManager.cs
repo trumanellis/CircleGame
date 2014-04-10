@@ -10,6 +10,8 @@ public class LevelEditorManager : MonoBehaviour {
     public LevelEditorCamera editorCam;
     public RadialMenu radialMenu;
 
+    public Color _selectedObstaColour;
+    public static Color selectedObstacleColour;
     public CirlePrefabs circlePrefabs;
     public GroundPrefabs groundPrefabs;
     public SpeedTrackPrefabs trackPrefabs;
@@ -17,6 +19,7 @@ public class LevelEditorManager : MonoBehaviour {
     private void Awake() {
         instance = this;
         root = transform;
+        selectedObstacleColour = _selectedObstaColour;
     }
 
     private void Start() {
@@ -40,7 +43,10 @@ public class LevelEditorManager : MonoBehaviour {
     private void OnPress(bool pressed) {
         if(!SOS.isMobile) {
             if(!pressed) radialMenu.HideRadialMenu();
-            else if(pressed && Input.GetMouseButton(1)) radialMenu.ShowRadialMenu(null);
+            else if(pressed && Input.GetMouseButtonDown(1)) {
+                radialMenu.ShowRadialMenu(null);
+                radialMenu.deleteButton.isEnabled = false;
+            }
         }
     }
 

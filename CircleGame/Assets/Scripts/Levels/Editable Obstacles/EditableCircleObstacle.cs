@@ -5,7 +5,7 @@ public class EditableCircleObstacle : EditableObstacle {
     private CircleObstacle cob;
     public CircleObstacle.CircleType subType { get { return cob.subType; } set { cob.subType = value; } }
 
-    private void Awake() {
+    protected override void Awake() {
         GameObject go = gameObject;
         cob = new CircleObstacle() {
             position = go.transform.position,
@@ -14,6 +14,7 @@ public class EditableCircleObstacle : EditableObstacle {
         };
         obstacle = cob;
         SetEditableProperties();
+        base.Awake();
     }
 
     private void SetEditableProperties() {

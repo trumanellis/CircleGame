@@ -5,7 +5,7 @@ public class EditableSpeedTrackObstacle : EditableObstacle {
     private SpeedtrackObstacle stob;
     public SpeedtrackObstacle.SpeedTrackType subType { get { return stob.subType; } set { stob.subType = value; } }
 
-    private void Awake() {
+    protected override void Awake() {
         GameObject go = gameObject;
         stob = new SpeedtrackObstacle() {
             position = go.transform.position,
@@ -14,6 +14,7 @@ public class EditableSpeedTrackObstacle : EditableObstacle {
         };
         obstacle = stob;
         SetEditableProperties();
+        base.Awake();
     }
 
     private void SetEditableProperties() {
