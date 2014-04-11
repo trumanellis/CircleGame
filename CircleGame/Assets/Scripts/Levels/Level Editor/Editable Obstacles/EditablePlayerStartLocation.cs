@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class EditablePlayerStartLocation : EditableObstacle {
-    private void Start() {
+    protected override void Awake() {
         obstacle = new Obstacle() {
             obstacleType = ObstacleType.Player_Start,
             position = transform.position,
@@ -11,7 +11,7 @@ public class EditablePlayerStartLocation : EditableObstacle {
         };
 
         SetEditableProperties();
-        LevelEditorManager.AddObstacle(obstacle);
+        base.Awake();
     }
 
     public void SetLocation(Vector2 location) {

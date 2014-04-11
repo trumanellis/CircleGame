@@ -94,6 +94,7 @@ public class SOS : MonoBehaviour {
         if(instance != null && ReferenceEquals(instance, this)) {
             CreatePrototypesObject();
             HidePrototypes();
+            ResetVirtualKeys();
         }
     }
 
@@ -271,6 +272,13 @@ public class SOS : MonoBehaviour {
         cInput.SetVirtualAxis("Horizontal", "Right", "Left");
         cInput.SetVirtualKey("Jump");
         cInput.SetVirtualKey("Escape");
+    }
+
+    private void ResetVirtualKeys() {
+        cInput.ReleaseVirtualKey("Left");
+        cInput.ReleaseVirtualKey("Right");
+        cInput.ReleaseVirtualKey("Jump");
+        cInput.ReleaseVirtualKey("Escape");
     }
 }
 

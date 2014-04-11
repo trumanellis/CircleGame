@@ -5,9 +5,11 @@ using Newtonsoft.Json;
 
 public class CustomLevelManager : MonoBehaviour {
     public static LevelEditorManager instance { get; private set; }
+    public static bool fromEditor { get; set; }
     private Transform root;
 
     public CameraFollow follow;
+    public GameObject editorButton;
     public CirlePrefabs circlePrefabs;
     public GroundPrefabs groundPrefabs;
     public SpeedTrackPrefabs trackPrefabs;
@@ -15,6 +17,8 @@ public class CustomLevelManager : MonoBehaviour {
 
     private void Start() {
         root = transform;
+        if(fromEditor) editorButton.SetActive(true);
+        else editorButton.SetActive(false);
         if(PlayerPrefs.HasKey("Serialize Test"))
             LoadLevel();
         follow.SetTarget(player);
@@ -24,6 +28,8 @@ public class CustomLevelManager : MonoBehaviour {
         JsonSerializerSettings settings = new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All };
         string map = PlayerPrefs.GetString("Serialize Test");
         var obs = JsonConvert.DeserializeObject<List<Obstacle>>(map, settings);
+
+        Debug.Log("Loading " + obs.Count + " objects in Play mode");
         for(int i = 0; i < obs.Count; i++) {
             Vector3 pos = obs[i].position;
             Vector3 scale = obs[i].scale;
@@ -63,8 +69,18 @@ public class CustomLevelManager : MonoBehaviour {
                 trans.localEulerAngles = rot;
                 trans.localScale = scale;
 
-                trans.parent = root;
+                if(trans != player) trans.parent = root;
             }
         }
     }
+
+    public void ReturnToEditor() {
+        Application.LoadLevel("Level Editor");
+    }
+
+    public void RestartLevel() {
+        Application.LoadLevel(Application.loadedLevelName);
+    }
+
+    private void OnDestroy() { fromEditor = false; }
 }

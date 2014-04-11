@@ -20,14 +20,17 @@ public class EditableObstacle : MonoBehaviour {
 
     protected virtual void Awake() {
         trans = transform;
-        Debug.Log(name);
         boundingBox = (BoxCollider)collider;
-        if(cam == null) cam = Camera.main.GetComponent<tk2dCamera>();
+        if(cam == null) 
+            cam = Camera.main.GetComponent<tk2dCamera>();
         sprites = GetComponents<SpriteRenderer>();
-        if(sprites.Length == 0) sprites = GetComponentsInChildren<SpriteRenderer>();
+        if(sprites.Length == 0)
+            sprites = GetComponentsInChildren<SpriteRenderer>();
         spriteColours = new Color[sprites.Length];
         for(int i = 0; i < sprites.Length; i++)
             spriteColours[i] = sprites[i].color;
+
+        LevelEditorManager.AddObstacle(obstacle);
     }
 
     private void OnScroll(float delta) { LevelEditorManager.instance.editorCam.Zoom(delta); }

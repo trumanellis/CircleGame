@@ -11,7 +11,7 @@ public class SubObstacleButton : MonoBehaviour {
 
     public void OnClick() {
         GameObject go = Instantiate(obstacle, (Vector2)Camera.main.transform.position, Quaternion.identity) as GameObject;
-        go.transform.parent = LevelEditorManager.instance.transform;
+        go.transform.parent = LevelEditorManager.instance.obstaclesRoot;
         Obstacle ob = null;
         EditableObstacle eob = null;
         switch(type) {
@@ -38,6 +38,5 @@ public class SubObstacleButton : MonoBehaviour {
             case ObstacleType.Water: break;
         }
         EditableObstacle.SetCurrentObject(eob);
-        LevelEditorManager.AddObstacle(ob);
     }
 }

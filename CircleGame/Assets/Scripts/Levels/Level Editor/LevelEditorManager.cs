@@ -5,11 +5,11 @@ using Newtonsoft.Json;
 
 public class LevelEditorManager : MonoBehaviour {
     public static LevelEditorManager instance { get; private set; }
-    private Transform root;
     private List<Obstacle> obstacles = new List<Obstacle>();
     public LevelEditorCamera editorCam;
     public RadialMenu radialMenu;
 
+    public Transform obstaclesRoot;
     public Color _selectedObstaColour;
     public static Color selectedObstacleColour;
     public CirlePrefabs circlePrefabs;
@@ -19,7 +19,6 @@ public class LevelEditorManager : MonoBehaviour {
 
     private void Awake() {
         instance = this;
-        root = transform;
         selectedObstacleColour = _selectedObstaColour;
     }
 
@@ -59,6 +58,7 @@ public class LevelEditorManager : MonoBehaviour {
         JsonSerializerSettings settings = new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All };
         string map = PlayerPrefs.GetString("Serialize Test");
         var obs = JsonConvert.DeserializeObject<List<Obstacle>>(map, settings);
+        Debug.Log("Loading " + obs.Count + " objects in edit mode");
         for(int i = 0; i < obs.Count; i++) {
             Vector3 pos = obs[i].position;
             Vector3 scale = obs[i].scale;
@@ -74,7 +74,6 @@ public class LevelEditorManager : MonoBehaviour {
 
                     var ecob = trans.gameObject.AddComponent<EditableCircleObstacle>();
                     ecob.subType = cob.subType;
-                    obstacles.Add(ecob.obstacle);
                     break;
                 case ObstacleType.Ground:
                     var gob = obs[i] as GroundObstacle;
@@ -85,7 +84,6 @@ public class LevelEditorManager : MonoBehaviour {
 
                     var egob = trans.gameObject.AddComponent<EditableGroundObstacle>();
                     egob.subType = gob.subType;
-                    obstacles.Add(egob.obstacle);
                     break;
 
                 case ObstacleType.Speed_Track:
@@ -101,7 +99,6 @@ public class LevelEditorManager : MonoBehaviour {
 
                     var estob = trans.gameObject.AddComponent<EditableSpeedTrackObstacle>();
                     estob.subType = stob.subType;
-                    obstacles.Add(estob.obstacle);
                     break;
                 case ObstacleType.Player_Start: trans = playerStartMarker; break;
                 default: break;
@@ -111,20 +108,29 @@ public class LevelEditorManager : MonoBehaviour {
                 trans.localEulerAngles = rot;
                 trans.localScale = scale;
 
-                trans.parent = root;
+                if(trans != playerStartMarker) trans.parent = obstaclesRoot;
+                else playerStartMarker.parent = transform;
             }
         }
     }
 
     public void SaveLevel() {
-        JsonSerializerSettings settings = new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All };
-        string serialized = JsonConvert.SerializeObject(obstacles, Formatting.Indented, settings);
-        PlayerPrefs.SetString("Serialize Test", serialized);
-        PlayerPrefs.Save();
-        Debug.Log("Save Complete");
+        if(obstacles.Count > 1) {
+            JsonSerializerSettings settings = new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All };
+            string serialized = JsonConvert.SerializeObject(obstacles, Formatting.Indented, settings);
+            PlayerPrefs.SetString("Serialize Test", serialized);
+            PlayerPrefs.Save();
+            Debug.Log("Save Complete");
+        }
     }
 
     public void ClearPrefs() {
+        obstacles.Clear();
+        var children = new List<GameObject>();
+        foreach(Transform child in obstaclesRoot) children.Add(child.gameObject);
+        children.ForEach(child => Destroy(child));
+        obstacles.Add(playerStartMarker.GetComponent<EditableObstacle>().obstacle);
+
         PlayerPrefs.DeleteKey("Serialize Test");
         PlayerPrefs.Save();
         Debug.Log("All Prefs Cleared");
@@ -136,6 +142,14 @@ public class LevelEditorManager : MonoBehaviour {
 
     public static void RemoveObstacle(Obstacle ob) {
         instance.obstacles.Remove(ob);
+    }
+
+    public void TestLevel() {
+        if(obstacles.Count > 1) {
+            SaveLevel();
+            CustomLevelManager.fromEditor = true;
+            Application.LoadLevel("Custom Level");
+        }
     }
 }
 
