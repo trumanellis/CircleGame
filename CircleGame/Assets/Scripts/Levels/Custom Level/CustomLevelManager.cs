@@ -28,8 +28,6 @@ public class CustomLevelManager : MonoBehaviour {
         JsonSerializerSettings settings = new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All };
         string map = PlayerPrefs.GetString("Serialize Test");
         var obs = JsonConvert.DeserializeObject<List<Obstacle>>(map, settings);
-
-        Debug.Log("Loading " + obs.Count + " objects in Play mode");
         for(int i = 0; i < obs.Count; i++) {
             Vector3 pos = obs[i].position;
             Vector3 scale = obs[i].scale;

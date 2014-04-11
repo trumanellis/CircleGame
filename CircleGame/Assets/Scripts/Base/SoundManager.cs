@@ -10,7 +10,7 @@ public class SoundManager : MonoBehaviour {
     private Dictionary<string, Sound> sounds = new Dictionary<string, Sound>();
     private Transform soundParent;
 
-    private void Start() {
+    private void Awake() {
         instance = this;
         isMuted = _muted;
 
@@ -97,6 +97,7 @@ public class Sound {
             isPlaying = true;
             return this;
         }
+        source.mute = SoundManager.isMuted;
         SoundManager.Play(this);
         isPlaying = true;
         return this;

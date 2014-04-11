@@ -20,12 +20,17 @@ public class LevelEditorManager : MonoBehaviour {
     private void Awake() {
         instance = this;
         selectedObstacleColour = _selectedObstaColour;
+        if(IntroManager.mainMenuMusic != null && IntroManager.mainMenuMusic.isPlaying) IntroManager.mainMenuMusic.Stop();
     }
 
     private void Start() {
         if(PlayerPrefs.HasKey("Serialize Test")) {
             LoadLevel();
         }
+
+        Vector3 pos = playerStartMarker.position;
+        pos.z = -10;
+        editorCam.transform.position = pos;
     }
 
     public static void ShowRadialMenu(ObstacleType type) {
@@ -58,7 +63,6 @@ public class LevelEditorManager : MonoBehaviour {
         JsonSerializerSettings settings = new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All };
         string map = PlayerPrefs.GetString("Serialize Test");
         var obs = JsonConvert.DeserializeObject<List<Obstacle>>(map, settings);
-        Debug.Log("Loading " + obs.Count + " objects in edit mode");
         for(int i = 0; i < obs.Count; i++) {
             Vector3 pos = obs[i].position;
             Vector3 scale = obs[i].scale;

@@ -11,10 +11,11 @@ public class IntroManager : MonoBehaviour {
     public IntroLogoTween logoTween;
     public MainMenuStarter menuStarter;
 
-    private static Sound mainMenuMusic;
+    public static Sound mainMenuMusic { get; set; }
 
     private void Start() {
-        if(mainMenuMusic == null) mainMenuMusic = SoundManager.Play("Main Menu").Loop(true);
+        //if(mainMenuMusic == null) mainMenuMusic = SoundManager.Play("Main Menu").Loop(true);
+        //else mainMenuMusic.Play();
 
         showMenuTrigger.onButtonPress += ShowMainMenu;
         triggerArea.onAreaEnter += DetachTitle;

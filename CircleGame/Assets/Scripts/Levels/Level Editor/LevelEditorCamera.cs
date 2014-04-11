@@ -20,8 +20,6 @@ public class LevelEditorCamera : MonoBehaviour {
     }
 
     private void Update() {
-        //float scroll = cInput.GetAxis("Vertical");
-
         if(Input.GetMouseButtonDown(2) || ((Input.GetKey(KeyCode.LeftAlt) || Input.GetKey(KeyCode.LeftAlt)) && Input.GetMouseButtonDown(0))) {
             startPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             shouldTrack = true;
@@ -47,8 +45,8 @@ public class LevelEditorCamera : MonoBehaviour {
                 bgCam.ZoomFactor += scroll;
             }
 
-            if(mainCam.ZoomFactor < startZoom) currentCameraBounds = cameraBounds * mainCam.ZoomFactor;
-            else if(mainCam.ZoomFactor > startZoom) currentCameraBounds = cameraBounds / mainCam.ZoomFactor;
+            if(mainCam.ZoomFactor <= startZoom) currentCameraBounds = cameraBounds * mainCam.ZoomFactor;
+            else if(mainCam.ZoomFactor >= startZoom) currentCameraBounds = cameraBounds / mainCam.ZoomFactor;
 
             RepositionCamera();
         }
