@@ -31,6 +31,7 @@ public class LevelEditorManager : MonoBehaviour {
         Vector3 pos = playerStartMarker.position;
         pos.z = -10;
         editorCam.transform.position = pos;
+        editorCam.RepositionCamera();
     }
 
     public static void ShowRadialMenu(ObstacleType type) {

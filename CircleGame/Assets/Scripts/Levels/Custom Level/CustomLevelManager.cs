@@ -17,8 +17,8 @@ public class CustomLevelManager : MonoBehaviour {
 
     private void Start() {
         root = transform;
-        if(fromEditor) editorButton.SetActive(true);
-        else editorButton.SetActive(false);
+        //if(fromEditor) editorButton.SetActive(true);
+        //else editorButton.SetActive(false);
         if(PlayerPrefs.HasKey("Serialize Test"))
             LoadLevel();
         follow.SetTarget(player);

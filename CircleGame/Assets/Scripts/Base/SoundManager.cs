@@ -76,9 +76,6 @@ public class Sound {
     public bool isPlaying { get; set; }
     public bool isPaused { get; set; }
     public float length { get { return clip.length; } }
-    //public bool loop { get { return source.loop; } }
-    //public float volume { get { return source.volume; } }
-    //public float pitch { get { return source.pitch; } }
 
     public Sound(string name, AudioClip clip) {
         this.name = name;

@@ -52,7 +52,7 @@ public class LevelEditorCamera : MonoBehaviour {
         }
     }
 
-    private void RepositionCamera() {
+    public void RepositionCamera() {
         if(cameraPos.x < currentCameraBounds.x) cameraPos.x = currentCameraBounds.x;
         else if(cameraPos.x > currentCameraBounds.z) cameraPos.x = currentCameraBounds.z;
 
