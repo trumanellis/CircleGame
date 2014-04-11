@@ -32,7 +32,6 @@ public class LevelEditorCamera : MonoBehaviour {
     }
 
     public void Zoom(float scroll) {
-        if(!currentCameraBounds.HasValue) currentCameraBounds = cameraBounds;
         if(scroll != 0) {
             float startZoom = mainCam.ZoomFactor;
             if(mainCam.ZoomFactor + scroll < maxZoom) {
@@ -66,6 +65,7 @@ public class LevelEditorCamera : MonoBehaviour {
     }
 
     public void RepositionCamera() {
+        if(!currentCameraBounds.HasValue) currentCameraBounds = cameraBounds;
         if(cameraPos.x < currentCameraBounds.Value.x) cameraPos.x = currentCameraBounds.Value.x;
         else if(cameraPos.x > currentCameraBounds.Value.z) cameraPos.x = currentCameraBounds.Value.z;
 
