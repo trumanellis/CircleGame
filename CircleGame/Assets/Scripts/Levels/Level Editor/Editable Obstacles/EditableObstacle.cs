@@ -20,6 +20,7 @@ public class EditableObstacle : MonoBehaviour {
 
     protected virtual void Awake() {
         trans = transform;
+        Debug.Log(name);
         boundingBox = (BoxCollider)collider;
         if(cam == null) cam = Camera.main.GetComponent<tk2dCamera>();
         sprites = GetComponents<SpriteRenderer>();
