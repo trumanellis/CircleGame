@@ -15,6 +15,7 @@ public class LevelEditorManager : MonoBehaviour {
     public CirlePrefabs circlePrefabs;
     public GroundPrefabs groundPrefabs;
     public SpeedTrackPrefabs trackPrefabs;
+    public Transform playerStartMarker;
 
     private void Awake() {
         instance = this;
@@ -79,6 +80,8 @@ public class LevelEditorManager : MonoBehaviour {
                     var gob = obs[i] as GroundObstacle;
                     if(gob.subType == GroundObstacle.GroundType.Ground) trans = ((GameObject)Instantiate(groundPrefabs.ground, pos, Quaternion.identity)).transform;
                     else if(gob.subType == GroundObstacle.GroundType.Falling_Ground) trans = ((GameObject)Instantiate(groundPrefabs.fallingGround, pos, Quaternion.identity)).transform;
+                    else if(gob.subType == GroundObstacle.GroundType.Moving_Ground) trans = ((GameObject)Instantiate(groundPrefabs.movingGround, pos, Quaternion.identity)).transform;
+                    else if(gob.subType == GroundObstacle.GroundType.Trampoline) trans = ((GameObject)Instantiate(groundPrefabs.trampoline, pos, Quaternion.identity)).transform;
 
                     var egob = trans.gameObject.AddComponent<EditableGroundObstacle>();
                     egob.subType = gob.subType;
@@ -100,14 +103,16 @@ public class LevelEditorManager : MonoBehaviour {
                     estob.subType = stob.subType;
                     obstacles.Add(estob.obstacle);
                     break;
+                case ObstacleType.Player_Start: trans = playerStartMarker; break;
                 default: break;
             }
+            if(trans != null) {
+                trans.position = pos;
+                trans.localEulerAngles = rot;
+                trans.localScale = scale;
 
-            trans.position = pos;
-            trans.localEulerAngles = rot;
-            trans.localScale = scale;
-
-            trans.parent = root;
+                trans.parent = root;
+            }
         }
     }
 
@@ -145,6 +150,8 @@ public class CirlePrefabs {
 public class GroundPrefabs {
     public GameObject ground;
     public GameObject fallingGround;
+    public GameObject movingGround;
+    public GameObject trampoline;
 }
 
 [System.Serializable]

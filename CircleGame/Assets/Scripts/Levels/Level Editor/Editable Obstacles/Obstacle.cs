@@ -33,7 +33,7 @@ public class CircleObstacle : Obstacle {
 }
 
 public class GroundObstacle : Obstacle {
-    public enum GroundType { None, Ground, Falling_Ground, Moving_Ground }
+    public enum GroundType { None, Ground, Falling_Ground, Moving_Ground, Trampoline }
     public GroundType subType = GroundType.None;
 
     public GroundObstacle() { obstacleType = ObstacleType.Ground; }
