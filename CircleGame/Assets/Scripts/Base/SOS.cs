@@ -241,6 +241,10 @@ public class SOS : MonoBehaviour {
         if(SystemInfo.supportsAccelerometer) isMobile = true; //works in MOST casses
     }
 
+    public static bool IsPointOnScreen(Vector2 point) {
+        return (point.x >= 0 && point.x <= Screen.width) && (point.y >= 0 && point.y <= Screen.height);
+    }
+
     private void CheckForkeyBoardInput() {
         if(cInput.GetKeyDown("Right")) cInput.PressVirtualKey("Right");
         else if(cInput.GetKeyUp("Right")) cInput.ReleaseVirtualKey("Right");

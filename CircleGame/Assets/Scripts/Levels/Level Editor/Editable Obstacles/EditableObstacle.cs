@@ -53,13 +53,22 @@ public class EditableObstacle : MonoBehaviour {
     private void Update() {
         if(shouldReposition) {
             Vector3 pos = Input.mousePosition;
-            if(pos.x > Screen.width - (boundingBox.size.x / 2f) * (100f * cam.ZoomFactor) - leftPadding) pos.x = Screen.width - (boundingBox.size.x / 2f) * (100f * cam.ZoomFactor) - leftPadding;
-            else if(pos.x < (boundingBox.size.x / 2f) * (100f * cam.ZoomFactor) + rightPadding) pos.x = (boundingBox.size.x / 2f) * (100f * cam.ZoomFactor) + rightPadding;
-            if(pos.y > Screen.height - (boundingBox.size.y / 2f) * (100f * cam.ZoomFactor) - upperPadding) pos.y = Screen.height - (boundingBox.size.y / 2f) * (100f * cam.ZoomFactor) - upperPadding;
-            else if(pos.y < (boundingBox.size.y / 2f) * (100f * cam.ZoomFactor) + lowerPadding) pos.y = (boundingBox.size.y / 2f) * (100f * cam.ZoomFactor) + lowerPadding;
+            if(SOS.IsPointOnScreen(pos)) {
+                Vector2 worldPos = (Vector2)Camera.main.ScreenToWorldPoint(pos);
 
-            trans.position = (Vector2)Camera.main.ScreenToWorldPoint(pos);
-            obstacle.position = trans.position;
+                if(worldPos.x > (LevelEditorManager.worldBounds.size.x / 2f) - ((boundingBox.size.x * trans.localScale.x) / 2f))
+                    worldPos.x = (LevelEditorManager.worldBounds.size.x / 2f) - ((boundingBox.size.x * trans.localScale.x) / 2f);
+                else if(worldPos.x < -(LevelEditorManager.worldBounds.size.x / 2f) + ((boundingBox.size.x * trans.localScale.x) / 2f))
+                    worldPos.x = -(LevelEditorManager.worldBounds.size.x / 2f) + ((boundingBox.size.x * trans.localScale.x) / 2f);
+
+                if(worldPos.y > (LevelEditorManager.worldBounds.size.y / 2f) - ((boundingBox.size.y * trans.localScale.y) / 2f))
+                    worldPos.y = (LevelEditorManager.worldBounds.size.y / 2f) - ((boundingBox.size.y * trans.localScale.y) / 2f);
+                else if(worldPos.y < -(LevelEditorManager.worldBounds.size.y / 2f) + ((boundingBox.size.y * trans.localScale.y) / 2f))
+                    worldPos.y = -(LevelEditorManager.worldBounds.size.y / 2f) + ((boundingBox.size.y * trans.localScale.y) / 2f);
+
+                trans.position = worldPos;
+                obstacle.position = trans.position;
+            }
         }
     }
 

@@ -9,9 +9,10 @@ public class LevelEditorManager : MonoBehaviour {
     public LevelEditorCamera editorCam;
     public RadialMenu radialMenu;
 
-    public Transform obstaclesRoot;
     public Color _selectedObstaColour;
     public static Color selectedObstacleColour;
+    public static BoxCollider worldBounds;
+    public Transform obstaclesRoot;
     public CirlePrefabs circlePrefabs;
     public GroundPrefabs groundPrefabs;
     public SpeedTrackPrefabs trackPrefabs;
@@ -20,6 +21,7 @@ public class LevelEditorManager : MonoBehaviour {
     private void Awake() {
         instance = this;
         selectedObstacleColour = _selectedObstaColour;
+        worldBounds = (BoxCollider)collider;
         if(IntroManager.mainMenuMusic != null && IntroManager.mainMenuMusic.isPlaying) IntroManager.mainMenuMusic.Stop();
     }
 

@@ -7,7 +7,7 @@ public class LevelEditorCamera : MonoBehaviour {
     private Vector3 cameraPos;
     public tk2dCamera mainCam;
     public tk2dCamera bgCam;
-    public Vector4 cameraBounds;
+    public Vector4 worldBounds;
     private Vector4? currentCameraBounds;
     public float accelerant = 1.0f;
     public float zoomSpeed = 1.0f;
@@ -16,7 +16,7 @@ public class LevelEditorCamera : MonoBehaviour {
 
     private void Awake() {
         root = transform;
-        currentCameraBounds = cameraBounds;
+        currentCameraBounds = worldBounds;
     }
 
     private void Update() {
@@ -47,25 +47,21 @@ public class LevelEditorCamera : MonoBehaviour {
 
             if(mainCam.ZoomFactor != startZoom) {
                 Vector4 newBounds = Vector4.zero;
-                //newBounds.x = cameraBounds.x * mainCam.ZoomFactor;
-                //newBounds.y = cameraBounds.y * mainCam.ZoomFactor;
-                //newBounds.z = cameraBounds.z * mainCam.ZoomFactor;
-                //newBounds.w = cameraBounds.w * mainCam.ZoomFactor;
 
-                newBounds.x = cameraBounds.x * mainCam.ZoomFactor;
-                newBounds.y = cameraBounds.y * mainCam.ZoomFactor;
-                newBounds.z = cameraBounds.z * mainCam.ZoomFactor;
-                newBounds.w = cameraBounds.w * mainCam.ZoomFactor;
+                newBounds.x = worldBounds.x * mainCam.ZoomFactor;
+                newBounds.y = worldBounds.y * mainCam.ZoomFactor;
+                newBounds.z = worldBounds.z * mainCam.ZoomFactor;
+                newBounds.w = worldBounds.w * mainCam.ZoomFactor;
 
                 currentCameraBounds = newBounds;
             }
-            Debug.Log(currentCameraBounds.Value);
             RepositionCamera();
         }
     }
 
     public void RepositionCamera() {
-        if(!currentCameraBounds.HasValue) currentCameraBounds = cameraBounds;
+        if(!currentCameraBounds.HasValue) currentCameraBounds = worldBounds;
+
         if(cameraPos.x < currentCameraBounds.Value.x) cameraPos.x = currentCameraBounds.Value.x;
         else if(cameraPos.x > currentCameraBounds.Value.z) cameraPos.x = currentCameraBounds.Value.z;
 
