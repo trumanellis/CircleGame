@@ -116,7 +116,13 @@ public class LevelEditorManager : MonoBehaviour {
                 trans.localScale = scale;
 
                 if(trans != playerStartMarker) trans.parent = obstaclesRoot;
-                else playerStartMarker.parent = transform;
+                else {
+                    playerStartMarker.parent = transform;
+                    var pso = playerStartMarker.GetComponent<EditableObstacle>();
+                    pso.obstacle.position = playerStartMarker.position;
+                    pso.obstacle.rotaion = playerStartMarker.eulerAngles;
+                    pso.obstacle.scale = playerStartMarker.localScale;
+                }
             }
         }
     }
