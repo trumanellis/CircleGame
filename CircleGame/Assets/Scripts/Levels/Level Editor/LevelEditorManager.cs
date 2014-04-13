@@ -53,7 +53,7 @@ public class LevelEditorManager : MonoBehaviour {
     }
 
     private void OnScroll(float delta) {
-        editorCam.Zoom(delta);
+        LevelEditorCamera.Zoom(delta);
     }
 
     private void OnPress(bool pressed) {

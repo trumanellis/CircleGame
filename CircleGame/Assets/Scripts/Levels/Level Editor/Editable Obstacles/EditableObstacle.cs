@@ -39,7 +39,7 @@ public class EditableObstacle : MonoBehaviour {
         LevelEditorManager.AddObstacle(obstacle);
     }
 
-    private void OnScroll(float delta) { LevelEditorManager.instance.editorCam.Zoom(delta); }
+    private void OnScroll(float delta) { LevelEditorCamera.Zoom(delta); }
     private void OnPress(bool pressed) {
         if(pressed && currentObstacle != this) SetCurrentObject(this);
 
@@ -59,11 +59,8 @@ public class EditableObstacle : MonoBehaviour {
     private void Update() {
         if(shouldReposition) {
             Vector3 pos = Input.mousePosition;
-            if(SOS.IsPointOnScreen(pos)) {
+            if(SOS.IsPointOnScreen(pos))
                 Reposition((Vector2)Camera.main.ScreenToWorldPoint(pos));
-
-
-            }
         }
     }
 
@@ -128,8 +125,8 @@ public class EditableObstacle : MonoBehaviour {
 
     public virtual void EditRotation() {
         if(LevelEditorManager.currentGizmo != null) LevelEditorManager.currentGizmo.SetActive(false);
-        //for(int i = 0; i < sprites.Length; i++)
-        //    sprites[i].color = LevelEditorManager.editableObstacleColour;
+        for(int i = 0; i < sprites.Length; i++)
+            sprites[i].color = LevelEditorManager.editableObstacleColour;
     }
 
     public virtual void EditScale() {

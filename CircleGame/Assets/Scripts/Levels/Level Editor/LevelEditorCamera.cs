@@ -2,6 +2,7 @@
 using System.Collections;
 
 public class LevelEditorCamera : MonoBehaviour {
+    private static LevelEditorCamera instance;
     private Transform root;
     private Vector3 startPos;
     private Vector3 cameraPos;
@@ -15,6 +16,7 @@ public class LevelEditorCamera : MonoBehaviour {
     public bool shouldTrack { get; set; }
 
     private void Awake() {
+        instance = this;
         root = transform;
         currentCameraBounds = worldBounds;
     }
@@ -31,31 +33,31 @@ public class LevelEditorCamera : MonoBehaviour {
         }
     }
 
-    public void Zoom(float scroll) {
+    public static void Zoom(float scroll) {
         if(scroll != 0) {
-            float startZoom = mainCam.ZoomFactor;
-            if(mainCam.ZoomFactor + scroll < maxZoom) {
-                mainCam.ZoomFactor = maxZoom;
-                bgCam.ZoomFactor = maxZoom;
-            } else if(mainCam.ZoomFactor + scroll > 1f) {
-                mainCam.ZoomFactor = 1f;
-                bgCam.ZoomFactor = 1f;
+            float startZoom = instance.mainCam.ZoomFactor;
+            if(instance.mainCam.ZoomFactor + scroll < instance.maxZoom) {
+                instance.mainCam.ZoomFactor = instance.maxZoom;
+                instance.bgCam.ZoomFactor = instance.maxZoom;
+            } else if(instance.mainCam.ZoomFactor + scroll > 1f) {
+                instance.mainCam.ZoomFactor = 1f;
+                instance.bgCam.ZoomFactor = 1f;
             } else {
-                mainCam.ZoomFactor += scroll;
-                bgCam.ZoomFactor += scroll;
+                instance.mainCam.ZoomFactor += scroll;
+                instance.bgCam.ZoomFactor += scroll;
             }
 
-            if(mainCam.ZoomFactor != startZoom) {
+            if(instance.mainCam.ZoomFactor != startZoom) {
                 Vector4 newBounds = Vector4.zero;
 
-                newBounds.x = worldBounds.x * mainCam.ZoomFactor;
-                newBounds.y = worldBounds.y * mainCam.ZoomFactor;
-                newBounds.z = worldBounds.z * mainCam.ZoomFactor;
-                newBounds.w = worldBounds.w * mainCam.ZoomFactor;
+                newBounds.x = instance.worldBounds.x * instance.mainCam.ZoomFactor;
+                newBounds.y = instance.worldBounds.y * instance.mainCam.ZoomFactor;
+                newBounds.z = instance.worldBounds.z * instance.mainCam.ZoomFactor;
+                newBounds.w = instance.worldBounds.w * instance.mainCam.ZoomFactor;
 
-                currentCameraBounds = newBounds;
+                instance.currentCameraBounds = newBounds;
             }
-            RepositionCamera();
+            instance.RepositionCamera();
         }
     }
 
