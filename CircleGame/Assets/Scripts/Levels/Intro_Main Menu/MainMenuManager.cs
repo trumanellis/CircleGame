@@ -23,25 +23,37 @@ public class MainMenuManager : MonoBehaviour {
     }
 
     public void UpdateButtonClicked() {
-        if(pendingRestart) Application.Quit();
+        if(pendingRestart) {
+            Application.Quit();
+            return;
+        }
         updateButton.button.isEnabled = false;
         updateButton.tweener.PlayReverse();
         updateButton.tweener.onFinished.Add(new EventDelegate(() => {
-            updateButton.button.isEnabled = true;
             updateButton.nameLabel.gameObject.SetActive(false);
             updateButton.closeX.SetActive(false);
             updateButton.cancelLabel.SetActive(true);
             updateButton.progressBar.gameObject.SetActive(true);
-            pendingRestart = true;
-            updating = true;
-            Updater.onProgress = OnProgressUpdate;
-            Updater.Download(() => { if(!pendingCancel) Updater.ExtractPatch(() => { finishUpdate = true; }); });
             updateButton.tweener.PlayForward();
-        }));
+
+            updateButton.tweener.onFinished.Add(new EventDelegate(() => {
+                updating = true;
+                Updater.onProgress = OnProgressUpdate;
+                Updater.Download(() => {
+                    if(!pendingCancel) Updater.ExtractPatch(() => {
+                        finishUpdate = true;
+                    });
+                });
+            }) {
+                oneShot = true
+            });
+        }) {
+            oneShot = true
+        });
     }
 
     public void OnProgressUpdate(double progress) {
-        updateButton.progressBar.value = (float) progress;
+        updateButton.progressBar.value = (float)progress;
     }
 
     public void UpdateButtonCancelled() {
@@ -54,6 +66,7 @@ public class MainMenuManager : MonoBehaviour {
     private void FinishUpdate() {
         updateButton.cancelLabel.SetActive(false);
         updateButton.progressBar.gameObject.SetActive(false);
+        updateButton.nameLabel.gameObject.SetActive(true);
         updateButton.nameLabel.text = "Click To Close";
         updateButton.button.isEnabled = true;
         pendingRestart = true;

@@ -38,7 +38,7 @@ public class LaunchieLogic : MonoBehaviour
 	void Asyncwork ()
 	{
 		_l = new Launchie.Launchie (url, version);
-		_l.debug = false;
+		_l.debug = true;
 		_l.setOnError( OnError );
 		
 		int check_state = _l.Check ();

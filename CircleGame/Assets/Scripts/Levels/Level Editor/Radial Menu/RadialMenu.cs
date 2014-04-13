@@ -38,8 +38,7 @@ public class RadialMenu : MonoBehaviour {
     public void OnMenuHover(string name, bool enter) {
         if(enter) menuLabel.text = name;
         else {
-            string description = string.Empty;
-            if(currentType == ObstacleType.None) description = "General";
+            if(currentType == ObstacleType.None) menuLabel.text = "General";
             else menuLabel.text = EditableObstacle.currentObstacle.GetObstacleDescription();
         }
     }
