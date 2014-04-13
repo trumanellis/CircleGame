@@ -65,6 +65,23 @@ public class EditableObstacle : MonoBehaviour {
         }
     }
 
+    public string GetObstacleDescription() {
+        string description = string.Empty;
+        switch(obstacle.obstacleType) {
+            case ObstacleType.Circle:
+                description = ((CircleObstacle)obstacle).subType.GetDescription();
+                break;
+            case ObstacleType.Ground:
+                description = ((GroundObstacle)obstacle).subType.GetDescription();
+                break;
+            case ObstacleType.Speed_Track:
+                description = ((SpeedtrackObstacle)obstacle).subType.GetDescription();
+                break;
+            default: description = obstacle.obstacleType.GetDescription(); break;
+        }
+        return description;
+    }
+
     private void Reposition(Vector2 pos) {
         if(pos.x > (LevelEditorManager.worldBounds.size.x / 2f) - ((boundingBox.size.x * trans.localScale.x) / 2f))
             pos.x = (LevelEditorManager.worldBounds.size.x / 2f) - ((boundingBox.size.x * trans.localScale.x) / 2f);

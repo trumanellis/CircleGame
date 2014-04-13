@@ -36,7 +36,12 @@ public class RadialMenu : MonoBehaviour {
     private void Start() { radialMenu.SetActive(false); }
 
     public void OnMenuHover(string name, bool enter) {
-        menuLabel.text = enter ? name : (currentType == ObstacleType.None ? "General" : currentType.GetDescription());
+        if(enter) menuLabel.text = name;
+        else {
+            string description = string.Empty;
+            if(currentType == ObstacleType.None) description = "General";
+            else menuLabel.text = EditableObstacle.currentObstacle.GetObstacleDescription();
+        }
     }
 
     public void OnMenuSelected(EditableProperties.Properties prop) {
@@ -67,7 +72,7 @@ public class RadialMenu : MonoBehaviour {
             menuButtons[index].gameObject.SetActive(false);
 
         currentType = ob == null ? ObstacleType.None : ob.obstacle.obstacleType;
-        menuLabel.text = ob == null ? "General" : ob.obstacle.obstacleType.GetDescription();
+        menuLabel.text = ob == null ? "General" : ob.GetObstacleDescription();
         radialMenu.SetActive(true);
         Vector3 radialPos = Input.mousePosition;
         if(radialPos.x >= Screen.width / 2f && radialPos.x > Screen.width - size.x / 2f - radialRightPadding) radialPos.x = Screen.width - (size.x / 2f) - radialRightPadding;

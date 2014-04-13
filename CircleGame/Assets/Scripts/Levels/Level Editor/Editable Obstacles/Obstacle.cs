@@ -6,14 +6,14 @@ using System.Collections;
 /// It is used for the serialization/deserialization of obstacles
 /// </summary>
 
-public enum ObstacleType { 
+public enum ObstacleType {
     None,
     Circle,
-    Ground, 
-    Water, 
+    Ground,
+    Water,
     [EnumDescription("Speed Track")]
-    Speed_Track, 
-    Cannon, 
+    Speed_Track,
+    Cannon,
     Trampoline,
     [EnumDescription("Player Start")]
     Player_Start,
@@ -28,7 +28,15 @@ public class Obstacle {
 }
 
 public class CircleObstacle : Obstacle {
-    public enum CircleType { None, Circle_Single, Circle_Double, Circle_Triple }
+    public enum CircleType {
+        None,
+        [EnumDescription("Single Circle")]
+        Circle_Single,
+        [EnumDescription("Double Circle")]
+        Circle_Double,
+        [EnumDescription("Triple Circle")]
+        Circle_Triple
+    }
     public CircleType subType = CircleType.None;
     public bool showGround = true;
 
@@ -36,14 +44,40 @@ public class CircleObstacle : Obstacle {
 }
 
 public class GroundObstacle : Obstacle {
-    public enum GroundType { None, Ground, Falling_Ground, Moving_Ground, Trampoline }
+    public enum GroundType {
+        None,
+        Ground,
+        [EnumDescription("Falling Ground")]
+        Falling_Ground,
+        [EnumDescription("Moving Ground")]
+        Moving_Ground,
+        Trampoline
+    }
     public GroundType subType = GroundType.None;
 
     public GroundObstacle() { obstacleType = ObstacleType.Ground; }
 }
 
 public class SpeedtrackObstacle : Obstacle {
-    public enum SpeedTrackType { None, Small_Down, Small_Up, Small_Left, Small_Right, Wide_Down, Wide_Up, Wide_Left, Wide_Right }
+    public enum SpeedTrackType {
+        None,
+        [EnumDescription("Small Down")]
+        Small_Down,
+        [EnumDescription("Small Up")]
+        Small_Up,
+        [EnumDescription("Small Left")]
+        Small_Left,
+        [EnumDescription("Small Right")]
+        Small_Right,
+        [EnumDescription("Wide Down")]
+        Wide_Down,
+        [EnumDescription("Wide Up")]
+        Wide_Up,
+        [EnumDescription("Wide Left")]
+        Wide_Left,
+        [EnumDescription("Wide Right")]
+        Wide_Right
+    }
     public SpeedTrackType subType = SpeedTrackType.None;
 
     public SpeedtrackObstacle() { obstacleType = ObstacleType.Speed_Track; }
