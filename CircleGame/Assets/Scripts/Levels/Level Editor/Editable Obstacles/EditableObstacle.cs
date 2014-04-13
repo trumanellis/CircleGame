@@ -114,4 +114,11 @@ public class EditableObstacle : MonoBehaviour {
     public virtual void EditScale() {
 
     }
+
+    public void EditComplete() {
+        if(LevelEditorManager.currentGizmo != null) LevelEditorManager.currentGizmo.SetActive(false);
+        for(int i = 0; i < sprites.Length; i++)
+            sprites[i].color = spriteColours[i];
+        currentObstacle = null;
+    }
 }

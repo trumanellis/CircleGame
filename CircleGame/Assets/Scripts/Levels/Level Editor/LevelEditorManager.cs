@@ -5,12 +5,16 @@ using Newtonsoft.Json;
 
 public class LevelEditorManager : MonoBehaviour {
     public static LevelEditorManager instance { get; private set; }
+    public static GameObject currentGizmo { get; set; }
+
     private List<Obstacle> obstacles = new List<Obstacle>();
     public LevelEditorCamera editorCam;
     public RadialMenu radialMenu;
 
-    public Color _selectedObstaColour;
+    public Color _selectedObstacleColour = Color.white;
     public static Color selectedObstacleColour;
+    public Color _editableObstacleColour = Color.white;
+    public static Color editableObstacleColour;
     public static BoxCollider worldBounds;
     public Transform obstaclesRoot;
     public CirlePrefabs circlePrefabs;
@@ -20,7 +24,8 @@ public class LevelEditorManager : MonoBehaviour {
 
     private void Awake() {
         instance = this;
-        selectedObstacleColour = _selectedObstaColour;
+        selectedObstacleColour = _selectedObstacleColour;
+        editableObstacleColour = _editableObstacleColour;
         worldBounds = (BoxCollider)collider;
         if(IntroManager.mainMenuMusic != null && IntroManager.mainMenuMusic.isPlaying) IntroManager.mainMenuMusic.Stop();
     }
@@ -59,7 +64,7 @@ public class LevelEditorManager : MonoBehaviour {
     }
 
     private void OnClick() {
-        if(Input.GetMouseButtonUp(0)) EditableObstacle.SetCurrentObject(null);
+        if(Input.GetMouseButtonUp(0) && EditableObstacle.currentObstacle != null) EditableObstacle.currentObstacle.EditComplete();
     }
 
     private void LoadLevel() {
@@ -81,8 +86,10 @@ public class LevelEditorManager : MonoBehaviour {
 
                     var ecob = trans.gameObject.AddComponent<EditableCircleObstacle>();
                     ecob.subType = cob.subType;
+                    ecob.cob.showGround = cob.showGround;
 
-                    trans.Find("Ground").gameObject.SetActive(cob.showGround);
+                    if(!cob.showGround)
+                        trans.Find("Ground").gameObject.SetActive(false);
                     break;
                 case ObstacleType.Ground:
                     var gob = obs[i] as GroundObstacle;

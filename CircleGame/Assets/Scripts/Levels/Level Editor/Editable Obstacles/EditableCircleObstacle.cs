@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class EditableCircleObstacle : EditableObstacle {
-    private CircleObstacle cob;
+    public CircleObstacle cob { get; private set; }
     public CircleObstacle.CircleType subType { get { return cob.subType; } set { cob.subType = value; } }
 
     protected override void Awake() {
