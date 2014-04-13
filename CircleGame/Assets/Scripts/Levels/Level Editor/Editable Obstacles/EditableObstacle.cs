@@ -3,12 +3,12 @@ using System.Collections;
 
 public class EditableObstacle : MonoBehaviour {
     private static tk2dCamera cam;
-    private Transform trans;
     private SpriteRenderer[] sprites;
     private Color[] spriteColours;
 
-    public static EditableObstacle currentObstacle { get; private set; }
     public readonly EditableProperties properties = new EditableProperties();
+    public static EditableObstacle currentObstacle { get; private set; }
+    public Transform trans { get; private set; }
     public Obstacle obstacle { get; protected set; }
     public BoxCollider boundingBox { get; private set; }
     private bool shouldReposition;
@@ -17,15 +17,20 @@ public class EditableObstacle : MonoBehaviour {
     private const float rightPadding = 5f;
     private const float upperPadding = 5f;
     private const float lowerPadding = 5f;
+    private const float positionFactor = .01f;
+    private const float scaleFactor = .1f;
 
     protected virtual void Awake() {
         trans = transform;
         boundingBox = (BoxCollider)collider;
+
         if(cam == null)
             cam = Camera.main.GetComponent<tk2dCamera>();
+
         sprites = GetComponents<SpriteRenderer>();
         if(sprites.Length == 0)
             sprites = GetComponentsInChildren<SpriteRenderer>();
+
         spriteColours = new Color[sprites.Length];
         for(int i = 0; i < sprites.Length; i++)
             spriteColours[i] = sprites[i].color;
@@ -36,7 +41,7 @@ public class EditableObstacle : MonoBehaviour {
 
     private void OnScroll(float delta) { LevelEditorManager.instance.editorCam.Zoom(delta); }
     private void OnPress(bool pressed) {
-        if(pressed) SetCurrentObject(this);
+        if(pressed && currentObstacle != this) SetCurrentObject(this);
 
         if(Input.GetMouseButtonDown(0) || Input.GetMouseButtonUp(0))
             shouldReposition = pressed;
@@ -55,22 +60,26 @@ public class EditableObstacle : MonoBehaviour {
         if(shouldReposition) {
             Vector3 pos = Input.mousePosition;
             if(SOS.IsPointOnScreen(pos)) {
-                Vector2 worldPos = (Vector2)Camera.main.ScreenToWorldPoint(pos);
+                Reposition((Vector2)Camera.main.ScreenToWorldPoint(pos));
 
-                if(worldPos.x > (LevelEditorManager.worldBounds.size.x / 2f) - ((boundingBox.size.x * trans.localScale.x) / 2f))
-                    worldPos.x = (LevelEditorManager.worldBounds.size.x / 2f) - ((boundingBox.size.x * trans.localScale.x) / 2f);
-                else if(worldPos.x < -(LevelEditorManager.worldBounds.size.x / 2f) + ((boundingBox.size.x * trans.localScale.x) / 2f))
-                    worldPos.x = -(LevelEditorManager.worldBounds.size.x / 2f) + ((boundingBox.size.x * trans.localScale.x) / 2f);
 
-                if(worldPos.y > (LevelEditorManager.worldBounds.size.y / 2f) - ((boundingBox.size.y * trans.localScale.y) / 2f))
-                    worldPos.y = (LevelEditorManager.worldBounds.size.y / 2f) - ((boundingBox.size.y * trans.localScale.y) / 2f);
-                else if(worldPos.y < -(LevelEditorManager.worldBounds.size.y / 2f) + ((boundingBox.size.y * trans.localScale.y) / 2f))
-                    worldPos.y = -(LevelEditorManager.worldBounds.size.y / 2f) + ((boundingBox.size.y * trans.localScale.y) / 2f);
-
-                trans.position = worldPos;
-                obstacle.position = trans.position;
             }
         }
+    }
+
+    private void Reposition(Vector2 pos) {
+        if(pos.x > (LevelEditorManager.worldBounds.size.x / 2f) - ((boundingBox.size.x * trans.localScale.x) / 2f))
+            pos.x = (LevelEditorManager.worldBounds.size.x / 2f) - ((boundingBox.size.x * trans.localScale.x) / 2f);
+        else if(pos.x < -(LevelEditorManager.worldBounds.size.x / 2f) + ((boundingBox.size.x * trans.localScale.x) / 2f))
+            pos.x = -(LevelEditorManager.worldBounds.size.x / 2f) + ((boundingBox.size.x * trans.localScale.x) / 2f);
+
+        if(pos.y > (LevelEditorManager.worldBounds.size.y / 2f) - ((boundingBox.size.y * trans.localScale.y) / 2f))
+            pos.y = (LevelEditorManager.worldBounds.size.y / 2f) - ((boundingBox.size.y * trans.localScale.y) / 2f);
+        else if(pos.y < -(LevelEditorManager.worldBounds.size.y / 2f) + ((boundingBox.size.y * trans.localScale.y) / 2f))
+            pos.y = -(LevelEditorManager.worldBounds.size.y / 2f) + ((boundingBox.size.y * trans.localScale.y) / 2f);
+
+        trans.position = pos;
+        obstacle.position = trans.position;
     }
 
     private void SetSelectionDepth() {
@@ -81,6 +90,7 @@ public class EditableObstacle : MonoBehaviour {
     }
 
     public static void SetCurrentObject(EditableObstacle eob) {
+        if(LevelEditorManager.currentGizmo != null) LevelEditorManager.currentGizmo.SetActive(false);
         if(currentObstacle != null) {
             for(int i = 0; i < currentObstacle.sprites.Length; i++)
                 currentObstacle.sprites[i].color = currentObstacle.spriteColours[i];
@@ -104,15 +114,42 @@ public class EditableObstacle : MonoBehaviour {
 
     //most common editable properties
     public virtual void EditPosition() {
+        if(LevelEditorManager.currentGizmo != null) LevelEditorManager.currentGizmo.SetActive(false);
+        CreateGizmo(EditPropertyUIController.positionGizmo.gameObject);
+        EditPropertyUIController.positionGizmo.onGizmoDrag = (delta) => {
+            trans.position += (Vector3)(delta * (positionFactor / cam.ZoomFactor));
+            Reposition(trans.position);
+            obstacle.position = trans.position;
+        };
 
+        for(int i = 0; i < sprites.Length; i++)
+            sprites[i].color = LevelEditorManager.editableObstacleColour;
     }
 
     public virtual void EditRotation() {
-
+        if(LevelEditorManager.currentGizmo != null) LevelEditorManager.currentGizmo.SetActive(false);
+        //for(int i = 0; i < sprites.Length; i++)
+        //    sprites[i].color = LevelEditorManager.editableObstacleColour;
     }
 
     public virtual void EditScale() {
+        if(LevelEditorManager.currentGizmo != null) LevelEditorManager.currentGizmo.SetActive(false);
+        CreateGizmo(EditPropertyUIController.scaleGizmo.gameObject);
+        EditPropertyUIController.scaleGizmo.onGizmoDrag = (delta) => {
+            trans.localScale += (Vector3)(delta * (scaleFactor / cam.ZoomFactor));
+            Reposition(trans.position);
+            obstacle.scale = trans.localScale;
+        };
 
+        for(int i = 0; i < sprites.Length; i++)
+            sprites[i].color = LevelEditorManager.editableObstacleColour;
+    }
+
+    private void CreateGizmo(GameObject gizmo) {
+        gizmo.SetActive(true);
+        gizmo.transform.position = LevelEditorManager.uiCamera.ScreenToWorldPoint(Camera.main.WorldToScreenPoint(trans.position));
+        gizmo.GetComponent<GizmoFollow>().obstacle = trans;
+        LevelEditorManager.currentGizmo = gizmo;
     }
 
     public void EditComplete() {

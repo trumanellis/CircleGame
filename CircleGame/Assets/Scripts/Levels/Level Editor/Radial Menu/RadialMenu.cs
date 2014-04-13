@@ -51,6 +51,7 @@ public class RadialMenu : MonoBehaviour {
         if(EditableObstacle.currentObstacle != null) {
             LevelEditorManager.RemoveObstacle(EditableObstacle.currentObstacle.obstacle);
             Destroy(EditableObstacle.currentObstacle.gameObject);
+            EditableObstacle.currentObstacle.EditComplete();
         }
     }
 

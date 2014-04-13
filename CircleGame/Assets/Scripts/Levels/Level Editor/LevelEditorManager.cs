@@ -9,6 +9,8 @@ public class LevelEditorManager : MonoBehaviour {
 
     private List<Obstacle> obstacles = new List<Obstacle>();
     public LevelEditorCamera editorCam;
+    public Camera _uiCamera;
+    public static Camera uiCamera;
     public RadialMenu radialMenu;
 
     public Color _selectedObstacleColour = Color.white;
@@ -24,6 +26,7 @@ public class LevelEditorManager : MonoBehaviour {
 
     private void Awake() {
         instance = this;
+        uiCamera = _uiCamera;
         selectedObstacleColour = _selectedObstacleColour;
         editableObstacleColour = _editableObstacleColour;
         worldBounds = (BoxCollider)collider;
