@@ -157,6 +157,7 @@ public class EditableObstacle : MonoBehaviour {
         if(LevelEditorManager.currentGizmo != null) LevelEditorManager.currentGizmo.SetActive(false);
         CreateGizmo(EditPropertyUIController.scaleGizmo.gameObject);
         EditPropertyUIController.scaleGizmo.onGizmoDrag = (delta) => {
+            //need to check if it will become to large before setting it
             trans.localScale += (Vector3)(delta * (scaleFactor / cam.ZoomFactor));
             Reposition(trans.position);
             obstacle.scale = trans.localScale;
