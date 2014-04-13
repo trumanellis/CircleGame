@@ -65,7 +65,7 @@ public class CustomLevelManager : MonoBehaviour {
             }
             if(trans != null) {
                 trans.position = pos;
-                trans.localEulerAngles = rot;
+                trans.eulerAngles = rot;
                 trans.localScale = scale;
 
                 if(trans != player) trans.parent = root;

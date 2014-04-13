@@ -79,6 +79,7 @@ public class LevelEditorManager : MonoBehaviour {
             Vector3 scale = obs[i].scale;
             Vector3 rot = obs[i].rotation;
             Transform trans = null;
+            EditableObstacle ob = null;
 
             switch(obs[i].obstacleType) {
                 case ObstacleType.Circle:
@@ -90,6 +91,7 @@ public class LevelEditorManager : MonoBehaviour {
                     var ecob = trans.gameObject.AddComponent<EditableCircleObstacle>();
                     ecob.subType = cob.subType;
                     ecob.cob.showGround = cob.showGround;
+                    ob = ecob;
 
                     if(!cob.showGround)
                         trans.Find("Ground").gameObject.SetActive(false);
@@ -103,6 +105,7 @@ public class LevelEditorManager : MonoBehaviour {
 
                     var egob = trans.gameObject.AddComponent<EditableGroundObstacle>();
                     egob.subType = gob.subType;
+                    ob = egob;
                     break;
 
                 case ObstacleType.Speed_Track:
@@ -118,35 +121,35 @@ public class LevelEditorManager : MonoBehaviour {
 
                     var estob = trans.gameObject.AddComponent<EditableSpeedTrackObstacle>();
                     estob.subType = stob.subType;
+                    ob = estob;
                     break;
-                case ObstacleType.Player_Start: trans = playerStartMarker; break;
+                case ObstacleType.Player_Start:
+                    trans = playerStartMarker;
+                    ob = trans.GetComponent<EditableObstacle>();
+                    break;
                 default: break;
             }
             if(trans != null) {
                 trans.position = pos;
-                trans.localEulerAngles = rot;
+                trans.eulerAngles = rot;
                 trans.localScale = scale;
 
+                ob.obstacle.position = trans.position;
+                ob.obstacle.rotation = trans.eulerAngles;
+                ob.obstacle.scale = trans.localScale;
+
                 if(trans != playerStartMarker) trans.parent = obstaclesRoot;
-                else {
-                    playerStartMarker.parent = transform;
-                    var pso = playerStartMarker.GetComponent<EditableObstacle>();
-                    pso.obstacle.position = playerStartMarker.position;
-                    pso.obstacle.rotation = playerStartMarker.eulerAngles;
-                    pso.obstacle.scale = playerStartMarker.localScale;
-                }
+                else playerStartMarker.parent = transform;
             }
         }
     }
 
     public void SaveLevel() {
-        if(obstacles.Count > 1) {
-            JsonSerializerSettings settings = new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All };
-            string serialized = JsonConvert.SerializeObject(obstacles, Formatting.Indented, settings);
-            PlayerPrefs.SetString("Serialize Test", serialized);
-            PlayerPrefs.Save();
-            Debug.Log("Save Complete");
-        }
+        JsonSerializerSettings settings = new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All };
+        string serialized = JsonConvert.SerializeObject(obstacles, Formatting.Indented, settings);
+        PlayerPrefs.SetString("Serialize Test", serialized);
+        PlayerPrefs.Save();
+        Debug.Log("Save Complete");
     }
 
     public void ClearPrefs() {
@@ -155,10 +158,6 @@ public class LevelEditorManager : MonoBehaviour {
         foreach(Transform child in obstaclesRoot) children.Add(child.gameObject);
         children.ForEach(child => Destroy(child));
         obstacles.Add(playerStartMarker.GetComponent<EditableObstacle>().obstacle);
-
-        PlayerPrefs.DeleteKey("Serialize Test");
-        PlayerPrefs.Save();
-        Debug.Log("All Prefs Cleared");
     }
 
     public static void AddObstacle(Obstacle ob) {

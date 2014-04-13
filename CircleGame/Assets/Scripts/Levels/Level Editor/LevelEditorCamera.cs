@@ -3,7 +3,7 @@ using System.Collections;
 
 public class LevelEditorCamera : MonoBehaviour {
     private static LevelEditorCamera instance;
-    private Transform root;
+    private Transform trans;
     private Vector3 startPos;
     private Vector3 cameraPos;
     public tk2dCamera mainCam;
@@ -17,7 +17,7 @@ public class LevelEditorCamera : MonoBehaviour {
 
     private void Awake() {
         instance = this;
-        root = transform;
+        trans = transform;
         currentCameraBounds = worldBounds;
     }
 
@@ -28,7 +28,7 @@ public class LevelEditorCamera : MonoBehaviour {
         } else if(Input.GetMouseButtonUp(2) || (Input.GetKeyUp(KeyCode.LeftAlt) || Input.GetKeyUp(KeyCode.RightAlt)) || Input.GetMouseButtonUp(0)) shouldTrack = false;
 
         if(shouldTrack) {
-            cameraPos = root.position -= (Camera.main.ScreenToWorldPoint(Input.mousePosition) - startPos);
+            trans.position -= (Camera.main.ScreenToWorldPoint(Input.mousePosition) - startPos);
             RepositionCamera();
         }
     }
@@ -62,7 +62,7 @@ public class LevelEditorCamera : MonoBehaviour {
     }
 
     public void RepositionCamera() {
-        if(!currentCameraBounds.HasValue) currentCameraBounds = worldBounds;
+        cameraPos = transform.position;
 
         if(cameraPos.x < currentCameraBounds.Value.x) cameraPos.x = currentCameraBounds.Value.x;
         else if(cameraPos.x > currentCameraBounds.Value.z) cameraPos.x = currentCameraBounds.Value.z;
@@ -71,6 +71,6 @@ public class LevelEditorCamera : MonoBehaviour {
         else if(cameraPos.y < currentCameraBounds.Value.w) cameraPos.y = currentCameraBounds.Value.w;
 
         cameraPos.z = -10;
-        root.position = cameraPos;
+        trans.position = cameraPos;
     }
 }
