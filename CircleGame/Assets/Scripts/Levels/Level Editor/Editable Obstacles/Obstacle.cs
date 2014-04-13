@@ -16,7 +16,9 @@ public enum ObstacleType {
     Cannon, 
     Trampoline,
     [EnumDescription("Player Start")]
-    Player_Start
+    Player_Start,
+    [EnumDescription("Portal Position")]
+    Portal_Position
 }
 public class Obstacle {
     public ObstacleType obstacleType = ObstacleType.Circle;
@@ -28,6 +30,7 @@ public class Obstacle {
 public class CircleObstacle : Obstacle {
     public enum CircleType { None, Circle_Single, Circle_Double, Circle_Triple }
     public CircleType subType = CircleType.None;
+    public bool showGround = true;
 
     public CircleObstacle() { obstacleType = ObstacleType.Circle; }
 }

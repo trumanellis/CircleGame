@@ -20,4 +20,17 @@ public class EditableCircleObstacle : EditableObstacle {
     private void SetEditableProperties() {
         properties.edits = (EditableProperties.Properties.Position | EditableProperties.Properties.Remove_Center_Ground);
     }
+
+    public override void EditProperty(EditableProperties.Properties prop) {
+        if(properties.edits.Contains(prop)) {
+            if(prop == EditableProperties.Properties.Remove_Center_Ground) ToggleGround();
+            else base.EditProperty(prop);
+        }
+    }
+
+    public void ToggleGround() {
+        GameObject ground = transform.Find("Ground").gameObject;
+        ground.SetActive(!ground.activeSelf);
+        cob.showGround = ground.activeSelf;
+    }
 }

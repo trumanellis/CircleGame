@@ -81,6 +81,8 @@ public class LevelEditorManager : MonoBehaviour {
 
                     var ecob = trans.gameObject.AddComponent<EditableCircleObstacle>();
                     ecob.subType = cob.subType;
+
+                    trans.Find("Ground").gameObject.SetActive(cob.showGround);
                     break;
                 case ObstacleType.Ground:
                     var gob = obs[i] as GroundObstacle;

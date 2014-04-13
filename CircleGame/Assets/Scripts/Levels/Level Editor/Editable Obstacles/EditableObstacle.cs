@@ -21,7 +21,7 @@ public class EditableObstacle : MonoBehaviour {
     protected virtual void Awake() {
         trans = transform;
         boundingBox = (BoxCollider)collider;
-        if(cam == null) 
+        if(cam == null)
             cam = Camera.main.GetComponent<tk2dCamera>();
         sprites = GetComponents<SpriteRenderer>();
         if(sprites.Length == 0)
@@ -74,8 +74,8 @@ public class EditableObstacle : MonoBehaviour {
     }
 
     private void SetSelectionDepth() {
-        //doing this will fake an alpha test
-        float depth = -1 + (((boundingBox.size.x * trans.localScale.x) + (boundingBox.size.y * trans.localScale.y)) * .01f); 
+        //doing this will fake an alpha test. this will also need to be called every time we scale an obstacle
+        float depth = -1 + (((boundingBox.size.x * trans.localScale.x) + (boundingBox.size.y * trans.localScale.y)) * .01f);
         Vector3 center = new Vector3(boundingBox.center.x, boundingBox.center.y, depth);
         boundingBox.center = center;
     }
@@ -91,5 +91,27 @@ public class EditableObstacle : MonoBehaviour {
                 eob.sprites[i].color = LevelEditorManager.selectedObstacleColour;
         }
         currentObstacle = eob;
+    }
+
+    public virtual void EditProperty(EditableProperties.Properties prop) {
+        switch(prop) {
+            case EditableProperties.Properties.Position: EditPosition(); break;
+            case EditableProperties.Properties.Rotation: EditRotation(); break;
+            case EditableProperties.Properties.Scale: EditScale(); break;
+            default: break;
+        }
+    }
+
+    //most common editable properties
+    public virtual void EditPosition() {
+
+    }
+
+    public virtual void EditRotation() {
+
+    }
+
+    public virtual void EditScale() {
+
     }
 }

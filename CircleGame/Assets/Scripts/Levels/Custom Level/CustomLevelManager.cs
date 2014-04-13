@@ -38,6 +38,8 @@ public class CustomLevelManager : MonoBehaviour {
                     if(cob.subType == CircleObstacle.CircleType.Circle_Single) trans = ((GameObject)Instantiate(circlePrefabs.circleSingle, pos, Quaternion.identity)).transform;
                     else if(cob.subType == CircleObstacle.CircleType.Circle_Double) trans = ((GameObject)Instantiate(circlePrefabs.circleDouble, pos, Quaternion.identity)).transform;
                     else trans = ((GameObject)Instantiate(circlePrefabs.circleTriple, pos, Quaternion.identity)).transform;
+
+                    trans.Find("Ground").gameObject.SetActive(cob.showGround);
                     break;
                 case ObstacleType.Ground:
                     var gob = obs[i] as GroundObstacle;

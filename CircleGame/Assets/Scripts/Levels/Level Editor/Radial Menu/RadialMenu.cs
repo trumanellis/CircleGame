@@ -43,6 +43,7 @@ public class RadialMenu : MonoBehaviour {
         menuLabel.text = string.Empty;
         switch(prop) {
             case EditableProperties.Properties.Set_Player_Start: playerStartLocation.SetLocation(location); break;
+            default: EditableObstacle.currentObstacle.EditProperty(prop); break;
         }
     }
 
