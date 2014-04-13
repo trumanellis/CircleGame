@@ -9,7 +9,7 @@ public class EditableCircleObstacle : EditableObstacle {
         GameObject go = gameObject;
         cob = new CircleObstacle() {
             position = go.transform.position,
-            rotaion = go.transform.localEulerAngles,
+            rotation = go.transform.localEulerAngles,
             scale = go.transform.localScale
         };
         obstacle = cob;

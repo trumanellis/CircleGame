@@ -6,7 +6,7 @@ public class EditablePlayerStartLocation : EditableObstacle {
         obstacle = new Obstacle() {
             obstacleType = ObstacleType.Player_Start,
             position = transform.position,
-            rotaion = transform.eulerAngles,
+            rotation = transform.eulerAngles,
             scale = transform.localScale
         };
 

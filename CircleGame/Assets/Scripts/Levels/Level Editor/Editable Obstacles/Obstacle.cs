@@ -24,7 +24,7 @@ public class Obstacle {
     public ObstacleType obstacleType = ObstacleType.Circle;
     public Vector3 position { get; set; }
     public Vector3 scale { get; set; }
-    public Vector3 rotaion { get; set; }
+    public Vector3 rotation { get; set; }
 }
 
 public class CircleObstacle : Obstacle {

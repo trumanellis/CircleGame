@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class ScaleCenterGrabber : MonoBehaviour {
-    public ScaleGizmo gizmo;
+    public Gizmo gizmo;
 
     private void OnDrag(Vector2 delta) {
         float largest = Mathf.Max(Mathf.Abs(delta.x), Mathf.Abs(delta.y));

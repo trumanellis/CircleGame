@@ -29,7 +29,7 @@ public class CustomLevelManager : MonoBehaviour {
         for(int i = 0; i < obs.Count; i++) {
             Vector3 pos = obs[i].position;
             Vector3 scale = obs[i].scale;
-            Vector3 rot = obs[i].rotaion;
+            Vector3 rot = obs[i].rotation;
             Transform trans = null;
 
             switch(obs[i].obstacleType) {

@@ -19,6 +19,7 @@ public class EditableObstacle : MonoBehaviour {
     private const float lowerPadding = 5f;
     private const float positionFactor = .01f;
     private const float scaleFactor = .1f;
+    private const float rotationFactor = .3f;
 
     protected virtual void Awake() {
         trans = transform;
@@ -125,6 +126,12 @@ public class EditableObstacle : MonoBehaviour {
 
     public virtual void EditRotation() {
         if(LevelEditorManager.currentGizmo != null) LevelEditorManager.currentGizmo.SetActive(false);
+        CreateGizmo(EditPropertyUIController.rotationGizmo.gameObject);
+        EditPropertyUIController.rotationGizmo.onGizmoDrag = (delta) => {
+            trans.eulerAngles = new Vector3(trans.eulerAngles.x, trans.eulerAngles.y, trans.eulerAngles.z + (delta.y * (rotationFactor / cam.ZoomFactor)));
+            obstacle.rotation = trans.eulerAngles;
+        };
+
         for(int i = 0; i < sprites.Length; i++)
             sprites[i].color = LevelEditorManager.editableObstacleColour;
     }

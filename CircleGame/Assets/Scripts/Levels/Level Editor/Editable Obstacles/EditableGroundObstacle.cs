@@ -15,7 +15,7 @@ public class EditableGroundObstacle : EditableObstacle {
         GameObject go = gameObject;
         gob = new GroundObstacle() {
             position = go.transform.position,
-            rotaion = go.transform.localEulerAngles,
+            rotation = go.transform.localEulerAngles,
             scale = go.transform.localScale
         };
         obstacle = gob;

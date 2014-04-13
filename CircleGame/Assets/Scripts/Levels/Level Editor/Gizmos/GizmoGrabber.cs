@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PositionGrabber : MonoBehaviour {
+public class GizmoGrabber : MonoBehaviour {
     private TweenColor tween;
-    public PositionGizmo gizmo;
+    public Gizmo gizmo;
     private bool isX;
 
     private void Awake() {

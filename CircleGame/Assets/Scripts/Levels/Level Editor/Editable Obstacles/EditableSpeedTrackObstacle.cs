@@ -9,7 +9,7 @@ public class EditableSpeedTrackObstacle : EditableObstacle {
         GameObject go = gameObject;
         stob = new SpeedtrackObstacle() {
             position = go.transform.position,
-            rotaion = go.transform.localEulerAngles,
+            rotation = go.transform.localEulerAngles,
             scale = go.transform.localScale
         };
         obstacle = stob;

@@ -77,7 +77,7 @@ public class LevelEditorManager : MonoBehaviour {
         for(int i = 0; i < obs.Count; i++) {
             Vector3 pos = obs[i].position;
             Vector3 scale = obs[i].scale;
-            Vector3 rot = obs[i].rotaion;
+            Vector3 rot = obs[i].rotation;
             Transform trans = null;
 
             switch(obs[i].obstacleType) {
@@ -132,7 +132,7 @@ public class LevelEditorManager : MonoBehaviour {
                     playerStartMarker.parent = transform;
                     var pso = playerStartMarker.GetComponent<EditableObstacle>();
                     pso.obstacle.position = playerStartMarker.position;
-                    pso.obstacle.rotaion = playerStartMarker.eulerAngles;
+                    pso.obstacle.rotation = playerStartMarker.eulerAngles;
                     pso.obstacle.scale = playerStartMarker.localScale;
                 }
             }
