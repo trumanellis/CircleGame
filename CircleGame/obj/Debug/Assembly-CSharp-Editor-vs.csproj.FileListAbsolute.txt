@@ -21,3 +21,4 @@ D:\programming\GitHub\CircleGame\CircleGame\Temp\bin\Debug\Assembly-CSharp.pdb
 D:\programming\GitHub\CircleGame\CircleGame\obj\Debug\Assembly-CSharp-Editor-vs.csprojResolveAssemblyReference.cache
 D:\programming\GitHub\CircleGame\CircleGame\obj\Debug\Assembly-CSharp-Editor.dll
 D:\programming\GitHub\CircleGame\CircleGame\obj\Debug\Assembly-CSharp-Editor.pdb
+D:\programming\GitHub\CircleGame\CircleGame\Temp\bin\Debug\Patchie.dll

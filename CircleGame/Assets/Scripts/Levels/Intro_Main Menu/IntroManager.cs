@@ -15,7 +15,10 @@ public class IntroManager : MonoBehaviour {
 
     private void Start() {
         if(mainMenuMusic == null) mainMenuMusic = SoundManager.Play("Main Menu").Loop(true);
-        else mainMenuMusic.Play();
+        else if(mainMenuMusic.isPlaying) {
+            mainMenuMusic.Stop();
+            mainMenuMusic.Play();
+        }
 
         showMenuTrigger.onButtonPress += ShowMainMenu;
         triggerArea.onAreaEnter += DetachTitle;

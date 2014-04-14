@@ -64,7 +64,7 @@ public class SOS : MonoBehaviour {
         quitKey = _quitKey;
         isPaidVersion = _isPaidVersion;
         debugEnabled = _enableDebug;
-        updateURL = _updateURL;
+        updateURL = _updateURL; 
     }
 
     private void Start() {

@@ -109,10 +109,10 @@ public class Sound {
         return this;
     }
 
-    public void Stop() {
+    public void Stop(bool destroy = false) {
         if(source != null) {
             source.Stop();
-            SOS.Destroy(source.gameObject);
+            if(destroy) SOS.Destroy(source.gameObject);
         } else NotInit();
     }
 
