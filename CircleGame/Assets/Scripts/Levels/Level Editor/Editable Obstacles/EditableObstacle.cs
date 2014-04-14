@@ -83,15 +83,15 @@ public class EditableObstacle : MonoBehaviour {
     }
 
     private void Reposition(Vector2 pos) {
-        if(pos.x > (LevelEditorManager.worldBounds.size.x / 2f) - ((boundingBox.size.x * trans.localScale.x) / 2f))
-            pos.x = (LevelEditorManager.worldBounds.size.x / 2f) - ((boundingBox.size.x * trans.localScale.x) / 2f);
-        else if(pos.x < -(LevelEditorManager.worldBounds.size.x / 2f) + ((boundingBox.size.x * trans.localScale.x) / 2f))
-            pos.x = -(LevelEditorManager.worldBounds.size.x / 2f) + ((boundingBox.size.x * trans.localScale.x) / 2f);
+        if(pos.x > (LevelEditorManager.worldBounds.size.x / 2f) - ((boundingBox.size.x * Mathf.Abs(trans.localScale.x)) / 2f))
+            pos.x = (LevelEditorManager.worldBounds.size.x / 2f) - ((boundingBox.size.x * Mathf.Abs(trans.localScale.x)) / 2f);
+        else if(pos.x < -(LevelEditorManager.worldBounds.size.x / 2f) + ((boundingBox.size.x * Mathf.Abs(trans.localScale.x)) / 2f))
+            pos.x = -(LevelEditorManager.worldBounds.size.x / 2f) + ((boundingBox.size.x * Mathf.Abs(trans.localScale.x)) / 2f);
 
-        if(pos.y > (LevelEditorManager.worldBounds.size.y / 2f) - ((boundingBox.size.y * trans.localScale.y) / 2f))
-            pos.y = (LevelEditorManager.worldBounds.size.y / 2f) - ((boundingBox.size.y * trans.localScale.y) / 2f);
-        else if(pos.y < -(LevelEditorManager.worldBounds.size.y / 2f) + ((boundingBox.size.y * trans.localScale.y) / 2f))
-            pos.y = -(LevelEditorManager.worldBounds.size.y / 2f) + ((boundingBox.size.y * trans.localScale.y) / 2f);
+        if(pos.y > (LevelEditorManager.worldBounds.size.y / 2f) - ((boundingBox.size.y * Mathf.Abs(trans.localScale.y)) / 2f))
+            pos.y = (LevelEditorManager.worldBounds.size.y / 2f) - ((boundingBox.size.y * Mathf.Abs(trans.localScale.y)) / 2f);
+        else if(pos.y < -(LevelEditorManager.worldBounds.size.y / 2f) + ((boundingBox.size.y * Mathf.Abs(trans.localScale.y)) / 2f))
+            pos.y = -(LevelEditorManager.worldBounds.size.y / 2f) + ((boundingBox.size.y * Mathf.Abs(trans.localScale.y)) / 2f);
 
         trans.position = pos;
         obstacle.position = trans.position;
@@ -162,6 +162,7 @@ public class EditableObstacle : MonoBehaviour {
             Reposition(trans.position);
             obstacle.scale = trans.localScale;
         };
+        EditPropertyUIController.scaleGizmo.transform.eulerAngles = trans.eulerAngles;
 
         for(int i = 0; i < sprites.Length; i++)
             sprites[i].color = LevelEditorManager.editableObstacleColour;

@@ -158,6 +158,7 @@ public class LevelEditorManager : MonoBehaviour {
         foreach(Transform child in obstaclesRoot) children.Add(child.gameObject);
         children.ForEach(child => Destroy(child));
         obstacles.Add(playerStartMarker.GetComponent<EditableObstacle>().obstacle);
+        if(currentGizmo != null) currentGizmo.SetActive(false);
     }
 
     public static void AddObstacle(Obstacle ob) {
