@@ -26,7 +26,7 @@ public class IntroManager : MonoBehaviour {
             player.moveController.trailEnabled = true;
             SOS.ExecuteMethod(menuStarter.cannonFireDelay, () => {
                 cannon.shouldFire = true;
-                menuStarter.ShowButtons();
+                menuStarter.ShowButtons(() => { mainMenuMusic.Volume(.2f); });
             });
         };
         openScreen.FadeOutScreen();
@@ -129,11 +129,14 @@ public class MainMenuStarter {
     public UITweener updateButton;
     public UITweener[] buttons;
 
-    public void ShowButtons() {
+    public void ShowButtons(System.Action onFinish = null) {
         for(int i = 0; i < buttons.Length; i++) {
             UIButton button = buttons[i].GetComponent<UIButton>();
             button.isEnabled = false;
-            buttons[i].onFinished.Add(new EventDelegate(() => { button.isEnabled = true; }));
+            buttons[i].onFinished.Add(new EventDelegate(() => {
+                button.isEnabled = true;
+                if(onFinish != null) onFinish();
+            }) { oneShot = true });
             buttons[i].PlayForward();
         }
 
@@ -142,7 +145,7 @@ public class MainMenuStarter {
                 updateButton.gameObject.SetActive(true);
                 UIButton ubutton = updateButton.GetComponent<UIButton>();
                 ubutton.isEnabled = false;
-                updateButton.onFinished.Add(new EventDelegate(() => { ubutton.isEnabled = true; }));
+                updateButton.onFinished.Add(new EventDelegate(() => { ubutton.isEnabled = true; }) { oneShot = true });
             }
         }
     }
