@@ -45,6 +45,9 @@ public class LevelEditorCamera : MonoBehaviour {
             } else {
                 instance.mainCam.ZoomFactor += scroll;
                 instance.bgCam.ZoomFactor += scroll;
+
+                Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                instance.trans.position += mousePos;
             }
 
             if(instance.mainCam.ZoomFactor != startZoom) {

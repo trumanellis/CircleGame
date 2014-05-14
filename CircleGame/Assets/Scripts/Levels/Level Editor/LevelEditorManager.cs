@@ -110,15 +110,8 @@ public class LevelEditorManager : MonoBehaviour {
 
                 case ObstacleType.Speed_Track:
                     var stob = obs[i] as SpeedtrackObstacle;
-                    if(stob.subType == SpeedtrackObstacle.SpeedTrackType.Small_Down) trans = ((GameObject)Instantiate(trackPrefabs.smallDown, pos, Quaternion.identity)).transform;
-                    else if(stob.subType == SpeedtrackObstacle.SpeedTrackType.Small_Left) trans = ((GameObject)Instantiate(trackPrefabs.smallLeft, pos, Quaternion.identity)).transform;
-                    else if(stob.subType == SpeedtrackObstacle.SpeedTrackType.Small_Right) trans = ((GameObject)Instantiate(trackPrefabs.smallRight, pos, Quaternion.identity)).transform;
-                    else if(stob.subType == SpeedtrackObstacle.SpeedTrackType.Small_Up) trans = ((GameObject)Instantiate(trackPrefabs.smallUp, pos, Quaternion.identity)).transform;
-                    else if(stob.subType == SpeedtrackObstacle.SpeedTrackType.Wide_Down) trans = ((GameObject)Instantiate(trackPrefabs.wideDown, pos, Quaternion.identity)).transform;
-                    else if(stob.subType == SpeedtrackObstacle.SpeedTrackType.Wide_Left) trans = ((GameObject)Instantiate(trackPrefabs.wideLeft, pos, Quaternion.identity)).transform;
-                    else if(stob.subType == SpeedtrackObstacle.SpeedTrackType.Wide_Right) trans = ((GameObject)Instantiate(trackPrefabs.wideRight, pos, Quaternion.identity)).transform;
-                    else if(stob.subType == SpeedtrackObstacle.SpeedTrackType.Wide_Up) trans = ((GameObject)Instantiate(trackPrefabs.wideUp, pos, Quaternion.identity)).transform;
-
+                    if(stob.subType == SpeedtrackObstacle.SpeedTrackType.Small) trans = ((GameObject)Instantiate(trackPrefabs.small, pos, Quaternion.identity)).transform;
+                    else if(stob.subType == SpeedtrackObstacle.SpeedTrackType.Wide) trans = ((GameObject)Instantiate(trackPrefabs.wide, pos, Quaternion.identity)).transform;
                     var estob = trans.gameObject.AddComponent<EditableSpeedTrackObstacle>();
                     estob.subType = stob.subType;
                     ob = estob;
@@ -195,12 +188,6 @@ public class GroundPrefabs {
 
 [System.Serializable]
 public class SpeedTrackPrefabs {
-    public GameObject smallDown;
-    public GameObject smallLeft;
-    public GameObject smallRight;
-    public GameObject smallUp;
-    public GameObject wideDown;
-    public GameObject wideLeft;
-    public GameObject wideRight;
-    public GameObject wideUp;
+    public GameObject small;
+    public GameObject wide;
 }

@@ -58,7 +58,8 @@ public class PlayerMovementController : MonoBehaviour {
             }
 
             if(jump) {
-                player.body2D.AddForce(new Vector2(0f, jumpForce));
+                //player.body2D.AddForce(new Vector2(0f, jumpForce));
+                player.body2D.velocity = new Vector2(player.body2D.velocity.x, 7f);
                 jump = false;
             }
         }

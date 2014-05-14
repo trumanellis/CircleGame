@@ -61,22 +61,10 @@ public class GroundObstacle : Obstacle {
 public class SpeedtrackObstacle : Obstacle {
     public enum SpeedTrackType {
         None,
-        [EnumDescription("Small Down")]
-        Small_Down,
-        [EnumDescription("Small Up")]
-        Small_Up,
-        [EnumDescription("Small Left")]
-        Small_Left,
-        [EnumDescription("Small Right")]
-        Small_Right,
-        [EnumDescription("Wide Down")]
-        Wide_Down,
-        [EnumDescription("Wide Up")]
-        Wide_Up,
-        [EnumDescription("Wide Left")]
-        Wide_Left,
-        [EnumDescription("Wide Right")]
-        Wide_Right
+        [EnumDescription("Speed Track (small)")]
+        Small,
+        [EnumDescription("Speed Track (wide)")]
+        Wide,
     }
     public SpeedTrackType subType = SpeedTrackType.None;
 
