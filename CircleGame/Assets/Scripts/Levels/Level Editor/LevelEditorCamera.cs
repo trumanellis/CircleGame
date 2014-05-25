@@ -34,6 +34,10 @@ public class LevelEditorCamera : MonoBehaviour {
     }
 
     public static void Zoom(float scroll) {
+        instance.StartCoroutine(_Zoom(scroll));
+    }
+
+    private static IEnumerator _Zoom(float scroll) {
         if(scroll != 0) {
             float startZoom = instance.mainCam.ZoomFactor;
             if(instance.mainCam.ZoomFactor + scroll < instance.maxZoom) {
@@ -43,11 +47,17 @@ public class LevelEditorCamera : MonoBehaviour {
                 instance.mainCam.ZoomFactor = 1f;
                 instance.bgCam.ZoomFactor = 1f;
             } else {
+                Vector3 wp = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                Debug.Log("Before Zoom" + wp);
+
                 instance.mainCam.ZoomFactor += scroll;
                 instance.bgCam.ZoomFactor += scroll;
 
-                Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                instance.trans.position += mousePos;
+                //Debug.Log("My guess" + wp * instance.mainCam.ZoomFactor);
+
+               //yield return 1;
+                instance.mainCam.UpdateCameraMatrix();
+                Debug.Log("After zoom" + Camera.main.ScreenToWorldPoint(Input.mousePosition));
             }
 
             if(instance.mainCam.ZoomFactor != startZoom) {
@@ -61,7 +71,7 @@ public class LevelEditorCamera : MonoBehaviour {
                 instance.currentCameraBounds = newBounds;
             }
             instance.RepositionCamera();
-        }
+        } return null;
     }
 
     public void RepositionCamera() {
