@@ -6,6 +6,7 @@ public class Absorb_FirePlayer : MonoBehaviour {
     public Transform cannonTip;
     private Transform cannon;
     public CameraFollow followingCamera;
+    private float origGrav;
     public float velocity = 20;
     public float cameraTweenDureation = 1.5f;
     public float maxZoom = .6f;
@@ -36,6 +37,7 @@ public class Absorb_FirePlayer : MonoBehaviour {
         if(!hasPlayer && !playerFired) {
             hasPlayer = true;
             player = col.GetComponent<Player>();
+            origGrav = player.body2D.gravityScale;
             player.body2D.gravityScale = 0;
             if(OnPlayerEnter != null) OnPlayerEnter();
 
@@ -54,8 +56,6 @@ public class Absorb_FirePlayer : MonoBehaviour {
     }
 
     public void FiredPlayer() {
-        player.body2D.gravityScale = 1;
-        playerFired = false;
         canFire = false;
         player = null;
         shouldFire = false;
@@ -76,6 +76,7 @@ public class Absorb_FirePlayer : MonoBehaviour {
     private IEnumerator LaunchPlayer() {
         player.trans.rotation = cannon.rotation;
         player.body2D.velocity = player.trans.up * velocity;
+        player.body2D.gravityScale = origGrav;
         hasPlayer = false;
         playerFired = true;
 
@@ -86,6 +87,7 @@ public class Absorb_FirePlayer : MonoBehaviour {
 
         yield return new WaitForSeconds(.1f); // this is here due to a unity bug with 2d triggers not sending right callbacks
         FiredPlayer();
+        //return null;
     }
 
     private void ChangeZoomValue(float value) {
