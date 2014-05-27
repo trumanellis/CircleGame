@@ -8,24 +8,30 @@ public class CustomLevelManager : MonoBehaviour {
     public static bool fromEditor { get; set; }
     private Transform root;
 
+    public Transform player;
     public CameraFollow follow;
     public GameObject editorButton;
     public CirlePrefabs circlePrefabs;
     public GroundPrefabs groundPrefabs;
     public SpeedTrackPrefabs trackPrefabs;
-    public Transform player;
+    public GameObject redBall;
 
     private void Start() {
         root = transform;
         if(PlayerPrefs.HasKey("Serialize Test"))
-            LoadLevel();
+            SaveOldLevel();
+        LoadLevel(CreatedLevel.LoadLevel("Test Level"));
         follow.SetTarget(player);
     }
 
-    private void LoadLevel() {
+    private void SaveOldLevel() {
+        CreatedLevel.SaveLevel("Test Level", PlayerPrefs.GetString("Serialize Test"));
+    }
+
+    private void LoadLevel(string levelData) {
         JsonSerializerSettings settings = new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All };
-        string map = PlayerPrefs.GetString("Serialize Test");
-        var obs = JsonConvert.DeserializeObject<List<Obstacle>>(map, settings);
+        if(string.IsNullOrEmpty(levelData)) return;
+        var obs = JsonConvert.DeserializeObject<List<Obstacle>>(levelData, settings);
         for(int i = 0; i < obs.Count; i++) {
             Vector3 pos = obs[i].position;
             Vector3 scale = obs[i].scale;
@@ -35,24 +41,27 @@ public class CustomLevelManager : MonoBehaviour {
             switch(obs[i].obstacleType) {
                 case ObstacleType.Circle:
                     var cob = obs[i] as CircleObstacle;
-                    if(cob.subType == CircleObstacle.CircleType.Circle_Single) trans = ((GameObject)Instantiate(circlePrefabs.circleSingle, pos, Quaternion.identity)).transform;
-                    else if(cob.subType == CircleObstacle.CircleType.Circle_Double) trans = ((GameObject)Instantiate(circlePrefabs.circleDouble, pos, Quaternion.identity)).transform;
-                    else trans = ((GameObject)Instantiate(circlePrefabs.circleTriple, pos, Quaternion.identity)).transform;
+                    if(cob.subType == CircleObstacle.CircleType.Circle_Single) trans = ((GameObject)Instantiate(circlePrefabs.circleSingle)).transform;
+                    else if(cob.subType == CircleObstacle.CircleType.Circle_Double) trans = ((GameObject)Instantiate(circlePrefabs.circleDouble)).transform;
+                    else trans = ((GameObject)Instantiate(circlePrefabs.circleTriple)).transform;
 
                     if(!cob.showGround)
                         trans.Find("Ground").gameObject.SetActive(false);
                     break;
                 case ObstacleType.Ground:
                     var gob = obs[i] as GroundObstacle;
-                    if(gob.subType == GroundObstacle.GroundType.Ground) trans = ((GameObject)Instantiate(groundPrefabs.ground, pos, Quaternion.identity)).transform;
-                    else if(gob.subType == GroundObstacle.GroundType.Falling_Ground) trans = ((GameObject)Instantiate(groundPrefabs.fallingGround, pos, Quaternion.identity)).transform;
-                    else if(gob.subType == GroundObstacle.GroundType.Moving_Ground) trans = ((GameObject)Instantiate(groundPrefabs.movingGround, pos, Quaternion.identity)).transform;
-                    else if(gob.subType == GroundObstacle.GroundType.Trampoline) trans = ((GameObject)Instantiate(groundPrefabs.trampoline, pos, Quaternion.identity)).transform;
+                    if(gob.subType == GroundObstacle.GroundType.Ground) trans = ((GameObject)Instantiate(groundPrefabs.ground)).transform;
+                    else if(gob.subType == GroundObstacle.GroundType.Falling_Ground) trans = ((GameObject)Instantiate(groundPrefabs.fallingGround)).transform;
+                    else if(gob.subType == GroundObstacle.GroundType.Moving_Ground) trans = ((GameObject)Instantiate(groundPrefabs.movingGround)).transform;
+                    else if(gob.subType == GroundObstacle.GroundType.Trampoline) trans = ((GameObject)Instantiate(groundPrefabs.trampoline)).transform;
                     break;
                 case ObstacleType.Speed_Track:
                     var stob = obs[i] as SpeedtrackObstacle;
-                    if(stob.subType == SpeedtrackObstacle.SpeedTrackType.Small) trans = ((GameObject)Instantiate(trackPrefabs.small, pos, Quaternion.identity)).transform;
-                    else if(stob.subType == SpeedtrackObstacle.SpeedTrackType.Wide) trans = ((GameObject)Instantiate(trackPrefabs.wide, pos, Quaternion.identity)).transform;
+                    if(stob.subType == SpeedtrackObstacle.SpeedTrackType.Small) trans = ((GameObject)Instantiate(trackPrefabs.small)).transform;
+                    else if(stob.subType == SpeedtrackObstacle.SpeedTrackType.Wide) trans = ((GameObject)Instantiate(trackPrefabs.wide)).transform;
+                    break;
+                case ObstacleType.RedBall:
+                    trans = ((GameObject)Instantiate(redBall)).transform;
                     break;
                 case ObstacleType.Player_Start: trans = player; break;
                 default: break;

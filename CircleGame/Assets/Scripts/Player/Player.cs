@@ -9,6 +9,7 @@ public class Player : MonoBehaviour {
     public Collider2D col2D { get; private set; }
     public PlayerMovementController moveController { get; private set; }
     public Vector2 position { get { return trans.position; } set { trans.position = value; } }
+    public float standardGravityScale { get; private set; }
 
     public float alpha { 
         get { return spriteRend.color.a; }
@@ -22,5 +23,6 @@ public class Player : MonoBehaviour {
         col2D = collider2D;
         spriteRend = GetComponent<SpriteRenderer>();
         moveController = GetComponent<PlayerMovementController>();
+        standardGravityScale = body2D.gravityScale;
 	}
 }

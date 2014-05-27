@@ -23,6 +23,7 @@ public class LevelEditorManager : MonoBehaviour {
     public GroundPrefabs groundPrefabs;
     public SpeedTrackPrefabs trackPrefabs;
     public Transform playerStartMarker;
+    public GameObject redBall;
 
     private void Awake() {
         instance = this;
@@ -31,17 +32,23 @@ public class LevelEditorManager : MonoBehaviour {
         editableObstacleColour = _editableObstacleColour;
         worldBounds = (BoxCollider)collider;
         if(IntroManager.mainMenuMusic != null && IntroManager.mainMenuMusic.isPlaying) IntroManager.mainMenuMusic.Stop();
+
+        //CreateLevelDirectory();
     }
 
     private void Start() {
-        if(PlayerPrefs.HasKey("Serialize Test")) {
-            LoadLevel();
-        }
-
+        if(PlayerPrefs.HasKey("Serialize Test"))
+            SaveOldLevel();
+        LoadLevel(CreatedLevel.LoadLevel("Test Level"));
         Vector3 pos = playerStartMarker.position;
         pos.z = -10;
         editorCam.transform.position = pos;
         editorCam.RepositionCamera();
+    }
+
+    private void SaveOldLevel() {
+        CreatedLevel.SaveLevel("Test Level", PlayerPrefs.GetString("Serialize Test"));
+        PlayerPrefs.DeleteKey("Serialize Test");
     }
 
     public static void ShowRadialMenu(ObstacleType type) {
@@ -70,10 +77,11 @@ public class LevelEditorManager : MonoBehaviour {
         if(Input.GetMouseButtonUp(0) && EditableObstacle.currentObstacle != null) EditableObstacle.currentObstacle.EditComplete();
     }
 
-    private void LoadLevel() {
+    private void LoadLevel(string levelData) {
         JsonSerializerSettings settings = new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All };
-        string map = PlayerPrefs.GetString("Serialize Test");
-        var obs = JsonConvert.DeserializeObject<List<Obstacle>>(map, settings);
+        Debug.Log(levelData);
+        if(string.IsNullOrEmpty(levelData)) return;
+        var obs = JsonConvert.DeserializeObject<List<Obstacle>>(levelData, settings);
         for(int i = 0; i < obs.Count; i++) {
             Vector3 pos = obs[i].position;
             Vector3 scale = obs[i].scale;
@@ -84,9 +92,9 @@ public class LevelEditorManager : MonoBehaviour {
             switch(obs[i].obstacleType) {
                 case ObstacleType.Circle:
                     var cob = obs[i] as CircleObstacle;
-                    if(cob.subType == CircleObstacle.CircleType.Circle_Single) trans = ((GameObject)Instantiate(circlePrefabs.circleSingle, pos, Quaternion.identity)).transform;
-                    else if(cob.subType == CircleObstacle.CircleType.Circle_Double) trans = ((GameObject)Instantiate(circlePrefabs.circleDouble, pos, Quaternion.identity)).transform;
-                    else trans = ((GameObject)Instantiate(circlePrefabs.circleTriple, pos, Quaternion.identity)).transform;
+                    if(cob.subType == CircleObstacle.CircleType.Circle_Single) trans = ((GameObject)Instantiate(circlePrefabs.circleSingle)).transform;
+                    else if(cob.subType == CircleObstacle.CircleType.Circle_Double) trans = ((GameObject)Instantiate(circlePrefabs.circleDouble)).transform;
+                    else trans = ((GameObject)Instantiate(circlePrefabs.circleTriple)).transform;
 
                     var ecob = trans.gameObject.AddComponent<EditableCircleObstacle>();
                     ecob.subType = cob.subType;
@@ -98,10 +106,10 @@ public class LevelEditorManager : MonoBehaviour {
                     break;
                 case ObstacleType.Ground:
                     var gob = obs[i] as GroundObstacle;
-                    if(gob.subType == GroundObstacle.GroundType.Ground) trans = ((GameObject)Instantiate(groundPrefabs.ground, pos, Quaternion.identity)).transform;
-                    else if(gob.subType == GroundObstacle.GroundType.Falling_Ground) trans = ((GameObject)Instantiate(groundPrefabs.fallingGround, pos, Quaternion.identity)).transform;
-                    else if(gob.subType == GroundObstacle.GroundType.Moving_Ground) trans = ((GameObject)Instantiate(groundPrefabs.movingGround, pos, Quaternion.identity)).transform;
-                    else if(gob.subType == GroundObstacle.GroundType.Trampoline) trans = ((GameObject)Instantiate(groundPrefabs.trampoline, pos, Quaternion.identity)).transform;
+                    if(gob.subType == GroundObstacle.GroundType.Ground) trans = ((GameObject)Instantiate(groundPrefabs.ground)).transform;
+                    else if(gob.subType == GroundObstacle.GroundType.Falling_Ground) trans = ((GameObject)Instantiate(groundPrefabs.fallingGround)).transform;
+                    else if(gob.subType == GroundObstacle.GroundType.Moving_Ground) trans = ((GameObject)Instantiate(groundPrefabs.movingGround)).transform;
+                    else if(gob.subType == GroundObstacle.GroundType.Trampoline) trans = ((GameObject)Instantiate(groundPrefabs.trampoline)).transform;
 
                     var egob = trans.gameObject.AddComponent<EditableGroundObstacle>();
                     egob.subType = gob.subType;
@@ -110,8 +118,8 @@ public class LevelEditorManager : MonoBehaviour {
 
                 case ObstacleType.Speed_Track:
                     var stob = obs[i] as SpeedtrackObstacle;
-                    if(stob.subType == SpeedtrackObstacle.SpeedTrackType.Small) trans = ((GameObject)Instantiate(trackPrefabs.small, pos, Quaternion.identity)).transform;
-                    else if(stob.subType == SpeedtrackObstacle.SpeedTrackType.Wide) trans = ((GameObject)Instantiate(trackPrefabs.wide, pos, Quaternion.identity)).transform;
+                    if(stob.subType == SpeedtrackObstacle.SpeedTrackType.Small) trans = ((GameObject)Instantiate(trackPrefabs.small)).transform;
+                    else if(stob.subType == SpeedtrackObstacle.SpeedTrackType.Wide) trans = ((GameObject)Instantiate(trackPrefabs.wide)).transform;
                     var estob = trans.gameObject.AddComponent<EditableSpeedTrackObstacle>();
                     estob.subType = stob.subType;
                     ob = estob;
@@ -119,6 +127,10 @@ public class LevelEditorManager : MonoBehaviour {
                 case ObstacleType.Player_Start:
                     trans = playerStartMarker;
                     ob = trans.GetComponent<EditableObstacle>();
+                    break;
+                case ObstacleType.RedBall:
+                    trans = ((GameObject)Instantiate(redBall)).transform;
+                    ob = trans.gameObject.AddComponent<EditableRedBall>();
                     break;
                 default: break;
             }
@@ -140,9 +152,11 @@ public class LevelEditorManager : MonoBehaviour {
     public void SaveLevel() {
         JsonSerializerSettings settings = new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All };
         string serialized = JsonConvert.SerializeObject(obstacles, Formatting.Indented, settings);
-        PlayerPrefs.SetString("Serialize Test", serialized);
-        PlayerPrefs.Save();
-        Debug.Log("Save Complete");
+        //PlayerPrefs.SetString("Serialize Test", serialized);
+        //PlayerPrefs.Save();
+        if(CreatedLevel.SaveLevel("Test Level", serialized))
+            Debug.Log("Save Complete");
+        else Debug.LogWarning("Error saving level");
     }
 
     public void ClearPrefs() {

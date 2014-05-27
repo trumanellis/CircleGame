@@ -29,6 +29,9 @@ public class SubObstacleButton : MonoBehaviour {
                 stob.subType = speedtrackType;
                 eob = stob;
                 break;
+            case ObstacleType.RedBall:
+                eob = go.AddComponent<EditableRedBall>();
+                break;
             case ObstacleType.Cannon:
             case ObstacleType.Trampoline:
             case ObstacleType.Water: break;

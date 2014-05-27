@@ -18,10 +18,12 @@ public enum ObstacleType {
     [EnumDescription("Player Start")]
     Player_Start,
     [EnumDescription("Portal Position")]
-    Portal_Position
+    Portal_Position,
+    [EnumDescription("Red Ball")]
+    RedBall
 }
 public class Obstacle {
-    public ObstacleType obstacleType = ObstacleType.Circle;
+    public ObstacleType obstacleType = ObstacleType.None;
     public Vector3 position { get; set; }
     public Vector3 scale { get; set; }
     public Vector3 rotation { get; set; }
