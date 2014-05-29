@@ -44,7 +44,6 @@ public class CreatedLevel : MonoBehaviour {
             path = Application.dataPath + @"/Custom Levels";
         try {
             if(Directory.Exists(path)) {
-                Debug.Log("Here");
                 string levelData = "";
                 using(StreamReader sr = new StreamReader(path + "/" + levelName + ".level")) {
                     levelData = sr.ReadToEnd();

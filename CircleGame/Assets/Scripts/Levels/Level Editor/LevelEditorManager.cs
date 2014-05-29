@@ -79,7 +79,6 @@ public class LevelEditorManager : MonoBehaviour {
 
     private void LoadLevel(string levelData) {
         JsonSerializerSettings settings = new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All };
-        Debug.Log(levelData);
         if(string.IsNullOrEmpty(levelData)) return;
         var obs = JsonConvert.DeserializeObject<List<Obstacle>>(levelData, settings);
         for(int i = 0; i < obs.Count; i++) {
