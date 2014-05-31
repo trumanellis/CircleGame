@@ -31,8 +31,10 @@ public class EditableGear : EditableObstacle {
 
     private void SetEditableProperties() {
         properties.edits = EditableProperties.Properties.Position | EditableProperties.Properties.Scale | EditableProperties.Properties.Toggle_Rotation_Direction;
+
         uniformScale = true;
-        maxScale = new Vector2(3f, 3f);
-        minScale = new Vector2(.5f, .5f);
+        maxScale = new Vector2(4f, 4f);
+        minScale = new Vector2(1f, 1f);
+        scaleFactor = .01f;
     }
 }

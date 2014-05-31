@@ -19,13 +19,13 @@ public class EditableObstacle : MonoBehaviour {
     protected Vector2 minScale = Vector2.one;
     protected bool uniformScale;
 
-    private const float leftPadding = 5f;
-    private const float rightPadding = 5f;
-    private const float upperPadding = 5f;
-    private const float lowerPadding = 5f;
-    private const float positionFactor = .01f;
-    private const float scaleFactor = .1f;
-    private const float rotationFactor = .3f;
+    protected float leftPadding = 5f;
+    protected float rightPadding = 5f;
+    protected float upperPadding = 5f;
+    protected float lowerPadding = 5f;
+    protected float positionFactor = .01f;
+    protected float scaleFactor = .1f;
+    protected float rotationFactor = .3f;
 
     protected virtual void Awake() {
         trans = transform;
