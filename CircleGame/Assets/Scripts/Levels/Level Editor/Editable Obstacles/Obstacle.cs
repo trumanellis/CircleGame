@@ -53,6 +53,7 @@ public class GroundObstacle : Obstacle {
         Falling_Ground,
         [EnumDescription("Moving Ground")]
         Moving_Ground,
+        Triangle,
         Trampoline
     }
     public GroundType subType = GroundType.None;

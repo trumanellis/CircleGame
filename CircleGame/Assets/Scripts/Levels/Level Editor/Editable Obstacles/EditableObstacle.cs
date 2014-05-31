@@ -12,6 +12,7 @@ public class EditableObstacle : MonoBehaviour {
     public Obstacle obstacle { get; protected set; }
     public BoxCollider boundingBox { get; private set; }
     private bool shouldReposition;
+    protected bool uniformScale;
 
     private const float leftPadding = 5f;
     private const float rightPadding = 5f;
@@ -158,7 +159,10 @@ public class EditableObstacle : MonoBehaviour {
         CreateGizmo(EditPropertyUIController.scaleGizmo.gameObject);
         EditPropertyUIController.scaleGizmo.onGizmoDrag = (delta) => {
             //need to check if it will become too large before setting it
-            trans.localScale += (Vector3)(delta * (scaleFactor / cam.ZoomFactor));
+            if(uniformScale) {
+                delta = delta.x > 0 || delta.y > 0 ? Vector2.one : -Vector2.one;
+                trans.localScale += (Vector3)(delta * (scaleFactor / cam.ZoomFactor));
+            } else trans.localScale += (Vector3)(delta * (scaleFactor / cam.ZoomFactor));
             Reposition(trans.position);
             obstacle.scale = trans.localScale;
             SetSelectionDepth();

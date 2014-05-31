@@ -20,14 +20,14 @@ TextureImporter:
   grayScaleToAlpha: 0
   generateCubemap: 0
   seamlessCubemap: 0
-  textureFormat: 5
+  textureFormat: -3
   maxTextureSize: 4096
   textureSettings:
-    filterMode: 2
-    aniso: 4
+    filterMode: 0
+    aniso: 1
     mipBias: -1
     wrapMode: 1
-  nPOTScale: 1
+  nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
   spriteMode: 2
@@ -35,7 +35,6 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: .5, y: .5}
-  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spritePixelsToUnits: 100
   alphaIsTransparency: 1
   textureType: 8
@@ -51,7 +50,6 @@ TextureImporter:
         height: 36
       alignment: 0
       pivot: {x: .5, y: .5}
-      border: {x: 0, y: 0, z: 0, w: 0}
     - name: Ground
       rect:
         serializedVersion: 2
@@ -61,7 +59,6 @@ TextureImporter:
         height: 8
       alignment: 0
       pivot: {x: .5, y: .5}
-      border: {x: 0, y: 0, z: 0, w: 0}
     - name: Circles_small
       rect:
         serializedVersion: 2
@@ -71,7 +68,6 @@ TextureImporter:
         height: 205
       alignment: 0
       pivot: {x: .5, y: .5}
-      border: {x: 0, y: 0, z: 0, w: 0}
     - name: Tramp_left-corner
       rect:
         serializedVersion: 2
@@ -81,7 +77,6 @@ TextureImporter:
         height: 6
       alignment: 0
       pivot: {x: .5, y: .5}
-      border: {x: 0, y: 0, z: 0, w: 0}
     - name: Tramp_right-corner
       rect:
         serializedVersion: 2
@@ -91,7 +86,6 @@ TextureImporter:
         height: 6
       alignment: 0
       pivot: {x: .5, y: .5}
-      border: {x: 0, y: 0, z: 0, w: 0}
     - name: Tramp_middle
       rect:
         serializedVersion: 2
@@ -101,7 +95,6 @@ TextureImporter:
         height: 5
       alignment: 0
       pivot: {x: .5, y: .5}
-      border: {x: 0, y: 0, z: 0, w: 0}
     - name: cannon
       rect:
         serializedVersion: 2
@@ -111,7 +104,6 @@ TextureImporter:
         height: 70
       alignment: 0
       pivot: {x: .5, y: .5}
-      border: {x: 0, y: 0, z: 0, w: 0}
     - name: Circles_large
       rect:
         serializedVersion: 2
@@ -121,7 +113,6 @@ TextureImporter:
         height: 401
       alignment: 0
       pivot: {x: .5, y: .5}
-      border: {x: 0, y: 0, z: 0, w: 0}
     - name: Circles_med
       rect:
         serializedVersion: 2
@@ -131,7 +122,6 @@ TextureImporter:
         height: 286
       alignment: 0
       pivot: {x: .5, y: .5}
-      border: {x: 0, y: 0, z: 0, w: 0}
     - name: Player_Start
       rect:
         serializedVersion: 2
@@ -141,16 +131,14 @@ TextureImporter:
         height: 48
       alignment: 0
       pivot: {x: .5, y: .5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-    - name: tri
+    - name: Tri
       rect:
         serializedVersion: 2
-        x: 711
-        y: 0
-        width: 154
-        height: 153
+        x: 220
+        y: 451
+        width: 40
+        height: 40
       alignment: 0
       pivot: {x: .5, y: .5}
-      border: {x: 0, y: 0, z: 0, w: 0}
   spritePackingTag: 
   userData: 

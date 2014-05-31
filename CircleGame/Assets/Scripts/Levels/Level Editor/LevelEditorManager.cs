@@ -109,6 +109,7 @@ public class LevelEditorManager : MonoBehaviour {
                     else if(gob.subType == GroundObstacle.GroundType.Falling_Ground) trans = ((GameObject)Instantiate(groundPrefabs.fallingGround)).transform;
                     else if(gob.subType == GroundObstacle.GroundType.Moving_Ground) trans = ((GameObject)Instantiate(groundPrefabs.movingGround)).transform;
                     else if(gob.subType == GroundObstacle.GroundType.Trampoline) trans = ((GameObject)Instantiate(groundPrefabs.trampoline)).transform;
+                    else if(gob.subType == GroundObstacle.GroundType.Triangle) trans = ((GameObject)Instantiate(groundPrefabs.triGround)).transform;
 
                     var egob = trans.gameObject.AddComponent<EditableGroundObstacle>();
                     egob.subType = gob.subType;
@@ -197,6 +198,7 @@ public class GroundPrefabs {
     public GameObject fallingGround;
     public GameObject movingGround;
     public GameObject trampoline;
+    public GameObject triGround;
 }
 
 [System.Serializable]

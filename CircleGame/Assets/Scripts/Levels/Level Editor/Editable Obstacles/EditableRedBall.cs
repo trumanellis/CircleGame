@@ -16,5 +16,6 @@ public class EditableRedBall : EditableObstacle {
 
     private void SetEditableProperties() {
         properties.edits = EditableProperties.Properties.Position;
+        uniformScale = true;
     }
 }

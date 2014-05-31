@@ -54,6 +54,7 @@ public class CustomLevelManager : MonoBehaviour {
                     else if(gob.subType == GroundObstacle.GroundType.Falling_Ground) trans = ((GameObject)Instantiate(groundPrefabs.fallingGround)).transform;
                     else if(gob.subType == GroundObstacle.GroundType.Moving_Ground) trans = ((GameObject)Instantiate(groundPrefabs.movingGround)).transform;
                     else if(gob.subType == GroundObstacle.GroundType.Trampoline) trans = ((GameObject)Instantiate(groundPrefabs.trampoline)).transform;
+                    else if(gob.subType == GroundObstacle.GroundType.Triangle) trans = ((GameObject)Instantiate(groundPrefabs.triGround)).transform;
                     break;
                 case ObstacleType.Speed_Track:
                     var stob = obs[i] as SpeedtrackObstacle;
