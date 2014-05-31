@@ -67,11 +67,10 @@ public class EditableObstacle : MonoBehaviour {
         if(shouldReposition) {
             Vector3 pos = Input.mousePosition;
             if(!mouseDelta.HasValue) {
-
+                mouseDelta = (Vector3)trans.position - pos;
             }
-            if(Ignis.IsPointOnScreen(pos))
-                Reposition((Vector2)Camera.main.ScreenToWorldPoint(pos));
-        }
+            Reposition((Vector2)Camera.main.ScreenToWorldPoint(pos));
+        } else if(mouseDelta.HasValue) mouseDelta = null;
     }
 
     public string GetObstacleDescription() {

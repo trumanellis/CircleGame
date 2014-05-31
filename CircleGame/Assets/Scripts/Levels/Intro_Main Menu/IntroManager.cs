@@ -26,7 +26,7 @@ public class IntroManager : MonoBehaviour {
             player.moveController.trailEnabled = true;
             Ignis.ExecuteMethod(menuStarter.cannonFireDelay, () => {
                 cannon.shouldFire = true;
-                menuStarter.ShowButtons(() => { mainMenuMusic.Volume(.2f); });
+                menuStarter.ShowButtons(() => { /*if(mainMenuMusic != null) mainMenuMusic.Volume(.2f);*/ });
             });
         };
         openScreen.FadeOutScreen();
