@@ -16,6 +16,7 @@ public class PlayerMovementController : MonoBehaviour {
     public float stoppingThreshHold = .2f;
     public bool isGrounded { get; set; }
     public bool canMove;
+    public bool remoteControlled;
     public bool trailEnabled = true;
     private bool jump;
     private int collisionMask = 0;
@@ -41,27 +42,15 @@ public class PlayerMovementController : MonoBehaviour {
 
     private void FixedUpdate() {
         if(canMove) {
-            float h = cInput.GetVirtualAxis("Horizontal");
-            if(h > .01f) {
-                if(player.body2D.velocity.x < maxSpeed) {
-                    float v = player.body2D.velocity.x + ((isGrounded ? groundedMoveForce : airbornMoveForce) / player.body2D.mass) * Time.fixedDeltaTime - player.body2D.angularDrag;
-                    if(v < maxSpeed) player.body2D.AddForce(Vector2.right * h * (isGrounded ? groundedMoveForce : airbornMoveForce));
-                    else player.body2D.velocity = new Vector2(maxSpeed, player.body2D.velocity.y);
-                }
-
-            } else if(h < -.01f) {
-                if(player.body2D.velocity.x > -maxSpeed) {
-                    float v = player.body2D.velocity.x - ((isGrounded ? groundedMoveForce : airbornMoveForce) / player.body2D.mass) * Time.fixedDeltaTime - player.body2D.angularDrag;
-                    if(v > -maxSpeed) player.body2D.AddForce(Vector2.right * h * (isGrounded ? groundedMoveForce : airbornMoveForce));
-                    else player.body2D.velocity = new Vector2(-maxSpeed, player.body2D.velocity.y);
-                }
-            }
+            MovePlayer(cInput.GetVirtualAxis("Horizontal"));
 
             if(jump) {
                 //player.body2D.AddForce(new Vector2(0f, jumpForce));
                 player.body2D.velocity = new Vector2(player.body2D.velocity.x, 7f);
                 jump = false;
             }
+        } else if(remoteControlled) {
+            MovePlayer(cInput.GetVirtualAxis("Remote Horizontal"));
         }
 
         if(trailEnabled) {
@@ -71,6 +60,23 @@ public class PlayerMovementController : MonoBehaviour {
 
         SlowDown();
         groundCheckerRoot.position = player.position;
+    }
+
+    private void MovePlayer(float h) {
+        if(h > .01f) {
+            if(player.body2D.velocity.x < maxSpeed) {
+                float v = player.body2D.velocity.x + ((isGrounded ? groundedMoveForce : airbornMoveForce) / player.body2D.mass) * Time.fixedDeltaTime - player.body2D.angularDrag;
+                if(v < maxSpeed) player.body2D.AddForce(Vector2.right * h * (isGrounded ? groundedMoveForce : airbornMoveForce));
+                else player.body2D.velocity = new Vector2(maxSpeed, player.body2D.velocity.y);
+            }
+
+        } else if(h < -.01f) {
+            if(player.body2D.velocity.x > -maxSpeed) {
+                float v = player.body2D.velocity.x - ((isGrounded ? groundedMoveForce : airbornMoveForce) / player.body2D.mass) * Time.fixedDeltaTime - player.body2D.angularDrag;
+                if(v > -maxSpeed) player.body2D.AddForce(Vector2.right * h * (isGrounded ? groundedMoveForce : airbornMoveForce));
+                else player.body2D.velocity = new Vector2(-maxSpeed, player.body2D.velocity.y);
+            }
+        }
     }
 
     private void SlowDown() {

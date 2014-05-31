@@ -5,6 +5,7 @@ using System.Collections;
 public class EventTriggerArea : MonoBehaviour {
     public bool playerOnly;
     public bool occupied { get; set; }
+    public bool isEnabled { get; set; }
 
     public delegate void EventTriggerAreaEvent(EventTriggerArea area, GameObject obj);
     private event EventTriggerAreaEvent OnAreaEnter;
@@ -19,19 +20,25 @@ public class EventTriggerArea : MonoBehaviour {
         remove { OnAreaExit -= value; }
     }
 
-    private void OnTriggerEnter2D(Collider2D col) {
-        bool isPlayer = col.gameObject.tag.Equals("Player");
-        if(playerOnly && !isPlayer) return;
+    private void Awake() { isEnabled = true; }
 
-        occupied = true;
-        if(OnAreaEnter != null) OnAreaEnter(this, col.gameObject);
+    private void OnTriggerEnter2D(Collider2D col) {
+        if(isEnabled) {
+            bool isPlayer = col.gameObject.tag.Equals("Player");
+            if(playerOnly && !isPlayer) return;
+
+            occupied = true;
+            if(OnAreaEnter != null) OnAreaEnter(this, col.gameObject);
+        }
     }
 
     private void OnTriggerExit2D(Collider2D col) {
-        bool isPlayer = col.gameObject.tag.Equals("Player");
-        if(playerOnly && !isPlayer) return;
+        if(isEnabled) {
+            bool isPlayer = col.gameObject.tag.Equals("Player");
+            if(playerOnly && !isPlayer) return;
 
-        occupied = false;
-        if(OnAreaExit != null) OnAreaExit(this, col.gameObject);
+            occupied = false;
+            if(OnAreaExit != null) OnAreaExit(this, col.gameObject);
+        }
     }
 }

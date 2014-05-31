@@ -4,6 +4,7 @@ using System.Collections;
 public class DebugInfo : MonoBehaviour {
     private UILabel label;
     private UILabel fpsText;
+    private bool running;
     public string header = "Game Prototype";
     public float fpsUpdateFrequency = 0.5f;
 
@@ -11,20 +12,17 @@ public class DebugInfo : MonoBehaviour {
 
     private void Awake() {
         label = GetComponent<UILabel>();
-        if(!Ignis.debugEnabled) { 
-            enabled = false;
-            label.enabled = false;
-            return; }
-        label.text = header + "\n" +
-            "Version: " + Ignis.version + "\n" +
-            "Press " + Ignis.quitKey.ToString() + " to exit\n" + 
-            "FPS: " + FramesPerSec;
+    }
 
-        StartCoroutine(FPS());
+    private void Update() {
+        if(Ignis.debugEnabled && !running) {
+            StartCoroutine(FPS());
+        }
     }
 
     private IEnumerator FPS() {
-        while(true) {
+        running = true;
+        while(Ignis.debugEnabled) {
             // Capture frame-per-second
             int lastFrameCount = Time.frameCount;
             float lastTime = Time.realtimeSinceStartup;
@@ -39,5 +37,7 @@ public class DebugInfo : MonoBehaviour {
                 (!Ignis.isMobile ? "Press " + Ignis.quitKey.ToString() + " to exit\n" : "") +
                 "FPS: " + FramesPerSec;
         }
+        running = false;
+        label.text = "";
     }
 }

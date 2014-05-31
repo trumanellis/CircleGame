@@ -59,6 +59,7 @@ public class Absorb_FirePlayer : MonoBehaviour {
         canFire = false;
         player = null;
         shouldFire = false;
+        playerFired = false;
         if(OnFirePlayer != null) OnFirePlayer();
     }
 

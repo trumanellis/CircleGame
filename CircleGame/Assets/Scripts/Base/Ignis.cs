@@ -88,6 +88,9 @@ public class Ignis : MonoBehaviour {
         if(Input.GetKeyUp(quitKey))
             Application.Quit();
         if(!isMobile) CheckForkeyBoardInput();
+        if(Input.GetKey(KeyCode.LeftShift) && Input.GetKeyUp(KeyCode.F9)) {
+            debugEnabled = !debugEnabled;
+        }
     }
 
     public void OnLevelWasLoaded() {
@@ -273,8 +276,12 @@ public class Ignis : MonoBehaviour {
         cInput.SetAxis("Vertical", "Scroll Down", "Scroll Up", 3f, 10f, 0.1f);
         cInput.SetVirtualKey("Left", 3f, 10f, .1f);
         cInput.SetVirtualKey("Right", 3f, 10f, .1f);
+        cInput.SetVirtualKey("Remote Left", 3f, 10f, .1f);
+        cInput.SetVirtualKey("Remote Right", 3f, 10f, .1f);
         cInput.SetVirtualAxis("Horizontal", "Right", "Left");
+        cInput.SetVirtualAxis("Remote Horizontal", "Remote Right", "Remote Left");
         cInput.SetVirtualKey("Jump");
+        cInput.SetVirtualKey("Remote Jump");
         cInput.SetVirtualKey("Escape");
     }
 
