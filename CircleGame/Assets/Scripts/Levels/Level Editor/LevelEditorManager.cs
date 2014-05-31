@@ -104,18 +104,23 @@ public class LevelEditorManager : MonoBehaviour {
                         trans.Find("Ground").gameObject.SetActive(false);
                     break;
                 case ObstacleType.Ground:
-                    var gob = obs[i] as GroundObstacle;
-                    if(gob.subType == GroundObstacle.GroundType.Ground) trans = ((GameObject)Instantiate(groundPrefabs.ground)).transform;
-                    else if(gob.subType == GroundObstacle.GroundType.Falling_Ground) trans = ((GameObject)Instantiate(groundPrefabs.fallingGround)).transform;
-                    else if(gob.subType == GroundObstacle.GroundType.Moving_Ground) trans = ((GameObject)Instantiate(groundPrefabs.movingGround)).transform;
-                    else if(gob.subType == GroundObstacle.GroundType.Trampoline) trans = ((GameObject)Instantiate(groundPrefabs.trampoline)).transform;
-                    else if(gob.subType == GroundObstacle.GroundType.Triangle) trans = ((GameObject)Instantiate(groundPrefabs.triGround)).transform;
+                    var grob = obs[i] as GroundObstacle;
+                    if(grob.subType == GroundObstacle.GroundType.Ground) trans = ((GameObject)Instantiate(groundPrefabs.ground)).transform;
+                    else if(grob.subType == GroundObstacle.GroundType.Falling_Ground) trans = ((GameObject)Instantiate(groundPrefabs.fallingGround)).transform;
+                    else if(grob.subType == GroundObstacle.GroundType.Moving_Ground) trans = ((GameObject)Instantiate(groundPrefabs.movingGround)).transform;
+                    else if(grob.subType == GroundObstacle.GroundType.Trampoline) trans = ((GameObject)Instantiate(groundPrefabs.trampoline)).transform;
+                    else if(grob.subType == GroundObstacle.GroundType.Triangle) trans = ((GameObject)Instantiate(groundPrefabs.triGround)).transform;
 
                     var egob = trans.gameObject.AddComponent<EditableGroundObstacle>();
-                    egob.subType = gob.subType;
+                    egob.subType = grob.subType;
                     ob = egob;
                     break;
-
+                case ObstacleType.Gear:
+                    var gob = obs[i] as GearObstacle;
+                    trans = ((GameObject)Instantiate(circlePrefabs.gear)).transform;
+                    ob = trans.gameObject.AddComponent<EditableGear>();
+                    trans.gameObject.GetComponent<CircleRotation>().direction = gob.direction;
+                    break;
                 case ObstacleType.Speed_Track:
                     var stob = obs[i] as SpeedtrackObstacle;
                     if(stob.subType == SpeedtrackObstacle.SpeedTrackType.Small) trans = ((GameObject)Instantiate(trackPrefabs.small)).transform;
@@ -183,26 +188,4 @@ public class LevelEditorManager : MonoBehaviour {
             Application.LoadLevel("Custom Level");
         }
     }
-}
-
-[System.Serializable]
-public class CirlePrefabs {
-    public GameObject circleSingle;
-    public GameObject circleDouble;
-    public GameObject circleTriple;
-}
-
-[System.Serializable]
-public class GroundPrefabs {
-    public GameObject ground;
-    public GameObject fallingGround;
-    public GameObject movingGround;
-    public GameObject trampoline;
-    public GameObject triGround;
-}
-
-[System.Serializable]
-public class SpeedTrackPrefabs {
-    public GameObject small;
-    public GameObject wide;
 }

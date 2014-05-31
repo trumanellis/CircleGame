@@ -174,7 +174,7 @@ public class EditableObstacle : MonoBehaviour {
             obstacle.scale = trans.localScale;
             SetSelectionDepth();
         };
-        EditPropertyUIController.scaleGizmo.transform.eulerAngles = trans.eulerAngles;
+        //EditPropertyUIController.scaleGizmo.transform.eulerAngles = trans.eulerAngles;
 
         for(int i = 0; i < sprites.Length; i++)
             sprites[i].color = LevelEditorManager.editableObstacleColour;

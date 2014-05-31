@@ -24,10 +24,10 @@ TextureImporter:
   maxTextureSize: 4096
   textureSettings:
     filterMode: 0
-    aniso: 1
+    aniso: 4
     mipBias: -1
     wrapMode: 1
-  nPOTScale: 0
+  nPOTScale: 1
   lightmap: 0
   compressionQuality: 50
   spriteMode: 2
@@ -63,9 +63,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 406
-        y: 291
+        y: 302
         width: 194
-        height: 205
+        height: 204
       alignment: 0
       pivot: {x: .5, y: .5}
     - name: Tramp_left-corner
@@ -113,13 +113,13 @@ TextureImporter:
         height: 401
       alignment: 0
       pivot: {x: .5, y: .5}
-    - name: Circles_med
+    - name: Gear
       rect:
         serializedVersion: 2
         x: 406
-        y: 3
-        width: 304
-        height: 286
+        y: 0
+        width: 300
+        height: 300
       alignment: 0
       pivot: {x: .5, y: .5}
     - name: Player_Start
@@ -138,6 +138,15 @@ TextureImporter:
         y: 451
         width: 40
         height: 40
+      alignment: 0
+      pivot: {x: .5, y: .5}
+    - name: Circles_med
+      rect:
+        serializedVersion: 2
+        x: 706
+        y: 0
+        width: 305
+        height: 289
       alignment: 0
       pivot: {x: .5, y: .5}
   spritePackingTag: 

@@ -49,12 +49,17 @@ public class CustomLevelManager : MonoBehaviour {
                         trans.Find("Ground").gameObject.SetActive(false);
                     break;
                 case ObstacleType.Ground:
-                    var gob = obs[i] as GroundObstacle;
-                    if(gob.subType == GroundObstacle.GroundType.Ground) trans = ((GameObject)Instantiate(groundPrefabs.ground)).transform;
-                    else if(gob.subType == GroundObstacle.GroundType.Falling_Ground) trans = ((GameObject)Instantiate(groundPrefabs.fallingGround)).transform;
-                    else if(gob.subType == GroundObstacle.GroundType.Moving_Ground) trans = ((GameObject)Instantiate(groundPrefabs.movingGround)).transform;
-                    else if(gob.subType == GroundObstacle.GroundType.Trampoline) trans = ((GameObject)Instantiate(groundPrefabs.trampoline)).transform;
-                    else if(gob.subType == GroundObstacle.GroundType.Triangle) trans = ((GameObject)Instantiate(groundPrefabs.triGround)).transform;
+                    var grob = obs[i] as GroundObstacle;
+                    if(grob.subType == GroundObstacle.GroundType.Ground) trans = ((GameObject)Instantiate(groundPrefabs.ground)).transform;
+                    else if(grob.subType == GroundObstacle.GroundType.Falling_Ground) trans = ((GameObject)Instantiate(groundPrefabs.fallingGround)).transform;
+                    else if(grob.subType == GroundObstacle.GroundType.Moving_Ground) trans = ((GameObject)Instantiate(groundPrefabs.movingGround)).transform;
+                    else if(grob.subType == GroundObstacle.GroundType.Trampoline) trans = ((GameObject)Instantiate(groundPrefabs.trampoline)).transform;
+                    else if(grob.subType == GroundObstacle.GroundType.Triangle) trans = ((GameObject)Instantiate(groundPrefabs.triGround)).transform;
+                    break;
+                case ObstacleType.Gear:
+                    var gob = obs[i] as GearObstacle;
+                    trans = ((GameObject)Instantiate(circlePrefabs.gear)).transform;
+                    trans.gameObject.GetComponent<CircleRotation>().direction = gob.direction;
                     break;
                 case ObstacleType.Speed_Track:
                     var stob = obs[i] as SpeedtrackObstacle;

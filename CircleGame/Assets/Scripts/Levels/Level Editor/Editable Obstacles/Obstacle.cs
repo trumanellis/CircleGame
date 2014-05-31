@@ -20,7 +20,8 @@ public enum ObstacleType {
     [EnumDescription("Portal Position")]
     Portal_Position,
     [EnumDescription("Red Ball")]
-    RedBall
+    RedBall,
+    Gear
 }
 public class Obstacle {
     public ObstacleType obstacleType = ObstacleType.None;
@@ -37,7 +38,7 @@ public class CircleObstacle : Obstacle {
         [EnumDescription("Double Circle")]
         Circle_Double,
         [EnumDescription("Triple Circle")]
-        Circle_Triple
+        Circle_Triple,
     }
     public CircleType subType = CircleType.None;
     public bool showGround = true;
@@ -79,3 +80,33 @@ public class WaterObstacle : Obstacle {
     public float width = 10;
     public int percision = 5;
 }
+
+public class GearObstacle : Obstacle {
+    public CircleRotation.RotationDirection direction = CircleRotation.RotationDirection.Left;
+    public float rotationSpeed;
+}
+
+#region obstacle prefabs
+[System.Serializable]
+public class CirlePrefabs {
+    public GameObject circleSingle;
+    public GameObject circleDouble;
+    public GameObject circleTriple;
+    public GameObject gear;
+}
+
+[System.Serializable]
+public class GroundPrefabs {
+    public GameObject ground;
+    public GameObject fallingGround;
+    public GameObject movingGround;
+    public GameObject trampoline;
+    public GameObject triGround;
+}
+
+[System.Serializable]
+public class SpeedTrackPrefabs {
+    public GameObject small;
+    public GameObject wide;
+}
+#endregion

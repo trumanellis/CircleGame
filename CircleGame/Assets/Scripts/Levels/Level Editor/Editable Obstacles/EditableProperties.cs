@@ -18,21 +18,23 @@ public class EditableProperties {
         [EnumDescription("Scale")]
         Scale = 1 << 2,
 
-        //uniques
-        [EnumDescription("Change Speed")]
-        Speed = 1 << 3, // cannon rotation/moving platforms
-        [EnumDescription("Start/End Position")]
-        Start_End_Pos = 1 << 4, // moving platforms
-        [EnumDescription("Left/Right Bounds")]
-        left_Right_Bounds = 1 << 5, //canons
-        [EnumDescription("Toggle Ground")]
-        Remove_Center_Ground = 1 << 6,
-
         //blank properties
         [EnumDescription("Set Start")]
-        Set_Player_Start = 1 << 7,
+        Set_Player_Start = 1 << 3,
         [EnumDescription("Set Portal")]
-        Set_Portal_Pos = 1 << 8
+        Set_Portal_Pos = 1 << 4,
+
+        //uniques
+        [EnumDescription("Change Speed")]
+        Speed = 1 << 5, // cannon rotation/moving platforms
+        [EnumDescription("Start/End Position")]
+        Start_End_Pos = 1 << 6, // moving platforms
+        [EnumDescription("Left/Right Bounds")]
+        left_Right_Bounds = 1 << 7, //canons
+        [EnumDescription("Toggle Ground")]
+        Remove_Center_Ground = 1 << 8,
+        [EnumDescription("Change Dir")]
+        Toggle_Rotation_Direction = 1 << 9,
     }
 }
 

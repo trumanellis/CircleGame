@@ -20,9 +20,12 @@ public class SubObstacleButton : MonoBehaviour {
                 eob = cob;
                 break;
             case ObstacleType.Ground:
-                var gob = go.AddComponent<EditableGroundObstacle>();
-                gob.subType = groundType;
-                eob = gob;
+                var grob = go.AddComponent<EditableGroundObstacle>();
+                grob.subType = groundType;
+                eob = grob;
+                break;
+            case ObstacleType.Gear:
+                eob = go.AddComponent<EditableGear>();
                 break;
             case ObstacleType.Speed_Track:
                 var stob = go.AddComponent<EditableSpeedTrackObstacle>();

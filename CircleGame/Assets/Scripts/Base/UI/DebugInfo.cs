@@ -12,6 +12,7 @@ public class DebugInfo : MonoBehaviour {
 
     private void Awake() {
         label = GetComponent<UILabel>();
+        label.text = "";
     }
 
     private void Update() {
