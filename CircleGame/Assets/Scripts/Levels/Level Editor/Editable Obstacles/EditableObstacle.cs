@@ -9,9 +9,14 @@ public class EditableObstacle : MonoBehaviour {
     public readonly EditableProperties properties = new EditableProperties();
     public static EditableObstacle currentObstacle { get; private set; }
     public Transform trans { get; private set; }
-    public Obstacle obstacle { get; protected set; }
     public BoxCollider boundingBox { get; private set; }
+    public Obstacle obstacle { get; protected set; }
+
+    private Vector2? mouseDelta;
     private bool shouldReposition;
+
+    protected Vector2 maxScale = new Vector2(10f, 10f);
+    protected Vector2 minScale = Vector2.one;
     protected bool uniformScale;
 
     private const float leftPadding = 5f;
@@ -48,7 +53,7 @@ public class EditableObstacle : MonoBehaviour {
         if(Input.GetMouseButtonDown(0) || Input.GetMouseButtonUp(0))
             shouldReposition = pressed;
 
-        if(!SOS.isMobile) {
+        if(!Ignis.isMobile) {
             if(!pressed) RadialMenu.instance.HideRadialMenu();
             else if(pressed && Input.GetMouseButtonDown(1)) {
                 RadialMenu.instance.ShowRadialMenu(this);
@@ -61,7 +66,10 @@ public class EditableObstacle : MonoBehaviour {
     private void Update() {
         if(shouldReposition) {
             Vector3 pos = Input.mousePosition;
-            if(SOS.IsPointOnScreen(pos))
+            if(!mouseDelta.HasValue) {
+
+            }
+            if(Ignis.IsPointOnScreen(pos))
                 Reposition((Vector2)Camera.main.ScreenToWorldPoint(pos));
         }
     }
@@ -159,10 +167,10 @@ public class EditableObstacle : MonoBehaviour {
         CreateGizmo(EditPropertyUIController.scaleGizmo.gameObject);
         EditPropertyUIController.scaleGizmo.onGizmoDrag = (delta) => {
             //need to check if it will become too large before setting it
-            if(uniformScale) {
-                delta = delta.x > 0 || delta.y > 0 ? Vector2.one : -Vector2.one;
-                trans.localScale += (Vector3)(delta * (scaleFactor / cam.ZoomFactor));
-            } else trans.localScale += (Vector3)(delta * (scaleFactor / cam.ZoomFactor));
+            if(uniformScale) 
+                SetScale(delta.x > 0 || delta.y > 0 ? Vector2.one : -Vector2.one);
+            else
+                SetScale(delta);
             Reposition(trans.position);
             obstacle.scale = trans.localScale;
             SetSelectionDepth();
@@ -171,6 +179,16 @@ public class EditableObstacle : MonoBehaviour {
 
         for(int i = 0; i < sprites.Length; i++)
             sprites[i].color = LevelEditorManager.editableObstacleColour;
+    }
+
+    private void SetScale(Vector3 delta) {
+        delta = (Vector3)(delta * (scaleFactor / cam.ZoomFactor));
+
+        Vector3 scale = trans.localScale + delta;
+        scale.x = Mathf.Clamp(scale.x, minScale.x, maxScale.x);
+        scale.y = Mathf.Clamp(scale.y, minScale.y, maxScale.y);
+
+        trans.localScale = scale;
     }
 
     private void CreateGizmo(GameObject gizmo) {

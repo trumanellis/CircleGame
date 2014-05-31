@@ -15,7 +15,9 @@ public class EditableRedBall : EditableObstacle {
     }
 
     private void SetEditableProperties() {
-        properties.edits = EditableProperties.Properties.Position;
+        properties.edits = EditableProperties.Properties.Position | EditableProperties.Properties.Scale;
         uniformScale = true;
+        maxScale = new Vector2(10f, 10f);
+        minScale = new Vector2(1f, 1f);
     }
 }

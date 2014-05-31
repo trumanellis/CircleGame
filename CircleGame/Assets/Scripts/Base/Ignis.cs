@@ -7,15 +7,15 @@ using System.Reflection;
 /// <summary>
 /// Exception handler for the SOS class
 /// </summary>
-public class SOSExcpetion : Exception {
-    public SOSExcpetion() : base() { }
-    public SOSExcpetion(string reason) : base(reason) { }
+public class IgnisExcpetion : Exception {
+    public IgnisExcpetion() : base() { }
+    public IgnisExcpetion(string reason) : base(reason) { }
 }
 /// <summary>
 /// This class is a collection of static functions designed to help with everyday use
 /// </summary>
-public class SOS : MonoBehaviour {
-    private static SOS instance;
+public class Ignis : MonoBehaviour {
+    private static Ignis instance;
     private static Transform _prototype;  //Transform to hold the prototypes
     private static Dictionary<string, Prototype> hierarchy;
 
@@ -83,7 +83,7 @@ public class SOS : MonoBehaviour {
     }
 
     private void Update() {
-        if(SOS.debugEnabled && Input.GetKeyUp(debugConsole.displayKey))
+        if(Ignis.debugEnabled && Input.GetKeyUp(debugConsole.displayKey))
             debugConsole.Show(!debugConsole.isShowing);
         if(Input.GetKeyUp(quitKey))
             Application.Quit();

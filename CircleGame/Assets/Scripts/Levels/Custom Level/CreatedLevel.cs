@@ -9,7 +9,7 @@ public class CreatedLevel : MonoBehaviour {
 
     public static bool CreateLevelDirectory() {
         if(string.IsNullOrEmpty(path))
-            path = Application.dataPath + @"/Custom Levels";
+            path = Application.persistentDataPath + @"/Custom Levels";
         try {
             if(!Directory.Exists(path)) {
                 Directory.CreateDirectory(path);

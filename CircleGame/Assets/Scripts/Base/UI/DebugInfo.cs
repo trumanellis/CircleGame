@@ -11,13 +11,13 @@ public class DebugInfo : MonoBehaviour {
 
     private void Awake() {
         label = GetComponent<UILabel>();
-        if(!SOS.debugEnabled) { 
+        if(!Ignis.debugEnabled) { 
             enabled = false;
             label.enabled = false;
             return; }
         label.text = header + "\n" +
-            "Version: " + SOS.version + "\n" +
-            "Press " + SOS.quitKey.ToString() + " to exit\n" + 
+            "Version: " + Ignis.version + "\n" +
+            "Press " + Ignis.quitKey.ToString() + " to exit\n" + 
             "FPS: " + FramesPerSec;
 
         StartCoroutine(FPS());
@@ -35,8 +35,8 @@ public class DebugInfo : MonoBehaviour {
             // Display it
             FramesPerSec = Mathf.RoundToInt(frameCount / timeSpan);
             label.text = header + "\n" +
-                "Version: " + SOS.version + "\n" +
-                (!SOS.isMobile ? "Press " + SOS.quitKey.ToString() + " to exit\n" : "") +
+                "Version: " + Ignis.version + "\n" +
+                (!Ignis.isMobile ? "Press " + Ignis.quitKey.ToString() + " to exit\n" : "") +
                 "FPS: " + FramesPerSec;
         }
     }

@@ -17,12 +17,12 @@ public class Updater : MonoBehaviour {
     public static bool initialized;
 
     public static UpdateData CheckForUpdate() {
-        return CheckForUpdate(SOS.version);
+        return CheckForUpdate(Ignis.version);
     }
 
 
     public static UpdateData CheckForUpdate(string version) {
-        updater = new Launchie.Launchie(SOS.updateURL, version);
+        updater = new Launchie.Launchie(Ignis.updateURL, version);
         updater.setOnError(OnError);
         initialized = true;
         bool updateFound = updater.Check() == 1 ? true : false;

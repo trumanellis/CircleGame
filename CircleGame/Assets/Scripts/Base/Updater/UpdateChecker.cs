@@ -11,7 +11,7 @@ public class UpdateChecker : MonoBehaviour {
     }
 
     public static void CheckForUpdate() {
-        updateData = Updater.CheckForUpdate(SOS.version);
+        updateData = Updater.CheckForUpdate(Ignis.version);
 
         if(updateData.updateFound) {
             Updater.DownloadReleaseNotes(() => {

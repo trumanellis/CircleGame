@@ -60,7 +60,7 @@ public class RadialMenu : MonoBehaviour {
     }
 
     public void ShowRadialMenu(EditableObstacle ob) {
-        if(!SOS.isMobile) location = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        if(!Ignis.isMobile) location = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         var props = ob == null ? EditableProperties.blankEdits.GetProperties() : ob.properties.edits.GetProperties();
         int index = 0;
         for(; index < props.Length; index++) {

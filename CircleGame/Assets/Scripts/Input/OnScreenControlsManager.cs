@@ -3,7 +3,7 @@ using System.Collections;
 
 public class OnScreenControlsManager : MonoBehaviour {
     private void Awake() {
-        if(!SOS.isMobile) gameObject.SetActive(false);
+        if(!Ignis.isMobile) gameObject.SetActive(false);
     }
 
     private void Update() {

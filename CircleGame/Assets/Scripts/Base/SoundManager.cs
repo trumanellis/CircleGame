@@ -112,7 +112,7 @@ public class Sound {
     public void Stop(bool destroy = false) {
         if(source != null) {
             source.Stop();
-            if(destroy) SOS.Destroy(source.gameObject);
+            if(destroy) Ignis.Destroy(source.gameObject);
         } else NotInit();
     }
 

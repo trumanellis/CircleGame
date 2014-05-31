@@ -58,88 +58,43 @@
       "obstacleType": 9,
       "position": {
         "$type": "UnityEngine.Vector3, UnityEngine",
-        "x": -1.98913908,
-        "y": -11.6352339,
+        "x": -1.28543472,
+        "y": -4.25155067,
         "z": 0.0,
         "normalized": {
           "$type": "UnityEngine.Vector3, UnityEngine",
-          "x": -0.168513432,
-          "y": -0.985699356,
+          "x": -0.289406449,
+          "y": -0.9572063,
           "z": 0.0,
           "magnitude": 1.0,
           "sqrMagnitude": 1.0
         },
-        "magnitude": 11.804039,
-        "sqrMagnitude": 139.335342
+        "magnitude": 4.441624,
+        "sqrMagnitude": 19.7280254
       },
       "scale": {
         "$type": "UnityEngine.Vector3, UnityEngine",
-        "x": 2.0,
-        "y": 2.0,
+        "x": 10.0,
+        "y": 10.0,
         "z": 1.0,
         "normalized": {
           "$type": "UnityEngine.Vector3, UnityEngine",
-          "x": 0.6666667,
-          "y": 0.6666667,
-          "z": 0.333333343,
-          "magnitude": 1.0,
-          "sqrMagnitude": 1.00000012
-        },
-        "magnitude": 3.0,
-        "sqrMagnitude": 9.0
-      },
-      "rotation": {
-        "$type": "UnityEngine.Vector3, UnityEngine",
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0,
-        "magnitude": 0.0,
-        "sqrMagnitude": 0.0
-      }
-    },
-    {
-      "$type": "GroundObstacle, Assembly-CSharp",
-      "subType": 4,
-      "obstacleType": 2,
-      "position": {
-        "$type": "UnityEngine.Vector3, UnityEngine",
-        "x": -1.22907174,
-        "y": -12.7336025,
-        "z": 0.0,
-        "normalized": {
-          "$type": "UnityEngine.Vector3, UnityEngine",
-          "x": -0.09607541,
-          "y": -0.995374,
-          "z": 0.0,
+          "x": 0.7053456,
+          "y": 0.7053456,
+          "z": 0.07053456,
           "normalized": {
             "$type": "UnityEngine.Vector3, UnityEngine",
-            "x": -0.0960754156,
-            "y": -0.9953741,
-            "z": 0.0,
+            "x": 0.705345631,
+            "y": 0.705345631,
+            "z": 0.0705345646,
             "magnitude": 1.0,
             "sqrMagnitude": 1.0
           },
           "magnitude": 0.99999994,
-          "sqrMagnitude": 0.99999994
+          "sqrMagnitude": 0.9999999
         },
-        "magnitude": 12.7927818,
-        "sqrMagnitude": 163.655258
-      },
-      "scale": {
-        "$type": "UnityEngine.Vector3, UnityEngine",
-        "x": 6.09999657,
-        "y": 6.09999657,
-        "z": 1.0,
-        "normalized": {
-          "$type": "UnityEngine.Vector3, UnityEngine",
-          "x": 0.702403367,
-          "y": 0.702403367,
-          "z": 0.115148164,
-          "magnitude": 1.0,
-          "sqrMagnitude": 1.00000012
-        },
-        "magnitude": 8.6844635,
-        "sqrMagnitude": 75.4199142
+        "magnitude": 14.1774473,
+        "sqrMagnitude": 201.0
       },
       "rotation": {
         "$type": "UnityEngine.Vector3, UnityEngine",

@@ -64,7 +64,7 @@ public class LevelEditorManager : MonoBehaviour {
     }
 
     private void OnPress(bool pressed) {
-        if(!SOS.isMobile) {
+        if(!Ignis.isMobile) {
             if(!pressed && Input.GetMouseButtonUp(1)) radialMenu.HideRadialMenu();
             else if(pressed && Input.GetMouseButtonDown(1)) {
                 radialMenu.ShowRadialMenu(null);

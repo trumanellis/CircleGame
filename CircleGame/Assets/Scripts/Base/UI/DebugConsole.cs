@@ -34,7 +34,7 @@ public class DebugConsole : MonoBehaviour {
     }
 
     public void OnSubmit() {
-        if(inputField.value.StartsWith("/")) SOS.ExecuteCommand(inputField.value.Remove(0, 1));
+        if(inputField.value.StartsWith("/")) Ignis.ExecuteCommand(inputField.value.Remove(0, 1));
         else Debug.Log("(Player) " + inputField.value);
 
         inputField.value = string.Empty;

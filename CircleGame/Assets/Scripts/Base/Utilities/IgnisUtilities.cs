@@ -2,7 +2,7 @@
 using System;
 using System.Collections;
 
-namespace Ignis.Utils.Math {
+namespace IgnisUtils.Math {
     public class Rounding {
         public static float RoundToPlaces(float value, int places) {
             float mult = Mathf.Pow(10, places);
@@ -24,7 +24,7 @@ namespace Ignis.Utils.Math {
     }
 }
 
-namespace Ignis.Util.Colors {
+namespace IgnisUtils.Colors {
     /// <summary>
     /// Structure to define HSBColor.
     /// </summary>

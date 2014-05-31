@@ -29,7 +29,10 @@ public class EditableGroundObstacle : EditableObstacle {
             properties.edits |= (EditableProperties.Properties.Speed | EditableProperties.Properties.Start_End_Pos);
         else if(subType == GroundObstacle.GroundType.Trampoline)
             properties.edits ^= EditableProperties.Properties.Scale;
-        else if(subType == GroundObstacle.GroundType.Triangle)
+        else if(subType == GroundObstacle.GroundType.Triangle) {
             uniformScale = true;
+            maxScale = new Vector2(20f, 20f);
+            minScale = new Vector2(1f, 1f);
+        }
     }
 }
