@@ -64,7 +64,7 @@ public class Ignis : MonoBehaviour {
         quitKey = _quitKey;
         isPaidVersion = _isPaidVersion;
         debugEnabled = _enableDebug;
-        updateURL = _updateURL; 
+        updateURL = _updateURL;
     }
 
     private void Start() {
@@ -337,4 +337,6 @@ public class Prototype {
             hierarchy.Add(root.GetChild(i).name.ToLower(), new Prototype(root.GetChild(i).gameObject));
         return hierarchy;
     }
+
+
 }

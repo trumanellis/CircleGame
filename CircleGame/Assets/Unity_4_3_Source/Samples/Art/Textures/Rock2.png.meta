@@ -1,6 +1,9 @@
 fileFormatVersion: 2
 guid: b12cd482664f5634d8e5b9c2d7a4191a
 TextureImporter:
+  fileIDToRecycleName:
+    21300000: Rock2_0
+    21300002: Rock2_1
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -35,6 +38,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: .5, y: .5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spritePixelsToUnits: 100
   alphaIsTransparency: 1
   textureType: 8
@@ -50,6 +54,7 @@ TextureImporter:
         height: 190
       alignment: 0
       pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
     - name: Rock2_1
       rect:
         serializedVersion: 2
@@ -59,5 +64,6 @@ TextureImporter:
         height: 84
       alignment: 0
       pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
   spritePackingTag: 
   userData: 

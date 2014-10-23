@@ -10,6 +10,7 @@ public class IntroManager : MonoBehaviour {
     public OpeningScreen openScreen;
     public IntroLogoTween logoTween;
     public MainMenuStarter menuStarter;
+    private bool introSkipped;
 
     public static Sound mainMenuMusic { get; set; }
 
@@ -26,7 +27,7 @@ public class IntroManager : MonoBehaviour {
             player.moveController.trailEnabled = true;
             Ignis.ExecuteMethod(menuStarter.cannonFireDelay, () => {
                 cannon.shouldFire = true;
-                menuStarter.ShowButtons(() => { /*if(mainMenuMusic != null) mainMenuMusic.Volume(.2f);*/ });
+                menuStarter.ShowButtons(/*() => { if(mainMenuMusic != null) mainMenuMusic.Volume(.2f); }*/);
             });
         };
         openScreen.FadeOutScreen();
@@ -46,6 +47,17 @@ public class IntroManager : MonoBehaviour {
     private void ShowMainMenu(EventTriggerButton button) {
         StopCoroutine("CheckForSkipRequest");
         Destroy(showMenuTrigger.gameObject);
+
+        if(!introSkipped) {
+            player.alpha = 0f;
+            playerCamera.SetTarget(menuStarter.endFollowObject);
+            Ignis.ExecuteMethod(menuStarter.displayDelay, new System.Action(_ShowMainMenu));
+        } else
+            _ShowMainMenu();
+    }
+
+    private void _ShowMainMenu() {
+        player.alpha = 1f;
         playerCamera.SetTarget(menuStarter.endFollowObject);
         player.trans.position = menuStarter.playerStartPosition.position;
         menuStarter.title.GetComponent<FollowTarget>().SetTarget(player.trans).shouldFollow = true;
@@ -60,12 +72,13 @@ public class IntroManager : MonoBehaviour {
     private void EnablePlayer() {
         player.root.parent = null;
         player.body2D.gravityScale = 1f;
-        player.col2D.enabled = true;
+        player.col2D.isTrigger = false;
     }
 
     private void SkipIntro() {
         iTween.Stop();
         EnablePlayer();
+        introSkipped = true;
         ShowMainMenu(null);
     }
 
@@ -124,6 +137,7 @@ public class MainMenuStarter {
     public Transform endFollowObject;
     public Transform title;
     public Transform playerStartPosition;
+    public float displayDelay = .4f;
     public float playerSpeed = 50f;
     public float cannonFireDelay = .8f;
     public UITweener updateButton;
@@ -134,19 +148,19 @@ public class MainMenuStarter {
             UIButton button = buttons[i].GetComponent<UIButton>();
             button.isEnabled = false;
             buttons[i].onFinished.Add(new EventDelegate(() => {
-                button.isEnabled = true;
+                if(button.gameObject.name.StartsWith("Play")) button.isEnabled = true;
                 if(onFinish != null) onFinish();
             }) { oneShot = true });
             buttons[i].PlayForward();
         }
 
-        if(UpdateChecker.updateData != null) {
-            if(UpdateChecker.updateData.updateFound) {
-                updateButton.gameObject.SetActive(true);
-                UIButton ubutton = updateButton.GetComponent<UIButton>();
-                ubutton.isEnabled = false;
-                updateButton.onFinished.Add(new EventDelegate(() => { ubutton.isEnabled = true; }) { oneShot = true });
-            }
-        }
+        //if(UpdateChecker.updateData != null) {
+        //    if(UpdateChecker.updateData.updateFound) {
+        //        updateButton.gameObject.SetActive(true);
+        //        UIButton ubutton = updateButton.GetComponent<UIButton>();
+        //        ubutton.isEnabled = false;
+        //        updateButton.onFinished.Add(new EventDelegate(() => { ubutton.isEnabled = true; }) { oneShot = true });
+        //    }
+        //}
     }
 }

@@ -31,6 +31,8 @@ public class Water : MonoBehaviour {
     public int percision = 5;
     public float height;
 
+    public bool generateColliders = true;
+
     //All our constants
     const float springconstant = 0.02f;
     const float damping = 0.04f;
@@ -56,10 +58,12 @@ public class Water : MonoBehaviour {
         baseheight = trans.position.y;
         bottom = trans.position.y - height;
 
-        BoxCollider2D col = gameObject.AddComponent<BoxCollider2D>();
-        col.center = new Vector2(0f, -(height / 2f));
-        col.size = new Vector2(width, height);
-        col.isTrigger = true;
+        if(generateColliders) {
+            BoxCollider2D col = gameObject.AddComponent<BoxCollider2D>();
+            col.center = new Vector2(0f, -(height / 2f));
+            col.size = new Vector2(width, height);
+            col.isTrigger = true;
+        }
 
 
         //Calculating the number of edges and nodes we have

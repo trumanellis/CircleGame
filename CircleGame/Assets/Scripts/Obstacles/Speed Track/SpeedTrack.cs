@@ -39,7 +39,7 @@ public class SpeedTrack : MonoBehaviour {
         }
     }
 
-    private void OnTriggerStay2D() {
+    private void OnTriggerStay2D(Collider2D col) {
         //switch(direction) {
         //    case TrackDirection.Left: player.body2D.AddForce(-Vector2.right * force); break;
         //    case TrackDirection.Right: player.body2D.AddForce(Vector2.right * force); break;
@@ -47,12 +47,17 @@ public class SpeedTrack : MonoBehaviour {
         //    case TrackDirection.Down: player.body2D.AddForce(-Vector2.up * force); break;
         //    default: break;
         //}
+
+        if(player == null) player = col.GetComponent<Player>();
+
         player.trans.rotation = trans.rotation;
         player.body2D.AddForce(player.trans.up * force);
     }
 
-    private void OnTriggerExit2D() {
+    private void OnTriggerExit2D(Collider2D col) {
         playerEntered = false;
+        if(player == null) player = col.GetComponent<Player>();
+
         if(alterGravity) {
             player.body2D.gravityScale = origGravityScale;
             player.moveController.canMove = true;

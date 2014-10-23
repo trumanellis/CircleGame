@@ -1,0 +1,12 @@
+D:\programming\GitHub\CircleGame\CircleGame\Temp\UnityVS_bin\Debug\Assembly-CSharp.dll
+D:\programming\GitHub\CircleGame\CircleGame\Temp\UnityVS_bin\Debug\Assembly-CSharp.pdb
+D:\programming\GitHub\CircleGame\CircleGame\Temp\UnityVS_bin\Debug\CraftyCompress.3.5.dll
+D:\programming\GitHub\CircleGame\CircleGame\Temp\UnityVS_bin\Debug\Launchie.dll
+D:\programming\GitHub\CircleGame\CircleGame\Temp\UnityVS_bin\Debug\SampleClassLibrary.dll
+D:\programming\GitHub\CircleGame\CircleGame\Temp\UnityVS_bin\Debug\UnityEditor.dll
+D:\programming\GitHub\CircleGame\CircleGame\Temp\UnityVS_bin\Debug\UnityEngine.dll
+D:\programming\GitHub\CircleGame\CircleGame\obj\Debug\UnityVS.CircleGame.CSharp.csprojResolveAssemblyReference.cache
+D:\programming\GitHub\CircleGame\CircleGame\obj\Debug\Assembly-CSharp.dll
+D:\programming\GitHub\CircleGame\CircleGame\obj\Debug\Assembly-CSharp.pdb
+D:\programming\GitHub\CircleGame\CircleGame\Temp\UnityVS_bin\Debug\UnityEngine.xml
+D:\programming\GitHub\CircleGame\CircleGame\Temp\UnityVS_bin\Debug\UnityEditor.xml

@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 using System;
-using System.Net;
-using System.Linq;
-using System.Xml.Linq;
-using System.Threading;
+//using System.Net;
+//using System.Linq;
+//using System.Xml.Linq;
+//using System.Threading;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -22,11 +22,12 @@ public class Updater : MonoBehaviour {
 
 
     public static UpdateData CheckForUpdate(string version) {
-        updater = new Launchie.Launchie(Ignis.updateURL, version);
-        updater.setOnError(OnError);
-        initialized = true;
-        bool updateFound = updater.Check() == 1 ? true : false;
-        return new UpdateData(updater, updateFound);
+        //updater = new Launchie.Launchie(Ignis.updateURL, version);
+        //updater.setOnError(OnError);
+        //initialized = true;
+        //bool updateFound = updater.Check() == 1 ? true : false;
+        //return new UpdateData(updater, updateFound);
+        return null;
     }
 
 

@@ -12,7 +12,7 @@ public class PlayerMovementController : MonoBehaviour {
     public float airbornMoveForce = 30f;
     public float slowingForce = 1.3f;
     public float maxSpeed = 2.6f;
-    public float jumpForce = 200f;
+    public float jumpHeight = 7f;
     public float stoppingThreshHold = .2f;
     public bool isGrounded { get; set; }
     public bool canMove;
@@ -36,6 +36,7 @@ public class PlayerMovementController : MonoBehaviour {
             }
         }
 
+        //this needs to change to an axis so we can use a controller
         if(canMove && cInput.GetVirtualKeyDown("Jump") && isGrounded)
             jump = true;
     }
@@ -46,7 +47,8 @@ public class PlayerMovementController : MonoBehaviour {
 
             if(jump) {
                 //player.body2D.AddForce(new Vector2(0f, jumpForce));
-                player.body2D.velocity = new Vector2(player.body2D.velocity.x, 7f);
+                //this should use the time jump held for better feel
+                player.body2D.velocity = new Vector2(player.body2D.velocity.x, jumpHeight);
                 jump = false;
             }
         } else if(remoteControlled) {

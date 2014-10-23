@@ -1,6 +1,21 @@
 fileFormatVersion: 2
 guid: e82258cf43e1a1341b1162005028e9d1
 TextureImporter:
+  fileIDToRecycleName:
+    21300000: Circle_Med
+    21300002: Circle_Small
+    21300004: Player
+    21300006: Gear
+    21300008: Circle_Large
+    21300010: Left_Close
+    21300012: Right_Close
+    21300014: Ground
+    21300016: Middle_Track
+    21300018: Cannon
+    21300020: Tri_Segment
+    21300022: St_Wide
+    21300024: St_Small
+    21300026: Player_Start_Marker
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -24,10 +39,10 @@ TextureImporter:
   maxTextureSize: 4096
   textureSettings:
     filterMode: 0
-    aniso: 4
+    aniso: 1
     mipBias: -1
     wrapMode: 1
-  nPOTScale: 1
+  nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
   spriteMode: 2
@@ -35,119 +50,152 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: .5, y: .5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spritePixelsToUnits: 100
   alphaIsTransparency: 1
   textureType: 8
   buildTargetSettings: []
   spriteSheet:
     sprites:
-    - name: Player
+    - name: Circle_Med
       rect:
         serializedVersion: 2
         x: 0
-        y: 473
-        width: 35
-        height: 36
+        y: 607
+        width: 302
+        height: 290
       alignment: 0
       pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Circle_Small
+      rect:
+        serializedVersion: 2
+        x: 303
+        y: 601
+        width: 207
+        height: 197
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Player
+      rect:
+        serializedVersion: 2
+        x: 601
+        y: 396
+        width: 200
+        height: 201
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Gear
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 1
+        width: 595
+        height: 600
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Circle_Large
+      rect:
+        serializedVersion: 2
+        x: 602
+        y: 5
+        width: 394
+        height: 390
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Left_Close
+      rect:
+        serializedVersion: 2
+        x: 997
+        y: 6
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Right_Close
+      rect:
+        serializedVersion: 2
+        x: 1006
+        y: 6
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
     - name: Ground
       rect:
         serializedVersion: 2
-        x: 36
-        y: 486
+        x: 1013
+        y: 0
         width: 8
         height: 8
       alignment: 0
       pivot: {x: .5, y: .5}
-    - name: Circles_small
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Middle_Track
       rect:
         serializedVersion: 2
-        x: 406
-        y: 302
-        width: 194
-        height: 204
-      alignment: 0
-      pivot: {x: .5, y: .5}
-    - name: Tramp_left-corner
-      rect:
-        serializedVersion: 2
-        x: 36
-        y: 479
-        width: 6
-        height: 6
-      alignment: 0
-      pivot: {x: .5, y: .5}
-    - name: Tramp_right-corner
-      rect:
-        serializedVersion: 2
-        x: 45
-        y: 479
-        width: 6
-        height: 6
-      alignment: 0
-      pivot: {x: .5, y: .5}
-    - name: Tramp_middle
-      rect:
-        serializedVersion: 2
-        x: 41
-        y: 474
+        x: 1002
+        y: 1
         width: 6
         height: 5
       alignment: 0
       pivot: {x: .5, y: .5}
-    - name: cannon
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Cannon
       rect:
         serializedVersion: 2
         x: 0
-        y: 402
+        y: 905
         width: 219
         height: 70
       alignment: 0
       pivot: {x: .5, y: .5}
-    - name: Circles_large
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Tri_Segment
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 405
-        height: 401
+        x: 802
+        y: 562
+        width: 35
+        height: 3
       alignment: 0
       pivot: {x: .5, y: .5}
-    - name: Gear
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: St_Wide
       rect:
         serializedVersion: 2
-        x: 406
-        y: 0
-        width: 300
-        height: 300
+        x: 802
+        y: 396
+        width: 141
+        height: 165
       alignment: 0
       pivot: {x: .5, y: .5}
-    - name: Player_Start
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: St_Small
+      rect:
+        serializedVersion: 2
+        x: 944
+        y: 396
+        width: 75
+        height: 165
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Player_Start_Marker
       rect:
         serializedVersion: 2
         x: 220
-        y: 402
+        y: 905
         width: 49
         height: 48
       alignment: 0
       pivot: {x: .5, y: .5}
-    - name: Tri
-      rect:
-        serializedVersion: 2
-        x: 220
-        y: 451
-        width: 40
-        height: 40
-      alignment: 0
-      pivot: {x: .5, y: .5}
-    - name: Circles_med
-      rect:
-        serializedVersion: 2
-        x: 706
-        y: 0
-        width: 305
-        height: 289
-      alignment: 0
-      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
   spritePackingTag: 
   userData: 

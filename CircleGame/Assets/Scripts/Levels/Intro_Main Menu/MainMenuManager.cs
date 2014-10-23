@@ -3,6 +3,7 @@ using System.Collections;
 
 public class MainMenuManager : MonoBehaviour {
     public UpdateNotification updateButton;
+    public string levelToLoad = "Level for Lauren";
     private bool updating;
     private bool pendingRestart;
     private bool pendingCancel;
@@ -10,7 +11,7 @@ public class MainMenuManager : MonoBehaviour {
 
     public void PlayClicked() {
         Debug.Log("Play clicked");
-        Application.LoadLevel("Dev Level");
+        Application.LoadLevel(levelToLoad);
     }
 
     public void StartNewGameClicked() {

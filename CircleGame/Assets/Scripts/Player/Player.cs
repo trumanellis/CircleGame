@@ -10,13 +10,14 @@ public class Player : MonoBehaviour {
     public PlayerMovementController moveController { get; private set; }
     public Vector2 position { get { return trans.position; } set { trans.position = value; } }
     public float standardGravityScale { get; private set; }
+    public bool levelWon;
 
-    public float alpha { 
+    public float alpha {
         get { return spriteRend.color.a; }
         set { spriteRend.color = new Color(spriteRend.color.r, spriteRend.color.g, spriteRend.color.b, value); }
     }
 
-	private void Start () {
+    private void Start() {
         trans = transform;
         root = trans.parent;
         body2D = rigidbody2D;
@@ -24,5 +25,9 @@ public class Player : MonoBehaviour {
         spriteRend = GetComponent<SpriteRenderer>();
         moveController = GetComponent<PlayerMovementController>();
         standardGravityScale = body2D.gravityScale;
-	}
+    }
+
+    private void OnBecameInvisible() {
+        if(levelWon) Application.LoadLevel("Thanks");
+    }
 }

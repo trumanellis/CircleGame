@@ -5,17 +5,25 @@ public class DevLevel : MonoBehaviour {
     public Player player;
     public CameraFollow followingCam;
     public EventTriggerArea eventTrigger;
+    public Portal portal;
+
+    public float startingZoom = .6f;
+    private float originalZoom;
 
     private void Start() {
-        player.moveController.canMove = false;
-        player.moveController.remoteControlled = true;
-        followingCam.cam.ZoomFactor = .7f;
+        originalZoom = followingCam.cam.ZoomFactor;
         followingCam.allowZooming = false;
+        followingCam.cam.ZoomFactor = startingZoom;
 
-        cInput.PressVirtualKey("Remote Left");
+        if(portal != null) portal.onPlayerEnter += () => { Application.LoadLevel("Thanks"); };
 
         eventTrigger.onAreaEnter += (a, go) => {
-            cInput.ReleaseVirtualKey("Remote Left");
+            cInput.PressVirtualKey("Remote Right");
+
+            player.moveController.canMove = false;
+            player.moveController.remoteControlled = true;
+
+            //cInput.ReleaseVirtualKey("Remote Left");
             iTween.ColorTo(player.gameObject, iTween.Hash(
                 "color", Color.black,
                 "time", .5f,
@@ -25,7 +33,7 @@ public class DevLevel : MonoBehaviour {
 
             iTween.ValueTo(gameObject, iTween.Hash(
                 "from", followingCam.cam.ZoomFactor,
-                "to", 1,
+                "to", originalZoom,
                 "time", .5f,
                 "easetype", iTween.EaseType.linear,
                 "onupdate", "ChangeZoomValue"
@@ -33,6 +41,8 @@ public class DevLevel : MonoBehaviour {
         };
 
         eventTrigger.onAreaExit += (a, go) => {
+            cInput.ReleaseVirtualKey("Remote Right");
+
             eventTrigger.gameObject.collider2D.isTrigger = false;
             eventTrigger.isEnabled = false;
         };
@@ -41,8 +51,6 @@ public class DevLevel : MonoBehaviour {
     private void FadeComplete() {
         player.moveController.canMove = true;
         player.moveController.remoteControlled = false;
-
-
     }
 
     private void ChangeZoomValue(float value) {
