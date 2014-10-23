@@ -4,6 +4,7 @@ using System.Collections;
 public class EventLevelManager : MonoBehaviour {
     public EventTriggerArea eventTrigger;
     public EventTriggerArea playAgainPortal;
+    public EventTriggerArea firstEventTrigger;
     public Transform levelStartPosition;
     public Transform levelEnd;
     public float zoomFactor = 1;
@@ -19,6 +20,7 @@ public class EventLevelManager : MonoBehaviour {
             eventTrigger.onAreaExit += (t, p) => { t.collider2D.isTrigger = false; };
             eventTrigger.onAreaEnter += (t, p) => {
                 //t.collider2D.isTrigger = false;
+                firstEventTrigger.collider2D.isTrigger = true;
 
                 followCam.SetTarget(levelEnd);
                 offSet = followCam.offSet;

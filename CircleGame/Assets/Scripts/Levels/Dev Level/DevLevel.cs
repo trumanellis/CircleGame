@@ -46,7 +46,6 @@ public class DevLevel : MonoBehaviour {
             cInput.ReleaseVirtualKey("Remote Right");
 
             eventTrigger.gameObject.collider2D.isTrigger = false;
-            eventTrigger.isEnabled = false;
         };
     }
 
