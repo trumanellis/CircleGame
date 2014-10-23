@@ -53,10 +53,10 @@ public class EventLevelManager : MonoBehaviour {
             followCam.offSet = offSet;
             followCam.startingZoom = startingZoomFactor;
             followCam.SetTarget(p.transform);
-            followCam.transform.position = levelStartPosition.position;
             followCam.cam.ZoomFactor = DevLevel.startingZoomFactor;
             player.body2D.isKinematic = true;
-            player.trans.position = new Vector3(levelStartPosition.position.x, levelStartPosition.position.y , 1F);
+            followCam.transform.position = new Vector3(levelStartPosition.position.x, levelStartPosition.position.y, 0f);
+            player.trans.position = new Vector3(levelStartPosition.position.x, levelStartPosition.position.y , 1f);
             player.body2D.isKinematic = false;
             eventTrigger.collider2D.isTrigger = true;
         };
