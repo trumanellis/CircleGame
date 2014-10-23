@@ -8,9 +8,11 @@ public class DevLevel : MonoBehaviour {
     public Portal portal;
 
     public float startingZoom = .6f;
+    public static float startingZoomFactor;
     private float originalZoom;
 
     private void Start() {
+        startingZoomFactor = startingZoom;
         originalZoom = followingCam.cam.ZoomFactor;
         followingCam.allowZooming = false;
         followingCam.cam.ZoomFactor = startingZoom;
